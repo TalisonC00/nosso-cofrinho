@@ -20,6 +20,7 @@
         .card { background: var(--card-bg); padding: 25px; border-radius: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: center; margin-bottom: 20px; position: relative; }
         .btn-logout { position: absolute; top: 20px; right: 20px; background: #f2f2f7; border: none; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
         .logo-app { width: 110px; height: 110px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 4px solid var(--primary); }
+        
         .barra-progresso { background: #e5e5ea; border-radius: 12px; height: 18px; width: 100%; margin: 15px 0; overflow: hidden; }
         .progresso-interna { background: linear-gradient(90deg, #34c759, #2ecc71); height: 100%; width: 0%; transition: width 1s ease; }
         
@@ -42,7 +43,6 @@
         .badge-sucesso { background: #e1f7e6; color: var(--primary); }
         .badge-pendente { background: #fff4e5; color: var(--warning); }
 
-        /* CONTROLES */
         .input-group { display: flex; gap: 10px; margin-bottom: 10px; }
         .btn-sinal { width: 60px; border-radius: 15px; border: none; font-size: 1.5rem; font-weight: bold; color: white; cursor: pointer; }
         .btn-pos { background: var(--primary); }
@@ -68,6 +68,7 @@
         <button class="btn-logout" id="btn-sair">🚪</button>
         <img src="foto.jpg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'" class="logo-app">
         <h2>Nosso Sonho</h2>
+        <small style="color: #8e8e93; font-weight: bold;">META: R$ 8.000,00</small>
         <div class="barra-progresso"><div class="progresso-interna" id="barra"></div></div>
         
         <div class="grid-stats">
@@ -107,6 +108,22 @@
             </div>
         </div>
 
+        <div class="secao-info" style="border-color: var(--danger); background: #fffafa;">
+            <p class="titulo-secao" style="color: var(--danger);">💸 Total de Retiradas (Gastos)</p>
+            <div class="grid-casal">
+                <div class="box-pessoal">
+                    <b>Talison</b>
+                    <span class="valor-info" id="ret-talison" style="color: var(--danger);">R$ 0</span>
+                    <small style="font-size: 0.65rem; color: #999;">Total Saídas</small>
+                </div>
+                <div class="box-pessoal">
+                    <b>Saiane</b>
+                    <span class="valor-info" id="ret-saiane" style="color: var(--danger);">R$ 0</span>
+                    <small style="font-size: 0.65rem; color: #999;">Total Saídas</small>
+                </div>
+            </div>
+        </div>
+
         <div class="secao-info">
             <p class="titulo-secao">📊 Histórico Mensal (Meta R$ 600)</p>
             <div id="lista-meses"></div>
@@ -132,7 +149,6 @@
     const firebaseConfig = { apiKey: "AIzaSyCrorkszGFAUTTN2ZnV8nJ5rpNvFG9d1ow", authDomain: "cofrinho-47422.firebaseapp.com", databaseURL: "https://cofrinho-47422-default-rtdb.firebaseio.com", projectId: "cofrinho-47422", storageBucket: "cofrinho-47422.firebasestorage.app", messagingSenderId: "995544707412", appId: "1:995544707412:web:6a1b1410a24b456de5d8c1" };
     const app = initializeApp(firebaseConfig); const db = getDatabase(app); const movimentacoesRef = ref(db, 'movimentacoes');
     
-    // LOGIN
     const btnLogin = document.getElementById('btn-entrar');
     btnLogin.addEventListener('click', () => {
         const senha = document.getElementById('senha-input').value;
@@ -195,16 +211,22 @@
 
             document.getElementById('total-geral').innerText = fmt(saldoGeral);
             document.getElementById('total-mes').innerText = fmt(mesesMap[`${mesHoje}-${anoHoje}`] ? mesesMap[`${mesHoje}-${anoHoje}`].totalLiq : 0);
-            document.getElementById('barra').style.width = Math.min((saldoGeral/15000)*100, 100) + "%";
+            
+            // ATUALIZAÇÃO DA BARRA PARA 8K
+            document.getElementById('barra').style.width = Math.min((saldoGeral/8000)*100, 100) + "%";
+            
             document.getElementById('dep-so-talison').innerText = fmt(depT);
             document.getElementById('dep-so-saiane').innerText = fmt(depS);
             const totalD = depT + depS;
             document.getElementById('perc-total-talison').innerText = totalD > 0 ? ((depT/totalD)*100).toFixed(1) + "%" : "0%";
             document.getElementById('perc-total-saiane').innerText = totalD > 0 ? ((depS/totalD)*100).toFixed(1) + "%" : "0%";
             
+            // RESUMO LÍQUIDO E RETIRADAS
             const liqT = depT - retT, liqS = depS - retS;
             document.getElementById('liq-talison').innerText = fmt(liqT);
             document.getElementById('liq-saiane').innerText = fmt(liqS);
+            document.getElementById('ret-talison').innerText = fmt(retT);
+            document.getElementById('ret-saiane').innerText = fmt(retS);
 
             const ajustarTag = (tag, val) => {
                 tag.innerText = val > 0 ? "Positivo" : (val === 0 ? "Zerado" : "Em Débito");
