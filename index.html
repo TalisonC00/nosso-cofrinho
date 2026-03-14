@@ -9,7 +9,10 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, system-ui, sans-serif; background-color: var(--bg); margin: 0; padding: 15px; display: flex; justify-content: center; }
         
+        /* Ajuste do botão de login para não ficar apagado */
         #tela-login { background: var(--card-bg); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 350px; margin-top: 60px; }
+        #btn-entrar { background: var(--primary); color: white; border: none; font-weight: 700; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 10px rgba(52, 199, 89, 0.3); }
+        
         #conteudo-app { display: none; width: 100%; max-width: 480px; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -60,7 +63,7 @@
 <div id="tela-login">
     <h2>Olá Casal! 💍</h2>
     <input type="password" id="senha-input" placeholder="Senha" style="text-align: center;">
-    <button id="btn-entrar" style="margin-top: 20px;">Entrar</button>
+    <button id="btn-entrar">Entrar</button>
 </div>
 
 <div id="conteudo-app">
@@ -148,11 +151,16 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const movimentacoesRef = ref(db, 'movimentacoes');
-    const SENHA = "1234";
+    const SENHA = "0202"; // SENHA ATUALIZADA
     let sinalPositivo = true;
 
     document.getElementById('btn-entrar').onclick = () => {
-        if(document.getElementById('senha-input').value === SENHA) { localStorage.setItem('auth_cofrinho', 'true'); location.reload(); }
+        if(document.getElementById('senha-input').value === SENHA) { 
+            localStorage.setItem('auth_cofrinho', 'true'); 
+            location.reload(); 
+        } else {
+            alert("Senha incorreta!");
+        }
     };
     document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_cofrinho'); location.reload(); };
 
@@ -171,7 +179,7 @@
 
         document.getElementById('btn-registrar').onclick = () => {
             let v = parseFloat(valI.value);
-            if (isNaN(v) || v <= 0) return;
+            if (isNaN(v) || v <= 0) { alert("Digite um valor válido!"); return; }
             if (!sinalPositivo) v = -Math.abs(v);
             if (v < 0 && motI.value.trim() === "") { alert("Motivo obrigatório!"); return; }
             
@@ -179,71 +187,5 @@
             push(movimentacoesRef, { 
                 quem: document.getElementById('quem').value, 
                 valor: v, motivo: v < 0 ? motI.value : "", 
-                data: agora.toLocaleDateString('pt-BR'), 
-                ts: Date.now(), mes: agora.getMonth(), ano: agora.getFullYear() 
-            }).then(() => { 
-                valI.value = ""; motI.value = ""; motI.style.display = 'none'; 
-                sinalPositivo = true; btnS.innerText = "+"; btnS.className = "btn-sinal btn-pos";
-            });
-        };
-
-        onValue(movimentacoesRef, (snap) => {
-            const dados = snap.val(); const fmt = (n) => n.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
-            const dataHoje = new Date(); const mesHoje = dataHoje.getMonth(), anoHoje = dataHoje.getFullYear();
-            let saldoGeral = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
-            const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
-
-            if(dados) {
-                Object.values(dados).sort((a,b) => b.ts - a.ts).forEach(m => {
-                    saldoGeral += m.valor;
-                    if(m.valor > 0) { if(m.quem === "Talison") depT += m.valor; else depS += m.valor; }
-                    else { if(m.quem === "Talison") retT += Math.abs(m.valor); else retS += Math.abs(m.valor); }
-                    
-                    const chaveM = `${m.mes}-${m.ano || anoHoje}`;
-                    if(!mesesMap[chaveM]) mesesMap[chaveM] = { totalLiq: 0, mesNomeIdx: m.mes, anoRef: m.ano || anoHoje };
-                    mesesMap[chaveM].totalLiq += m.valor;
-                    
-                    listaEl.innerHTML += `<div class="item-lista" style="border-left:5px solid ${m.valor>=0?'var(--primary)':'var(--danger)'}"><b>${m.quem}</b>: ${fmt(m.valor)}<br><small>${m.data} ${m.motivo?'⚠️ '+m.motivo:''}</small></div>`;
-                });
-            }
-
-            document.getElementById('total-geral').innerText = fmt(saldoGeral);
-            document.getElementById('total-mes').innerText = fmt(mesesMap[`${mesHoje}-${anoHoje}`] ? mesesMap[`${mesHoje}-${anoHoje}`].totalLiq : 0);
-            document.getElementById('barra').style.width = Math.min((saldoGeral/15000)*100, 100) + "%";
-            
-            document.getElementById('dep-so-talison').innerText = fmt(depT);
-            document.getElementById('dep-so-saiane').innerText = fmt(depS);
-            const totalD = depT + depS;
-            document.getElementById('perc-total-talison').innerText = totalD > 0 ? ((depT/totalD)*100).toFixed(1) + "%" : "0%";
-            document.getElementById('perc-total-saiane').innerText = totalD > 0 ? ((depS/totalD)*100).toFixed(1) + "%" : "0%";
-
-            const liqT = depT - retT, liqS = depS - retS;
-            document.getElementById('liq-talison').innerText = fmt(liqT);
-            document.getElementById('liq-saiane').innerText = fmt(liqS);
-
-            const ajustarTag = (tag, val, valEl) => {
-                valEl.style.color = val > 0 ? "var(--primary)" : (val === 0 ? "#555" : "var(--danger)");
-                tag.innerText = val > 0 ? "Positivo" : (val === 0 ? "Zerado" : "Em Débito");
-                tag.style.background = val > 0 ? "#e1f7e6" : (val === 0 ? "#eee" : "#ffebeb");
-                tag.style.color = val > 0 ? "var(--primary)" : (val === 0 ? "#555" : "var(--danger)");
-            };
-            ajustarTag(document.getElementById('tag-talison'), liqT, document.getElementById('liq-talison'));
-            ajustarTag(document.getElementById('tag-saiane'), liqS, document.getElementById('liq-saiane'));
-
-            const metasEl = document.getElementById('lista-meses'); metasEl.innerHTML = "";
-            const mNomes = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-            const chaveHoje = `${mesHoje}-${anoHoje}`;
-            if(!mesesMap[chaveHoje]) mesesMap[chaveHoje] = { totalLiq: 0, mesNomeIdx: mesHoje, anoRef: anoHoje };
-            
-            Object.keys(mesesMap).sort((a,b) => {
-                const [m1, a1] = a.split('-').map(Number); const [m2, a2] = b.split('-').map(Number);
-                return (a2 * 12 + m2) - (a1 * 12 + m1);
-            }).forEach(chave => {
-                const d = mesesMap[chave]; const ok = d.totalLiq >= 600;
-                metasEl.innerHTML += `<div class="mes-item"><div class="mes-header"><span><b>${mNomes[d.mesNomeIdx]} / ${d.anoRef}</b> <span class="badge ${ok?'badge-sucesso':'badge-pendente'}">${ok?'OK':'FOCO'}</span></span><b>${fmt(d.totalLiq)}</b></div></div>`;
-            });
-        });
-    }
-</script>
-</body>
-</html>
+                data: agora.toLocaleDateString('pt-BR'),
+    
