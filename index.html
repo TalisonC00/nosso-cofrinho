@@ -30,8 +30,8 @@
         .btn-neg { background: var(--danger); }
         .controles { background: #f2f2f7; padding: 20px; border-radius: 20px; display: flex; flex-direction: column; gap: 12px; }
         input, select, button { padding: 15px; border-radius: 15px; border: 1px solid #d1d1d6; font-size: 1rem; width: 100%; }
-        #btn-registrar { background: var(--primary); color: white; border: none; font-weight: 700; }
-        #lista { margin-top: 20px; max-height: 200px; overflow-y: auto; }
+        #btn-registrar { background: var(--primary); color: white; border: none; font-weight: 700; cursor: pointer; }
+        #lista { margin-top: 20px; max-height: 250px; overflow-y: auto; }
         .item-lista { background: #fff; padding: 10px; border-radius: 12px; margin-bottom: 8px; border-left: 5px solid #ccc; font-size: 0.8rem; text-align: left; }
     </style>
 </head>
@@ -68,11 +68,11 @@
         <div class="controles">
             <select id="quem"><option value="Talison">Talison</option><option value="Saiane">Saiane</option></select>
             <div class="input-group">
-                <button id="btn-sinal-toggle" class="btn-sinal btn-pos">+</button>
+                <button id="btn-sinal-toggle" type="button" class="btn-sinal btn-pos">+</button>
                 <input type="number" id="valor-input" inputmode="decimal" placeholder="Valor">
             </div>
             <input type="text" id="motivo-retirada" placeholder="Motivo da saída?" style="display:none;">
-            <button id="btn-registrar">Registrar Agora</button>
+            <button id="btn-registrar" type="button">Registrar Agora</button>
         </div>
         <div id="lista"></div>
     </div>
@@ -83,9 +83,67 @@
     const firebaseConfig = { apiKey: "AIzaSyCrorkszGFAUTTN2ZnV8nJ5rpNvFG9d1ow", authDomain: "cofrinho-47422.firebaseapp.com", databaseURL: "https://cofrinho-47422-default-rtdb.firebaseio.com", projectId: "cofrinho-47422", storageBucket: "cofrinho-47422.firebasestorage.app", messagingSenderId: "995544707412", appId: "1:995544707412:web:6a1b1410a24b456de5d8c1" };
     const app = initializeApp(firebaseConfig); const db = getDatabase(app); const movimentacoesRef = ref(db, 'movimentacoes');
     let sinalPositivo = true;
+    
     document.getElementById('btn-entrar').onclick = () => { if(document.getElementById('senha-input').value === "1234") { localStorage.setItem('auth_cofrinho', 'true'); location.reload(); } };
     document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_cofrinho'); location.reload(); };
+    
     if(localStorage.getItem('auth_cofrinho') === 'true') {
         document.getElementById('tela-login').style.display = 'none'; document.getElementById('conteudo-app').style.display = 'block';
-        const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle');
-        btnS.onclick = () => { sinalPositivo = !sinalPositivo; btnS.innerText = sinalPositivo ? "+" : "-"; btnS.className = sinalPositivo ? "btn-sinal btn-pos" : "btn-sinal btn-neg"; motI.style.display = sinalPositivo
+        const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle'), btnReg = document.getElementById('btn-registrar');
+        
+        btnS.onclick = () => {
+            sinalPositivo = !sinalPositivo;
+            btnS.innerText = sinalPositivo ? "+" : "-";
+            btnS.className = sinalPositivo ? "btn-sinal btn-pos" : "btn-sinal btn-neg";
+            motI.style.display = sinalPositivo ? "none" : "block";
+        };
+
+        btnReg.onclick = () => {
+            let v = parseFloat(valI.value);
+            if (isNaN(v) || v <= 0) { alert("Digite um valor válido!"); return; }
+            if (!sinalPositivo) v = -Math.abs(v);
+            if (v < 0 && motI.value.trim() === "") { alert("Informe o motivo da saída!"); return; }
+            
+            const agora = new Date();
+            push(movimentacoesRef, { 
+                quem: document.getElementById('quem').value, 
+                valor: v, 
+                motivo: v < 0 ? motI.value : "", 
+                data: agora.toLocaleDateString('pt-BR'), 
+                ts: Date.now(), 
+                mes: agora.getMonth(), 
+                ano: agora.getFullYear() 
+            }).then(() => { 
+                valI.value = ""; motI.value = ""; motI.style.display = 'none';
+                sinalPositivo = true; btnS.innerText = "+"; btnS.className = "btn-sinal btn-pos";
+            }).catch(e => alert("Erro ao salvar: " + e.message));
+        };
+
+        onValue(movimentacoesRef, (snap) => {
+            const dados = snap.val(); const fmt = (n) => n.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+            let saldoGeral = 0, depT = 0, depS = 0, retT = 0, retS = 0; const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
+            if(dados) {
+                Object.values(dados).sort((a,b) => b.ts - a.ts).forEach(m => {
+                    saldoGeral += m.valor; if(m.valor > 0) { if(m.quem === "Talison") depT += m.valor; else depS += m.valor; }
+                    else { if(m.quem === "Talison") retT += Math.abs(m.valor); else retS += Math.abs(m.valor); }
+                    listaEl.innerHTML += `<div class="item-lista" style="border-left:5px solid ${m.valor>=0?'#34c759':'#ff3b30'}"><b>${m.quem}</b>: ${fmt(m.valor)}<br><small>${m.data} ${m.motivo?'⚠️ '+m.motivo:''}</small></div>`;
+                });
+            }
+            document.getElementById('total-geral').innerText = fmt(saldoGeral);
+            document.getElementById('barra').style.width = Math.min((saldoGeral/15000)*100, 100) + "%";
+            document.getElementById('dep-so-talison').innerText = fmt(depT); document.getElementById('dep-so-saiane').innerText = fmt(depS);
+            const totalD = depT + depS;
+            document.getElementById('perc-total-talison').innerText = totalD > 0 ? ((depT/totalD)*100).toFixed(1) + "%" : "0%";
+            document.getElementById('perc-total-saiane').innerText = totalD > 0 ? ((depS/totalD)*100).toFixed(1) + "%" : "0%";
+            const liqT = depT - retT, liqS = depS - retS;
+            document.getElementById('liq-talison').innerText = fmt(liqT); document.getElementById('liq-saiane').innerText = fmt(liqS);
+            const tagT = document.getElementById('tag-talison'), tagS = document.getElementById('tag-saiane');
+            tagT.innerText = liqT > 0 ? "Positivo" : (liqT === 0 ? "Zerado" : "Em Débito");
+            tagT.style.color = liqT >= 0 ? "#34c759" : "#ff3b30";
+            tagS.innerText = liqS > 0 ? "Positivo" : (liqS === 0 ? "Zerado" : "Em Débito");
+            tagS.style.color = liqS >= 0 ? "#34c759" : "#ff3b30";
+        });
+    }
+</script>
+</body>
+</html>
