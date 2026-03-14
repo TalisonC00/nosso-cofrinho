@@ -9,14 +9,14 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, system-ui, sans-serif; background-color: var(--bg); margin: 0; padding: 15px; display: flex; justify-content: center; }
         
-        /* LOGIN */
+        /* TELA DE LOGIN */
         #tela-login { background: var(--card-bg); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 350px; margin-top: 60px; }
-        #btn-entrar { background: var(--primary); color: white; border: none; font-weight: 700; cursor: pointer; margin-top: 20px; padding: 15px; border-radius: 15px; width: 100%; display: block; font-size: 1rem; }
+        #btn-entrar { background: var(--primary); color: white; border: none; font-weight: 700; cursor: pointer; margin-top: 20px; padding: 15px; border-radius: 15px; width: 100%; display: block; font-size: 1rem; box-shadow: 0 4px 10px rgba(52, 199, 89, 0.3); }
         
         #conteudo-app { display: none; width: 100%; max-width: 480px; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* CARDS */
+        /* ESTILO DOS CARDS */
         .card { background: var(--card-bg); padding: 25px; border-radius: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: center; margin-bottom: 20px; position: relative; }
         .btn-logout { position: absolute; top: 20px; right: 20px; background: #f2f2f7; border: none; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
         .logo-app { width: 110px; height: 110px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 4px solid var(--primary); }
@@ -36,7 +36,6 @@
         .perc-label { font-size: 0.75rem; color: #8e8e93; display: block; margin-top: 4px; font-weight: 600; }
         .status-tag { font-size: 0.6rem; font-weight: bold; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; display: inline-block; margin-top: 5px; }
         
-        /* HISTÓRICO MENSAL */
         .mes-item { border-bottom: 1px solid #eee; padding: 12px 0; }
         .mes-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
         .badge { padding: 4px 8px; border-radius: 8px; font-size: 0.7rem; font-weight: bold; }
@@ -60,8 +59,8 @@
 
 <div id="tela-login">
     <h2>Olá Casal! 💍</h2>
-    <input type="password" id="senha-input" placeholder="Senha" style="text-align: center;">
-    <button id="btn-entrar">Entrar</button>
+    <input type="password" id="senha-input" placeholder="Senha" style="text-align: center; padding: 15px; border-radius: 15px; border: 1px solid #d1d1d6; width: 100%;">
+    <button id="btn-entrar" type="button">Entrar</button>
 </div>
 
 <div id="conteudo-app">
@@ -134,12 +133,15 @@
     const app = initializeApp(firebaseConfig); const db = getDatabase(app); const movimentacoesRef = ref(db, 'movimentacoes');
     
     // LOGIN
-    document.getElementById('btn-entrar').onclick = () => {
-        if(document.getElementById('senha-input').value === "0202") {
+    const btnLogin = document.getElementById('btn-entrar');
+    btnLogin.addEventListener('click', () => {
+        const senha = document.getElementById('senha-input').value;
+        if(senha === "0202") {
             localStorage.setItem('auth_cofrinho', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
-    };
+    });
+
     document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_cofrinho'); location.reload(); };
 
     if(localStorage.getItem('auth_cofrinho') === 'true') {
