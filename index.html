@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title> Metas 🏡🚘 </title>
+    <title>Cofrinho Talison & Saiane</title>
     <style>
         :root { --primary: #34c759; --secondary: #007aff; --danger: #ff3b30; --warning: #ff9500; --bg: #f2f2f7; --card-bg: #ffffff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, system-ui, sans-serif; background-color: var(--bg); margin: 0; padding: 15px; display: flex; justify-content: center; }
         
-        /* TELA DE LOGIN */
         #tela-login { background: var(--card-bg); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 350px; margin-top: 60px; }
         #btn-entrar { background: var(--primary); color: white; border: none; font-weight: 700; cursor: pointer; margin-top: 20px; padding: 15px; border-radius: 15px; width: 100%; display: block; font-size: 1rem; box-shadow: 0 4px 10px rgba(52, 199, 89, 0.3); }
         
         #conteudo-app { display: none; width: 100%; max-width: 480px; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* ESTILO DOS CARDS */
         .card { background: var(--card-bg); padding: 25px; border-radius: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: center; margin-bottom: 20px; position: relative; }
         .btn-logout { position: absolute; top: 20px; right: 20px; background: #f2f2f7; border: none; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
         .logo-app { width: 110px; height: 110px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 4px solid var(--primary); }
@@ -33,6 +31,10 @@
         .grid-casal { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .box-pessoal { background: white; padding: 12px; border-radius: 15px; text-align: center; border: 1px solid #f2f2f7; }
         
+        /* Estilo para a caixa de somatória centralizada */
+        .box-somatoria { grid-column: span 2; background: #fff; padding: 10px; border-radius: 15px; border: 1px dashed #ccc; margin-top: 5px; text-align: center; }
+        .aviso-reposicao { grid-column: span 2; font-size: 0.65rem; color: var(--danger); text-align: center; font-weight: bold; margin-top: 8px; }
+
         .valor-info { font-size: 1rem; font-weight: 700; display: block; }
         .perc-label { font-size: 0.75rem; color: #8e8e93; display: block; margin-top: 4px; font-weight: 600; }
         .status-tag { font-size: 0.6rem; font-weight: bold; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; display: inline-block; margin-top: 5px; }
@@ -58,7 +60,7 @@
 <body>
 
 <div id="tela-login">
-    <h2> Olá Casal! 🏡🚘💍 </h2>
+    <h2>Olá Casal!💍</h2>
     <input type="password" id="senha-input" placeholder="Senha" style="text-align: center; padding: 15px; border-radius: 15px; border: 1px solid #d1d1d6; width: 100%;">
     <button id="btn-entrar" type="button">Entrar</button>
 </div>
@@ -67,7 +69,7 @@
     <div class="card">
         <button class="btn-logout" id="btn-sair">❌</button>
         <img src="foto.jpg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'" class="logo-app">
-        <h2>Nossos Sonhos 🏡🚘💍</h2>
+        <h2>Nossos Sonhos 🏡🚘💍 </h2>
         <small style="color: #8e8e93; font-weight: bold;">META: R$ 8.000,00</small>
         <div class="barra-progresso"><div class="progresso-interna" id="barra"></div></div>
         
@@ -88,6 +90,10 @@
                     <b>Saiane</b>
                     <span class="valor-info" id="dep-so-saiane" style="color: var(--primary);">R$ 0</span>
                     <span class="perc-label" id="perc-total-saiane">0%</span>
+                </div>
+                <div class="box-somatoria">
+                    <small style="color:#666; font-weight: bold;">SOMA TOTAL INVESTIDA</small>
+                    <span class="valor-info" id="soma-bruta-total" style="color: var(--primary); font-size: 1.1rem;">R$ 0</span>
                 </div>
             </div>
         </div>
@@ -119,6 +125,11 @@
                     <b>Saiane</b>
                     <span class="valor-info" id="ret-saiane" style="color: var(--danger);">R$ 0</span>
                 </div>
+                <div class="box-somatoria">
+                    <small style="color:#666; font-weight: bold;">SOMA TOTAL DE SAÍDAS</small>
+                    <span class="valor-info" id="soma-retirada-total" style="color: var(--danger); font-size: 1.1rem;">R$ 0</span>
+                </div>
+                <div class="aviso-reposicao">⚠️ Este é o valor total que precisa ser reposto ao cofrinho.</div>
             </div>
         </div>
 
@@ -205,11 +216,18 @@
                 });
             }
 
+            // ATUALIZAÇÃO DOS CAMPOS DE SOMATÓRIA
+            const totalBrutoGeral = depT + depS;
+            const totalRetiradaGeral = retT + retS;
+
             document.getElementById('total-geral').innerText = fmt(saldoGeral);
             document.getElementById('total-mes').innerText = fmt(mesesMap[`${mesHoje}-${anoHoje}`] ? mesesMap[`${mesHoje}-${anoHoje}`].totalLiq : 0);
             document.getElementById('barra').style.width = Math.min((saldoGeral/8000)*100, 100) + "%";
+            
             document.getElementById('dep-so-talison').innerText = fmt(depT);
             document.getElementById('dep-so-saiane').innerText = fmt(depS);
+            document.getElementById('soma-bruta-total').innerText = fmt(totalBrutoGeral);
+
             const totalD = depT + depS;
             document.getElementById('perc-total-talison').innerText = totalD > 0 ? ((depT/totalD)*100).toFixed(1) + "%" : "0%";
             document.getElementById('perc-total-saiane').innerText = totalD > 0 ? ((depS/totalD)*100).toFixed(1) + "%" : "0%";
@@ -217,8 +235,10 @@
             const liqT = depT - retT, liqS = depS - retS;
             document.getElementById('liq-talison').innerText = fmt(liqT);
             document.getElementById('liq-saiane').innerText = fmt(liqS);
+            
             document.getElementById('ret-talison').innerText = fmt(retT);
             document.getElementById('ret-saiane').innerText = fmt(retS);
+            document.getElementById('soma-retirada-total').innerText = fmt(totalRetiradaGeral);
 
             const ajustarTag = (tag, val) => {
                 tag.innerText = val > 0 ? "Positivo" : (val === 0 ? "Zerado" : "Em Débito");
