@@ -4,20 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
+    
+    <link rel="apple-touch-icon" href="foto.jpg?v=3">
+    <link rel="icon" type="image/jpg" href="foto.jpg?v=3">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <style>
         :root { --primary: #34c759; --secondary: #007aff; --danger: #ff3b30; --warning: #ff9500; --bg: #f2f2f7; --card-bg: #ffffff; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, system-ui, sans-serif; background-color: var(--bg); margin: 0; padding: 15px; display: flex; justify-content: center; }
         
+        /* TELA DE LOGIN */
         #tela-login { background: var(--card-bg); padding: 40px 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 350px; margin-top: 60px; }
         #btn-entrar { background: var(--primary); color: white; border: none; font-weight: 700; cursor: pointer; margin-top: 20px; padding: 15px; border-radius: 15px; width: 100%; display: block; font-size: 1rem; box-shadow: 0 4px 10px rgba(52, 199, 89, 0.3); }
         
         #conteudo-app { display: none; width: 100%; max-width: 480px; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
+        /* ESTILO DOS CARDS */
         .card { background: var(--card-bg); padding: 25px; border-radius: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: center; margin-bottom: 20px; position: relative; }
         .btn-logout { position: absolute; top: 20px; right: 20px; background: #f2f2f7; border: none; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
-        .logo-app { width: 110px; height: 110px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 4px solid var(--primary); }
+        
+        /* FOTO DE VOCÊS */
+        .logo-app { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 5px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         
         .barra-progresso { background: #e5e5ea; border-radius: 12px; height: 18px; width: 100%; margin: 15px 0; overflow: hidden; }
         .progresso-interna { background: linear-gradient(90deg, #34c759, #2ecc71); height: 100%; width: 0%; transition: width 1s ease; }
@@ -31,7 +42,7 @@
         .grid-casal { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .box-pessoal { background: white; padding: 12px; border-radius: 15px; text-align: center; border: 1px solid #f2f2f7; }
         
-        /* Estilo para a caixa de somatória centralizada */
+        /* CAIXA DE SOMATÓRIA */
         .box-somatoria { grid-column: span 2; background: #fff; padding: 10px; border-radius: 15px; border: 1px dashed #ccc; margin-top: 5px; text-align: center; }
         .aviso-reposicao { grid-column: span 2; font-size: 0.65rem; color: var(--danger); text-align: center; font-weight: bold; margin-top: 8px; }
 
@@ -45,6 +56,7 @@
         .badge-sucesso { background: #e1f7e6; color: var(--primary); }
         .badge-pendente { background: #fff4e5; color: var(--warning); }
 
+        /* CONTROLES */
         .input-group { display: flex; gap: 10px; margin-bottom: 10px; }
         .btn-sinal { width: 60px; border-radius: 15px; border: none; font-size: 1.5rem; font-weight: bold; color: white; cursor: pointer; }
         .btn-pos { background: var(--primary); }
@@ -60,16 +72,16 @@
 <body>
 
 <div id="tela-login">
-    <h2>Olá Casal!💍</h2>
+    <h2>Olá Casal! 💍</h2>
     <input type="password" id="senha-input" placeholder="Senha" style="text-align: center; padding: 15px; border-radius: 15px; border: 1px solid #d1d1d6; width: 100%;">
     <button id="btn-entrar" type="button">Entrar</button>
 </div>
 
 <div id="conteudo-app">
     <div class="card">
-        <button class="btn-logout" id="btn-sair">❌</button>
-        <img src="foto.jpg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'" class="logo-app">
-        <h2>Nossos Sonhos 🏡🚘💍 </h2>
+        <button class="btn-logout" id="btn-sair">🚪</button>
+        <img src="foto.jpg?v=3" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+        <h2>Nosso Sonho</h2>
         <small style="color: #8e8e93; font-weight: bold;">META: R$ 8.000,00</small>
         <div class="barra-progresso"><div class="progresso-interna" id="barra"></div></div>
         
@@ -158,7 +170,6 @@
     const firebaseConfig = { apiKey: "AIzaSyCrorkszGFAUTTN2ZnV8nJ5rpNvFG9d1ow", authDomain: "cofrinho-47422.firebaseapp.com", databaseURL: "https://cofrinho-47422-default-rtdb.firebaseio.com", projectId: "cofrinho-47422", storageBucket: "cofrinho-47422.firebasestorage.app", messagingSenderId: "995544707412", appId: "1:995544707412:web:6a1b1410a24b456de5d8c1" };
     const app = initializeApp(firebaseConfig); const db = getDatabase(app); const movimentacoesRef = ref(db, 'movimentacoes');
     
-    // LOGIN
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
             localStorage.setItem('auth_cofrinho', 'true');
@@ -186,7 +197,6 @@
             if (isNaN(v) || v <= 0) { alert("Valor inválido!"); return; }
             if (!sinalPositivo) v = -Math.abs(v);
             if (v < 0 && motI.value.trim() === "") { alert("Motivo obrigatório!"); return; }
-            
             const agora = new Date();
             push(movimentacoesRef, { 
                 quem: document.getElementById('quem').value, valor: v, 
@@ -216,41 +226,31 @@
                 });
             }
 
-            // ATUALIZAÇÃO DOS CAMPOS DE SOMATÓRIA
-            const totalBrutoGeral = depT + depS;
-            const totalRetiradaGeral = retT + retS;
-
             document.getElementById('total-geral').innerText = fmt(saldoGeral);
             document.getElementById('total-mes').innerText = fmt(mesesMap[`${mesHoje}-${anoHoje}`] ? mesesMap[`${mesHoje}-${anoHoje}`].totalLiq : 0);
             document.getElementById('barra').style.width = Math.min((saldoGeral/8000)*100, 100) + "%";
-            
             document.getElementById('dep-so-talison').innerText = fmt(depT);
             document.getElementById('dep-so-saiane').innerText = fmt(depS);
-            document.getElementById('soma-bruta-total').innerText = fmt(totalBrutoGeral);
+            document.getElementById('soma-bruta-total').innerText = fmt(depT + depS);
+            document.getElementById('liq-talison').innerText = fmt(depT - retT);
+            document.getElementById('liq-saiane').innerText = fmt(depS - retS);
+            document.getElementById('ret-talison').innerText = fmt(retT);
+            document.getElementById('ret-saiane').innerText = fmt(retS);
+            document.getElementById('soma-retirada-total').innerText = fmt(retT + retS);
 
             const totalD = depT + depS;
             document.getElementById('perc-total-talison').innerText = totalD > 0 ? ((depT/totalD)*100).toFixed(1) + "%" : "0%";
             document.getElementById('perc-total-saiane').innerText = totalD > 0 ? ((depS/totalD)*100).toFixed(1) + "%" : "0%";
-            
-            const liqT = depT - retT, liqS = depS - retS;
-            document.getElementById('liq-talison').innerText = fmt(liqT);
-            document.getElementById('liq-saiane').innerText = fmt(liqS);
-            
-            document.getElementById('ret-talison').innerText = fmt(retT);
-            document.getElementById('ret-saiane').innerText = fmt(retS);
-            document.getElementById('soma-retirada-total').innerText = fmt(totalRetiradaGeral);
 
             const ajustarTag = (tag, val) => {
                 tag.innerText = val > 0 ? "Positivo" : (val === 0 ? "Zerado" : "Em Débito");
                 tag.style.color = val >= 0 ? "var(--primary)" : "var(--danger)";
             };
-            ajustarTag(document.getElementById('tag-talison'), liqT);
-            ajustarTag(document.getElementById('tag-saiane'), liqS);
+            ajustarTag(document.getElementById('tag-talison'), depT - retT);
+            ajustarTag(document.getElementById('tag-saiane'), depS - retS);
 
             const metasEl = document.getElementById('lista-meses'); metasEl.innerHTML = "";
             const mNomes = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-            const chaveHoje = `${mesHoje}-${anoHoje}`;
-            if(!mesesMap[chaveHoje]) mesesMap[chaveHoje] = { totalLiq: 0, mesNomeIdx: mesHoje, anoRef: anoHoje };
             Object.keys(mesesMap).sort((a,b) => {
                 const [m1, a1] = a.split('-').map(Number); const [m2, a2] = b.split('-').map(Number);
                 return (a2 * 12 + m2) - (a1 * 12 + m1);
@@ -263,3 +263,4 @@
 </script>
 </body>
 </html>
+
