@@ -5,125 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=30">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=30">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=31">
+    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=31">
     <meta name="theme-color" content="#34c759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <style>
-        :root { --primary: #34c759; --secondary: #007aff; --danger: #ff3b30; --warning: #ffcc00; --bg: #f2f2f7; --card-bg: rgba(255, 255, 255, 0.9); }
+        :root { 
+            --primary: #34c759; --secondary: #007aff; --danger: #ff3b30; --warning: #ffcc00; 
+            --bg: #f2f2f7; --card-bg: rgba(255, 255, 255, 0.9); 
+        }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 15px; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 10px; min-height: 100vh; }
         
-        .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.1); padding: 30px 25px; width: 100%; max-width: 450px; text-align: center; position: relative; }
-        #conteudo-app { display: none; width: 100%; max-width: 450px; animation: slideUp 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); padding: 20px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
         
-        .logo-app { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 6px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.15); margin-bottom: 10px; }
-        .btn-logout { position: absolute; top: 25px; right: 25px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        #conteudo-app { display: none; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* MENU DE ABAS */
+        .tab-menu { display: flex; justify-content: space-around; background: #fff; border-radius: 20px; padding: 8px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: sticky; top: 10px; z-index: 100; }
+        .tab-btn { border: none; background: none; padding: 10px 15px; border-radius: 15px; font-weight: 700; color: #8e8e93; cursor: pointer; font-size: 0.85rem; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-btn.active { background: var(--primary); color: #fff; box-shadow: 0 4px 10px rgba(52, 199, 89, 0.3); }
+        .tab-btn i { font-style: normal; font-size: 1.2rem; }
+
+        /* SEÇÕES */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .logo-app { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 8px 15px rgba(0,0,0,0.1); margin-bottom: 10px; }
+        .btn-logout { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 1rem; }
         
-        .barra-bg { background: rgba(0,0,0,0.08); border-radius: 20px; height: 16px; margin: 20px 0; overflow: hidden; }
+        .barra-bg { background: rgba(0,0,0,0.08); border-radius: 20px; height: 14px; margin: 15px 0; overflow: hidden; }
         .barra-fill { background: linear-gradient(90deg, #34c759, #2ecc71); height: 100%; width: 0%; transition: width 1.5s ease-in-out; }
         
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: #fff; padding: 20px; border-radius: 25px; border: 1.5px solid #1c1c1e; }
-        .stat-card span { font-weight: 800; font-size: 1.1rem; display: block; color: #1c1c1e; }
-        .stat-card small { color: #8e8e93; font-weight: 600; text-transform: uppercase; font-size: 0.6rem; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .stat-card { background: #fff; padding: 15px; border-radius: 20px; border: 1.5px solid #1c1c1e; }
+        .stat-card span { font-weight: 800; font-size: 1rem; display: block; color: #1c1c1e; }
+        .stat-card small { color: #8e8e93; font-weight: 600; text-transform: uppercase; font-size: 0.55rem; }
         
-        .info-box { background: #fff; border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.05); text-align: left; }
+        .info-box { background: #fff; border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1.5px solid rgba(0,0,0,0.05); text-align: left; }
         .section-title { font-size: 0.7rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 15px; display: block; text-align: center; }
         
-        .row-casal { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .user-pill { background: #f9f9fb; padding: 15px; border-radius: 20px; text-align: center; border: 1px solid #f2f2f7; display: flex; flex-direction: column; align-items: center; }
-        .status-tag { font-size: 0.7rem; font-weight: 800; margin-top: 5px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
+        .row-casal { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .user-pill { background: #f9f9fb; padding: 12px; border-radius: 18px; text-align: center; border: 1px solid #f2f2f7; }
+        .status-tag { font-size: 0.65rem; font-weight: 800; margin-top: 5px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
         
-        .controls { background: #fff; padding: 20px; border-radius: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-        input, select, .btn-action { padding: 18px; border-radius: 18px; border: 1px solid #e5e5ea; font-size: 1rem; font-weight: 600; }
-        .input-group { display: flex; gap: 12px; align-items: center; }
-        .btn-toggle { min-width: 65px; height: 60px; border-radius: 18px; border: none; font-size: 1.6rem; color: white; cursor: pointer; }
-        #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 12px 24px rgba(52, 199, 89, 0.3); width: 100%; cursor: pointer; }
+        /* REGISTRO */
+        .controls { display: flex; flex-direction: column; gap: 15px; }
+        input, select, .btn-action { padding: 16px; border-radius: 15px; border: 1.5px solid #e5e5ea; font-size: 1rem; font-weight: 600; width: 100%; }
+        .input-group { display: flex; gap: 10px; align-items: center; }
+        .btn-toggle { min-width: 60px; height: 55px; border-radius: 15px; border: none; font-size: 1.5rem; color: white; cursor: pointer; }
+        #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 8px 20px rgba(52, 199, 89, 0.3); margin-top: 10px; }
         
-        /* 🔨 O MARTELO: LISTA COM ESTRUTURA FIXA INDESTRUTÍVEL */
-        #lista { margin-top: 25px; max-height: 450px; overflow-y: auto; }
-        .item { 
-            background: #fff; padding: 15px; margin-bottom: 12px; 
-            border-left: 6px solid #ccc; border-radius: 15px;
-            cursor: pointer; display: block !important; width: 100%;
-        }
+        /* LISTA (MARTELO APLICADO) */
+        .item { background: #fff; padding: 15px; margin-bottom: 12px; border-left: 6px solid #ccc; border-radius: 15px; cursor: pointer; display: block !important; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .linha-topo { width: 100%; display: block; overflow: hidden; clear: both; margin-bottom: 5px; }
         .nome-lista { float: left; font-weight: 800; font-size: 1.05rem; color: #1c1c1e; }
         .valor-lista { float: right; font-weight: 800; font-size: 1.05rem; }
-        .linha-baixo { width: 100%; display: block; clear: both; text-align: left; color: #8e8e93; font-size: 0.88rem; line-height: 1.4; }
+        .linha-baixo { width: 100%; display: block; clear: both; text-align: left; color: #8e8e93; font-size: 0.85rem; }
 
-        .mes-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f2f2f7; font-size: 0.9rem; }
+        .mes-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f2f2f7; font-size: 0.9rem; }
         .badge-pro { padding: 5px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 900; }
     </style>
 </head>
 <body>
 
-<div id="tela-login" class="glass-card">
+<div id="tela-login" class="glass-card" style="margin-top: 50px;">
     <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
     <h2>Olá Casal! 💍</h2>
-    <input type="password" id="senha-input" placeholder="Senha" style="text-align: center; width: 100%;">
-    <button id="btn-entrar" class="btn-action" style="background: #1c1c1e; color: white; width: 100%; margin-top: 20px;">Digite a senha de acesso</button>
+    <input type="password" id="senha-input" placeholder="Senha" style="text-align: center;">
+    <button id="btn-entrar" class="btn-action" style="background: #1c1c1e; color: white; margin-top: 20px;">Digite a senha de acesso</button>
 </div>
 
 <div id="conteudo-app">
-    <div class="glass-card">
-        <button class="btn-logout" id="btn-sair">🔒</button>
-        <img src="foto.jpg?v=30" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
-        <h2 style="margin: 5px 0 0 0; font-weight: 800;">Nossos Sonhos 🏡🚘</h2>
-        <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;"><small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small></div>
-        <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
-        
-        <div class="stats-grid">
-            <div class="stat-card"><span id="total-geral">R$ 0,00</span><small>Saldo Geral</small></div>
-            <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
-        </div>
+    <div class="tab-menu">
+        <button class="tab-btn active" onclick="openTab('cofre')"><i>💰</i>Cofre</button>
+        <button class="tab-btn" onclick="openTab('novo')"><i>➕</i>Novo</button>
+        <button class="tab-btn" onclick="openTab('metas')"><i>📈</i>Metas</button>
+        <button class="tab-btn" onclick="openTab('extrato')"><i>📜</i>Extrato</button>
+    </div>
 
-        <div class="info-box" style="border: 2px solid var(--primary); background: #f0f9f2;">
-            <span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span>
-            <div class="row-casal">
-                <div class="user-pill"><b>Talison</b><span id="dep-so-talison" style="font-weight:700">R$ 0</span><div id="perc-talison" style="font-size:0.7rem; color:#999;">0%</div></div>
-                <div class="user-pill"><b>Saiane</b><span id="dep-so-saiane" style="font-weight:700">R$ 0</span><div id="perc-saiane" style="font-size:0.7rem; color:#999;">0%</div></div>
+    <div id="cofre" class="tab-content active">
+        <div class="glass-card">
+            <button class="btn-logout" id="btn-sair">🔒</button>
+            <img src="foto.jpg?v=31" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+            <h2 style="margin: 0; font-weight: 800;">Nossos Sonhos 🏡🚘</h2>
+            <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;">
+                <small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small>
             </div>
-            <div id="soma-bruta" style="text-align:center; font-weight:800; margin-top:15px; font-size:0.95rem; color: var(--primary);"></div>
-        </div>
+            <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
+            
+            <div class="stats-grid">
+                <div class="stat-card"><span id="total-geral">R$ 0,00</span><small>Saldo Geral</small></div>
+                <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
+            </div>
 
-        <div class="info-box" style="border: 2px solid var(--warning); background: #fffdf0;">
-            <span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span>
-            <div class="row-casal">
-                <div class="user-pill"><b>Talison</b><span id="liq-talison" style="font-weight:700">R$ 0</span><span class="status-tag" id="tag-talison">---</span></div>
-                <div class="user-pill"><b>Saiane</b><span id="liq-saiane" style="font-weight:700">R$ 0</span><span class="status-tag" id="tag-saiane">---</span></div>
+            <div class="info-box" style="border-color: var(--primary);">
+                <span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span>
+                <div class="row-casal">
+                    <div class="user-pill"><b>Talison</b><br><span id="dep-so-talison" style="font-weight:700">R$ 0</span><div id="perc-talison" style="font-size:0.6rem; color:#999;">0%</div></div>
+                    <div class="user-pill"><b>Saiane</b><br><span id="dep-so-saiane" style="font-weight:700">R$ 0</span><div id="perc-saiane" style="font-size:0.6rem; color:#999;">0%</div></div>
+                </div>
+                <div id="soma-bruta" style="text-align:center; font-weight:800; margin-top:15px; font-size:0.85rem; color: var(--primary);"></div>
+            </div>
+
+            <div class="info-box" style="border-color: var(--warning);">
+                <span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span>
+                <div class="row-casal">
+                    <div class="user-pill"><b>Talison</b><br><span id="liq-talison" style="font-weight:700">R$ 0</span><br><span class="status-tag" id="tag-talison">---</span></div>
+                    <div class="user-pill"><b>Saiane</b><br><span id="liq-saiane" style="font-weight:700">R$ 0</span><br><span class="status-tag" id="tag-saiane">---</span></div>
+                </div>
+            </div>
+
+            <div class="info-box" style="border-color: var(--danger);">
+                <span class="section-title" style="color: var(--danger);">💸 Reposição Necessária</span>
+                <div id="soma-retirada" style="text-align:center; font-weight:800; font-size:1.1rem; color: var(--danger); margin-bottom:5px;">R$ 0,00</div>
+                <p style="font-size:0.6rem; color:var(--danger); text-align:center; margin:0; font-weight:700;">⚠️ Valor total a repor ao cofre</p>
             </div>
         </div>
+    </div>
 
-        <div class="info-box" style="border: 2px solid var(--danger); background: #fff9f9;">
-            <span class="section-title" style="color: var(--danger);">💸 Histórico de Saídas</span>
-            <div class="row-casal">
-                <div class="user-pill"><b>Talison</b><span id="ret-talison" style="color:var(--danger); font-weight:700">R$ 0</span></div>
-                <div class="user-pill"><b>Saiane</b><span id="ret-saiane" style="color:var(--danger); font-weight:700">R$ 0</span></div>
+    <div id="novo" class="tab-content">
+        <div class="glass-card">
+            <h3 class="section-title">Registrar Movimentação</h3>
+            <div class="controls">
+                <select id="quem"><option value="Talison">Talison</option><option value="Saiane">Saiane</option></select>
+                <div class="input-group">
+                    <button id="btn-sinal-toggle" type="button" class="btn-toggle" style="background: var(--primary);">+</button>
+                    <input type="number" id="valor-input" inputmode="decimal" placeholder="0,00">
+                </div>
+                <input type="text" id="motivo-retirada" placeholder="Qual o motivo da saída?" style="display:none; border-color: var(--warning);">
+                <button id="btn-registrar" class="btn-action">Confirmar Registro</button>
             </div>
-            <div id="soma-retirada" style="text-align:center; font-weight:800; margin-top:15px; font-size:0.95rem; color: var(--danger);"></div>
-            <p style="font-size:0.65rem; color:var(--danger); text-align:center; margin-top:5px; font-weight:700;">⚠️ Valor total a repor ao cofre</p>
         </div>
+    </div>
 
-        <div class="info-box" style="border: 1.5px solid #1c1c1e;">
-            <span class="section-title">📊 Progressão Mensal - Meta R$600,00</span>
+    <div id="metas" class="tab-content">
+        <div class="glass-card">
+            <span class="section-title">📊 Progressão Mensal - Meta R$600,00)</span>
             <div id="lista-meses"></div>
         </div>
+    </div>
 
-        <div class="controls">
-            <select id="quem"><option value="Talison">Talison</option><option value="Saiane">Saiane</option></select>
-            <div class="input-group">
-                <button id="btn-sinal-toggle" type="button" class="btn-toggle" style="background: var(--primary);">+</button>
-                <input type="number" id="valor-input" inputmode="decimal" placeholder="0,00" style="flex:1">
-            </div>
-            <input type="text" id="motivo-retirada" placeholder="Qual o motivo?" style="display:none; border: 2px solid var(--warning);">
-            <button id="btn-registrar" class="btn-action">Registrar Agora</button>
+    <div id="extrato" class="tab-content">
+        <div class="glass-card">
+            <span class="section-title">📜 Histórico de Atividades</span>
+            <div id="lista"></div>
         </div>
-        <div id="lista"></div>
     </div>
 </div>
 
@@ -138,17 +169,26 @@
     const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     let sinalPositivo = true;
 
+    // Navegação de Abas
+    window.openTab = function(tabName) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_v30', 'true');
+            localStorage.setItem('auth_pro_v31', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v30'); location.reload(); };
+    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v31'); location.reload(); };
 
-    if(localStorage.getItem('auth_pro_v30') === 'true') {
+    if(localStorage.getItem('auth_pro_v31') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
+        
         const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle'), btnR = document.getElementById('btn-registrar');
         
         btnS.onclick = () => {
@@ -166,7 +206,8 @@
             btnR.disabled = true; btnR.innerText = "Salvando...";
             const agora = new Date();
             push(dbRef, { quem: document.getElementById('quem').value, valor: v, motivo: v < 0 ? motI.value : "", data: agora.toLocaleDateString('pt-BR'), ts: Date.now(), mes: agora.getMonth(), ano: agora.getFullYear() }).then(() => {
-                valI.value = ""; motI.value = ""; btnR.disabled = false; btnR.innerText = "Registrar Agora";
+                valI.value = ""; motI.value = ""; btnR.disabled = false; btnR.innerText = "Confirmar Registro";
+                openTab('cofre'); // Volta para a tela inicial após salvar
             });
         };
 
@@ -211,9 +252,7 @@
             document.getElementById('soma-bruta').innerText = `INVESTIMENTO TOTAL: ${fmt(depT+depS)}`;
             document.getElementById('liq-talison').innerText = fmt(depT - retT);
             document.getElementById('liq-saiane').innerText = fmt(depS - retS);
-            document.getElementById('ret-talison').innerText = fmt(retT);
-            document.getElementById('ret-saiane').innerText = fmt(retS);
-            document.getElementById('soma-retirada').innerText = `TOTAL: ${fmt(retT + retS)}`;
+            document.getElementById('soma-retirada').innerText = fmt(retT + retS);
             
             const totalDep = depT + depS;
             document.getElementById('perc-talison').innerText = totalDep ? ((depT/totalDep)*100).toFixed(1) + "%" : "0%";
