@@ -5,83 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=22">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=22">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=25">
+    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=25">
     <meta name="theme-color" content="#34c759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <style>
         :root { 
-            --primary: #34c759; 
-            --secondary: #007aff; 
-            --danger: #ff3b30; 
-            --warning: #ffcc00; 
-            --bg: #f2f2f7; 
-            --card-bg: rgba(255, 255, 255, 0.9); 
+            --primary: #34c759; --secondary: #007aff; --danger: #ff3b30; --warning: #ffcc00; 
+            --bg: #f2f2f7; --card-bg: rgba(255, 255, 255, 0.9); 
         }
-
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 15px; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
         
-        body { 
-            font-family: -apple-system, system-ui, sans-serif; 
-            background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%);
-            margin: 0; padding: 15px; min-height: 100vh;
-            display: flex; justify-content: center; align-items: flex-start;
-        }
-
-        .glass-card { 
-            background: var(--card-bg); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 35px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1); 
-            padding: 30px 25px; width: 100%; max-width: 450px; text-align: center;
-        }
-
+        .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.1); padding: 30px 25px; width: 100%; max-width: 450px; text-align: center; }
         #conteudo-app { display: none; width: 100%; max-width: 450px; animation: slideUp 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
         @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-
+        
         .logo-app { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 6px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.15); margin-bottom: 10px; }
         .btn-logout { position: absolute; top: 25px; right: 25px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-
+        
         .barra-bg { background: rgba(0,0,0,0.08); border-radius: 20px; height: 16px; margin: 20px 0; overflow: hidden; }
         .barra-fill { background: linear-gradient(90deg, #34c759, #2ecc71); height: 100%; width: 0%; transition: width 1.5s ease-in-out; }
-
+        
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .stat-card { background: #fff; padding: 20px; border-radius: 25px; border: 1.5px solid #1c1c1e; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
         .stat-card span { font-weight: 800; font-size: 1.1rem; display: block; color: #1c1c1e; }
         .stat-card small { color: #8e8e93; font-weight: 600; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 0.5px; }
-
+        
         .info-box { background: #fff; border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.05); text-align: left; }
         .section-title { font-size: 0.7rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 15px; display: block; text-align: center; }
-
+        
         .row-casal { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .user-pill { background: #f9f9fb; padding: 15px; border-radius: 20px; text-align: center; border: 1px solid #f2f2f7; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        
-        /* STATUS TAG ABAIXO DO VALOR */
         .status-tag { font-size: 0.7rem; font-weight: 800; margin-top: 5px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
-
+        
         .controls { background: #fff; padding: 20px; border-radius: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
         input, select, .btn-action { padding: 18px; border-radius: 18px; border: 1px solid #e5e5ea; font-size: 1rem; font-weight: 600; }
-        
         .input-group { display: flex; gap: 12px; align-items: center; width: 100%; }
         .btn-toggle { min-width: 65px; height: 60px; border-radius: 18px; border: none; font-size: 1.6rem; color: white; cursor: pointer; }
-
         #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 12px 24px rgba(52, 199, 89, 0.3); width: 100%; }
-
-        /* LISTA CONFORME PRINT: NOME EM CIMA, MOTIVO EM BAIXO */
+        
         #lista { margin-top: 25px; max-height: 400px; overflow-y: auto; }
-        .item { 
-            background: #fff; padding: 15px 18px; border-radius: 20px; 
-            margin-bottom: 12px; display: flex; justify-content: space-between; 
-            align-items: center; border-left: 6px solid #ccc; cursor: pointer; 
-        }
-        .item-content { display: flex; flex-direction: column; text-align: left; flex: 1; }
-        .item-content b { font-size: 1rem; color: #1c1c1e; display: block; }
-        .item-content small { color: #8e8e93; font-size: 0.85rem; line-height: 1.4; margin-top: 2px; display: block; }
-        .item-val { font-weight: 800; font-size: 1rem; white-space: nowrap; text-align: right; margin-left: 10px; }
+        .item { background: #fff; padding: 15px 18px; border-radius: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 6px solid #ccc; cursor: pointer; }
+        .item-content { display: flex; flex-direction: column; text-align: left; flex: 1; overflow: hidden; }
+        .item-name { font-size: 1rem; font-weight: 800; color: #1c1c1e; display: block; margin-bottom: 2px; }
+        .item-desc { color: #8e8e93; font-size: 0.85rem; line-height: 1.4; display: block; width: 100%; overflow-wrap: break-word; }
+        .item-val { font-weight: 800; font-size: 1rem; white-space: nowrap; text-align: right; margin-left: 10px; min-width: 85px; }
         
         .mes-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f2f2f7; font-size: 0.9rem; }
         .badge-pro { padding: 5px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 900; }
@@ -91,21 +62,19 @@
 
 <div id="tela-login" class="glass-card">
     <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
-    <h2 style="margin: 0 0 10px 0;">Olá Casal 💍</h2>
-    <input type="password" id="senha-input" placeholder="Senha" style="text-align: center; width: 100%;">
-    <button id="btn-entrar" class="btn-action" style="background: #1c1c1e; color: white; width: 100%; margin-top: 20px;">Entrar</button>
+    <h2>Olá Casal! 💍</h2>
+    <input type="password" id="senha-input" placeholder="Senha">
+    <button id="btn-entrar" class="btn-action" style="background: #1c1c1e; color: white; width: 100%; margin-top: 20px;">Digite a senha de acesso</button>
 </div>
 
 <div id="conteudo-app">
     <div class="glass-card" style="position:relative">
         <button class="btn-logout" id="btn-sair">🔒</button>
-        <img src="foto.jpg?v=22" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
-        
+        <img src="foto.jpg?v=25" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
         <h2 style="margin: 5px 0 0 0; font-weight: 800;">Nossos Sonhos 🏡🚘</h2>
         <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;"><small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small></div>
-        
         <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
-
+        
         <div class="stats-grid">
             <div class="stat-card"><span id="total-geral">R$ 0,00</span><small>Saldo Geral</small></div>
             <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
@@ -135,11 +104,11 @@
                 <div class="user-pill"><b>Saiane</b><span id="ret-saiane" style="color:var(--danger); font-weight:700">R$ 0</span></div>
             </div>
             <div id="soma-retirada" style="text-align:center; font-weight:800; margin-top:15px; font-size:0.95rem; color: var(--danger);"></div>
-            <p style="font-size:0.65rem; color:var(--danger); text-align:center; margin-top:5px; font-weight:700;">⚠️ Valor total a repor ao cofre</p>
+            <p style="font-size:0.65rem; color:var(--danger); text-align:center; margin-top:5px; font-weight:700;">⚠️ valor total a repor ao cofre</p>
         </div>
 
         <div class="info-box" style="border: 1.5px solid #1c1c1e;">
-            <span class="section-title">📊 Progressão Mensal - Meta R$600,00</span>
+            <span class="section-title">📊 Progressão Mensal - Meta R$ 600,00</span>
             <div id="lista-meses"></div>
         </div>
 
@@ -152,7 +121,6 @@
             <input type="text" id="motivo-retirada" placeholder="Qual o motivo?" style="display:none; border: 2px solid var(--warning);">
             <button id="btn-registrar" class="btn-action">Registrar Agora</button>
         </div>
-
         <div id="lista"></div>
     </div>
 </div>
@@ -161,16 +129,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    const firebaseConfig = { 
-        apiKey: "AIzaSyCrorkszGFAUTTN2ZnV8nJ5rpNvFG9d1ow", 
-        authDomain: "cofrinho-47422.firebaseapp.com", 
-        databaseURL: "https://cofrinho-47422-default-rtdb.firebaseio.com", 
-        projectId: "cofrinho-47422", 
-        storageBucket: "cofrinho-47422.firebasestorage.app", 
-        messagingSenderId: "995544707412", 
-        appId: "1:995544707412:web:6a1b1410a24b456de5d8c1" 
-    };
-
+    const firebaseConfig = { apiKey: "AIzaSyCrorkszGFAUTTN2ZnV8nJ5rpNvFG9d1ow", authDomain: "cofrinho-47422.firebaseapp.com", databaseURL: "https://cofrinho-47422-default-rtdb.firebaseio.com", projectId: "cofrinho-47422", storageBucket: "cofrinho-47422.firebasestorage.app", messagingSenderId: "995544707412", appId: "1:995544707412:web:6a1b1410a24b456de5d8c1" };
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const dbRef = ref(db, 'movimentacoes');
@@ -179,19 +138,17 @@
 
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_v22', 'true');
+            localStorage.setItem('auth_pro_v25', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
+    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v25'); location.reload(); };
 
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v22'); location.reload(); };
-
-    if(localStorage.getItem('auth_pro_v22') === 'true') {
+    if(localStorage.getItem('auth_pro_v25') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
-
         const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle'), btnR = document.getElementById('btn-registrar');
-
+        
         btnS.onclick = () => {
             sinalPositivo = !sinalPositivo;
             btnS.innerText = sinalPositivo ? "+" : "-";
@@ -202,8 +159,8 @@
         btnR.onclick = () => {
             let v = parseFloat(valI.value);
             if (!v || v <= 0) return alert("Insira um valor.");
-            if (!sinalPositivo) v = -Math.abs(v);
-            if (v < 0 && !motI.value.trim()) return alert("Descreva o motivo.");
+            if (!sinalPositivo) v = -v;
+            if (v < 0 && !motI.value.trim()) return alert("O motivo é obrigatório.");
             btnR.disabled = true; btnR.innerText = "Salvando...";
             const agora = new Date();
             push(dbRef, { quem: document.getElementById('quem').value, valor: v, motivo: v < 0 ? motI.value : "", data: agora.toLocaleDateString('pt-BR'), ts: Date.now(), mes: agora.getMonth(), ano: agora.getFullYear() }).then(() => {
@@ -213,8 +170,9 @@
 
         onValue(dbRef, (snap) => {
             const dados = snap.val();
-            let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, meses = {};
+            let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
             const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
+            const hoje = new Date(); const mAtual = hoje.getMonth(), aAtual = hoje.getFullYear();
 
             if (dados) {
                 const itens = Object.entries(dados).sort((a,b) => b[1].ts - a[1].ts);
@@ -222,9 +180,10 @@
                     saldoG += m.valor;
                     if (m.valor > 0) { m.quem === "Talison" ? depT += m.valor : depS += m.valor; }
                     else { m.quem === "Talison" ? retT += Math.abs(m.valor) : retS += Math.abs(m.valor); }
-                    const idMes = `${m.mes}-${m.ano}`;
-                    if (!meses[idMes]) meses[idMes] = { val: 0, m: m.mes, a: m.ano };
-                    meses[idMes].val += m.valor;
+                    
+                    const idMes = `${m.mes}-${m.ano || aAtual}`;
+                    if (!mesesMap[idMes]) mesesMap[idMes] = { val: 0, m: m.mes, a: m.ano || aAtual };
+                    mesesMap[idMes].val += m.valor;
                     
                     const div = document.createElement('div');
                     div.className = 'item'; div.style.borderLeftColor = m.valor > 0 ? 'var(--primary)' : 'var(--danger)';
@@ -232,17 +191,16 @@
                     
                     div.innerHTML = `
                         <div class="item-content">
-                            <b>${m.quem}</b>
-                            <small>${m.data}${descFinal ? ' • ' + descFinal : ''}</small>
+                            <span class="item-name">${m.quem}</span>
+                            <span class="item-desc">${m.data}${descFinal ? ' • ' + descFinal : ''}</span>
                         </div>
                         <div class="item-val" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">
                             ${fmt(m.valor)}
                         </div>`;
-                    div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
+                    div.onclick = () => { if(confirm("Apagar registro permanentemente?")) remove(ref(db, `movimentacoes/${key}`)); };
                     listaEl.appendChild(div);
                 });
             }
-
             document.getElementById('total-geral').innerText = fmt(saldoG);
             document.getElementById('barra').style.width = Math.min((saldoG / 8000) * 100, 100) + "%";
             document.getElementById('dep-so-talison').innerText = fmt(depT);
@@ -252,7 +210,7 @@
             document.getElementById('liq-saiane').innerText = fmt(depS - retS);
             document.getElementById('ret-talison').innerText = fmt(retT);
             document.getElementById('ret-saiane').innerText = fmt(retS);
-            document.getElementById('soma-retirada').innerText = `⚠️ TOTAL A REPOR: ${fmt(retT + retS)}`;
+            document.getElementById('soma-retirada').innerText = `TOTAL: ${fmt(retT + retS)}`;
             
             const totalDep = depT + depS;
             document.getElementById('perc-talison').innerText = totalDep ? ((depT/totalDep)*100).toFixed(1) + "%" : "0%";
@@ -268,11 +226,10 @@
 
             const listaMeses = document.getElementById('lista-meses'); listaMeses.innerHTML = "";
             const nomesM = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-            const hoje = new Date();
-            Object.values(meses).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
+            document.getElementById('total-mes').innerText = fmt(mesesMap[`${mAtual}-${aAtual}`] ? mesesMap[`${mAtual}-${aAtual}`].val : 0);
+            Object.values(mesesMap).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
                 const ok = d.val >= 600;
-                if(d.m === hoje.getMonth() && d.a === hoje.getFullYear()) document.getElementById('total-mes').innerText = fmt(d.val);
-                listaMeses.innerHTML += `<div class="mes-row"><span><b>${nomesM[d.m]}/${d.a}</b> <span class="badge-pro" style="background:${ok?'#e1f7e6':'#fff4e5'}; color:${ok?'#34c759':'#ff9500'}">${ok?'META OK':'FOCO'}</span></span><b>${fmt(d.val)}</b></div>`;
+                listaMeses.innerHTML += `<div class="mes-row"><span><b>${nomesM[d.m]} / ${d.a}</b> <span class="badge-pro" style="background:${ok?'#e1f7e6':'#fff4e5'}; color:${ok?'#34c759':'#ff9500'}">${ok?'META OK':'FOCO'}</span></span><b>${fmt(d.val)}</b></div>`;
             });
         });
     }
