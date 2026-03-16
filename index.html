@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=16">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=16">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=18">
+    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=18">
     <meta name="theme-color" content="#34c759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -62,12 +62,11 @@
         .user-pill b { font-size: 0.9rem; margin-bottom: 2px; }
         .status-tag { font-size: 0.7rem; font-weight: 800; margin-top: 5px; display: block; width: 100%; }
 
-        /* CONTROLES VOLTANDO AO PADRÃO AO LADO */
         .controls { background: #fff; padding: 20px; border-radius: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
         input, select, .btn-action { padding: 18px; border-radius: 18px; border: 1px solid #e5e5ea; font-size: 1rem; font-weight: 600; }
         
-        .input-group { display: flex; gap: 12px; align-items: center; }
-        .btn-toggle { width: 70px; height: 60px; border-radius: 18px; border: none; font-size: 1.6rem; color: white; cursor: pointer; transition: 0.3s; }
+        .input-group { display: flex; gap: 12px; align-items: center; width: 100%; }
+        .btn-toggle { min-width: 65px; height: 60px; border-radius: 18px; border: none; font-size: 1.6rem; color: white; cursor: pointer; transition: 0.3s; }
 
         #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 12px 24px rgba(52, 199, 89, 0.3); width: 100%; }
 
@@ -91,7 +90,7 @@
 <div id="conteudo-app">
     <div class="glass-card" style="position:relative">
         <button class="btn-logout" id="btn-sair">🔒</button>
-        <img src="foto.jpg?v=16" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+        <img src="foto.jpg?v=18" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
         
         <h2 style="margin: 5px 0 0 0; font-weight: 800;">Nossos Sonhos 🏡🚘</h2>
         <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;"><small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small></div>
@@ -113,7 +112,7 @@
         </div>
 
         <div class="info-box" style="border: 2px solid var(--warning); background: #fffdf0;">
-            <span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span>
+            <span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual Líquido</span>
             <div class="row-casal">
                 <div class="user-pill"><b>Talison</b><span id="liq-talison" style="font-weight:700">R$ 0</span><span class="status-tag" id="tag-talison">---</span></div>
                 <div class="user-pill"><b>Saiane</b><span id="liq-saiane" style="font-weight:700">R$ 0</span><span class="status-tag" id="tag-saiane">---</span></div>
@@ -171,14 +170,14 @@
 
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_final_v16', 'true');
+            localStorage.setItem('auth_pro_final_v18', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
 
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_final_v16'); location.reload(); };
+    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_final_v18'); location.reload(); };
 
-    if(localStorage.getItem('auth_pro_final_v16') === 'true') {
+    if(localStorage.getItem('auth_pro_final_v18') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
 
@@ -195,7 +194,7 @@
             let v = parseFloat(valI.value);
             if (!v || v <= 0) return alert("Insira um valor.");
             if (!sinalPositivo) v = -Math.abs(v);
-            if (v < 0 && !motI.value.trim()) return alert("Motivo obrigatório.");
+            if (v < 0 && !motI.value.trim()) return alert("Descreva o motivo.");
             btnR.disabled = true; btnR.innerText = "Salvando...";
             const agora = new Date();
             push(dbRef, { quem: document.getElementById('quem').value, valor: v, motivo: v < 0 ? motI.value : "", data: agora.toLocaleDateString('pt-BR'), ts: Date.now(), mes: agora.getMonth(), ano: agora.getFullYear() }).then(() => {
@@ -217,9 +216,14 @@
                     const idMes = `${m.mes}-${m.ano}`;
                     if (!meses[idMes]) meses[idMes] = { val: 0, m: m.mes, a: m.ano };
                     meses[idMes].val += m.valor;
+                    
                     const div = document.createElement('div');
                     div.className = 'item'; div.style.borderLeftColor = m.valor > 0 ? 'var(--primary)' : 'var(--danger)';
-                    div.innerHTML = `<div class="item-info"><b>${m.quem}</b><small>${m.data} ${m.motivo ? '• '+m.motivo : ''}</small></div><div class="item-val" style="color: ${m.valor>0?'var(--primary)':'var(--danger)'}">${fmt(m.valor)}</div>`;
+                    
+                    // AQUI ADICIONAMOS O ⚠️ CASO SEJA RETIRADA NA LISTA
+                    const textoMotivo = (m.valor < 0) ? `⚠️ ${m.motivo}` : m.motivo;
+                    
+                    div.innerHTML = `<div class="item-info"><b>${m.quem}</b><small>${m.data} ${textoMotivo ? '• '+textoMotivo : ''}</small></div><div class="item-val" style="color: ${m.valor>0?'var(--primary)':'var(--danger)'}">${fmt(m.valor)}</div>`;
                     div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
                     listaEl.appendChild(div);
                 });
@@ -234,7 +238,7 @@
             document.getElementById('liq-saiane').innerText = fmt(depS - retS);
             document.getElementById('ret-talison').innerText = fmt(retT);
             document.getElementById('ret-saiane').innerText = fmt(retS);
-            document.getElementById('soma-retirada').innerText = `TOTAL A REPOR: ${fmt(retT + retS)}`;
+            document.getElementById('soma-retirada').innerText = `⚠️ TOTAL A REPOR: ${fmt(retT + retS)}`;
             
             const totalDep = depT + depS;
             document.getElementById('perc-talison').innerText = totalDep ? ((depT/totalDep)*100).toFixed(1) + "%" : "0%";
