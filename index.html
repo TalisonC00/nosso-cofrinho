@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=26">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=26">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=27">
+    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=27">
     <meta name="theme-color" content="#34c759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,7 +19,7 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 15px; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
         
-        .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.1); padding: 30px 25px; width: 100%; max-width: 450px; text-align: center; }
+        .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.1); padding: 30px 25px; width: 100%; max-width: 450px; text-align: center; position: relative; }
         #conteudo-app { display: none; width: 100%; max-width: 450px; animation: slideUp 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
         @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -45,32 +45,20 @@
         input, select, .btn-action { padding: 18px; border-radius: 18px; border: 1px solid #e5e5ea; font-size: 1rem; font-weight: 600; }
         .input-group { display: flex; gap: 12px; align-items: center; width: 100%; }
         .btn-toggle { min-width: 65px; height: 60px; border-radius: 18px; border: none; font-size: 1.6rem; color: white; cursor: pointer; }
-        #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 12px 24px rgba(52, 199, 89, 0.3); width: 100%; }
+        #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 12px 24px rgba(52, 199, 89, 0.3); width: 100%; cursor: pointer; }
         
-        /* LISTA BLINDADA - MODO GRID */
+        /* DESIGN DA LISTA IGUAL AO ANTIGO */
         #lista { margin-top: 25px; max-height: 400px; overflow-y: auto; }
         .item { 
-            background: #fff; padding: 15px 18px; border-radius: 20px; 
-            margin-bottom: 12px; display: grid; 
-            grid-template-columns: 1fr auto; /* Coluna 1: Conteúdo, Coluna 2: Valor */
-            grid-template-rows: auto auto; /* Linha 1: Nome, Linha 2: Descrição */
-            align-items: center; border-left: 6px solid #ccc; cursor: pointer; 
+            background: transparent; padding: 10px 5px; margin-bottom: 15px; 
+            display: flex; flex-direction: column; align-items: flex-start;
+            border-left: 5px solid #ccc; border-radius: 5px 0 0 5px; cursor: pointer; 
         }
-        .item-name { 
-            grid-column: 1; grid-row: 1;
-            font-size: 1rem; font-weight: 800; color: #1c1c1e; text-align: left;
-        }
-        .item-desc { 
-            grid-column: 1; grid-row: 2;
-            color: #8e8e93; font-size: 0.82rem; line-height: 1.3; 
-            text-align: left; margin-top: 3px;
-        }
-        .item-val { 
-            grid-column: 2; grid-row: 1 / span 2; /* Ocupa as duas linhas à direita */
-            font-weight: 800; font-size: 1rem; white-space: nowrap; 
-            text-align: right; margin-left: 10px;
-        }
-        
+        .item-row-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .item-row-top b { font-size: 1.1rem; color: #1c1c1e; padding-left: 10px; }
+        .item-val { font-weight: 800; font-size: 1.1rem; }
+        .item-desc { padding-left: 10px; color: #555; font-size: 0.9rem; margin-top: 2px; text-align: left; }
+
         .mes-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f2f2f7; font-size: 0.9rem; }
         .badge-pro { padding: 5px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 900; }
     </style>
@@ -85,9 +73,9 @@
 </div>
 
 <div id="conteudo-app">
-    <div class="glass-card" style="position:relative">
+    <div class="glass-card">
         <button class="btn-logout" id="btn-sair">🔒</button>
-        <img src="foto.jpg?v=26" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+        <img src="foto.jpg?v=27" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
         <h2 style="margin: 5px 0 0 0; font-weight: 800;">Nossos Sonhos 🏡🚘</h2>
         <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;"><small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small></div>
         <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
@@ -121,7 +109,7 @@
                 <div class="user-pill"><b>Saiane</b><span id="ret-saiane" style="color:var(--danger); font-weight:700">R$ 0</span></div>
             </div>
             <div id="soma-retirada" style="text-align:center; font-weight:800; margin-top:15px; font-size:0.95rem; color: var(--danger);"></div>
-            <p style="font-size:0.65rem; color:var(--danger); text-align:center; margin-top:5px; font-weight:700;">⚠️ Valor total para repor ao cofre</p>
+            <p style="font-size:0.65rem; color:var(--danger); text-align:center; margin-top:5px; font-weight:700;">⚠️ Valor total a repor ao cofre</p>
         </div>
 
         <div class="info-box" style="border: 1.5px solid #1c1c1e;">
@@ -155,13 +143,13 @@
 
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_v26', 'true');
+            localStorage.setItem('auth_pro_v27', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v26'); location.reload(); };
+    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v27'); location.reload(); };
 
-    if(localStorage.getItem('auth_pro_v26') === 'true') {
+    if(localStorage.getItem('auth_pro_v27') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
         const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle'), btnR = document.getElementById('btn-registrar');
@@ -204,14 +192,15 @@
                     
                     const div = document.createElement('div');
                     div.className = 'item'; div.style.borderLeftColor = m.valor > 0 ? 'var(--primary)' : 'var(--danger)';
-                    const descFinal = (m.valor < 0) ? `⚠️ ${m.motivo}` : m.motivo;
+                    const descFinal = (m.valor < 0) ? `⚠️ ${m.motivo}` : '';
                     
                     div.innerHTML = `
-                        <span class="item-name">${m.quem}</span>
-                        <span class="item-desc">${m.data}${descFinal ? ' • ' + descFinal : ''}</span>
-                        <div class="item-val" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">
-                            ${fmt(m.valor)}
-                        </div>`;
+                        <div class="item-row-top">
+                            <b>${m.quem}</b>
+                            <span class="item-val" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">${fmt(m.valor)}</span>
+                        </div>
+                        <div class="item-desc">${m.data} ${descFinal}</div>`;
+                    
                     div.onclick = () => { if(confirm("Apagar registro permanentemente?")) remove(ref(db, `movimentacoes/${key}`)); };
                     listaEl.appendChild(div);
                 });
