@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=18">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=18">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=19">
+    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=19">
     <meta name="theme-color" content="#34c759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -70,10 +70,13 @@
 
         #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 12px 24px rgba(52, 199, 89, 0.3); width: 100%; }
 
+        /* LISTA CORRIGIDA */
         #lista { margin-top: 25px; max-height: 350px; overflow-y: auto; }
         .item { background: #fff; padding: 15px 20px; border-radius: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 6px solid #ccc; cursor: pointer; }
-        .item-info { flex: 1; padding-right: 10px; text-align: left; }
-        .item-val { white-space: nowrap; font-weight: 800; font-size: 0.95rem; }
+        .item-info { flex: 1; text-align: left; display: flex; flex-direction: column; gap: 2px; }
+        .item-info b { font-size: 0.95rem; }
+        .item-info small { color: #8e8e93; font-size: 0.8rem; line-height: 1.2; display: block; }
+        .item-val { white-space: nowrap; font-weight: 800; font-size: 1rem; margin-left: 10px; }
         
         .mes-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f2f2f7; font-size: 0.9rem; }
     </style>
@@ -90,7 +93,7 @@
 <div id="conteudo-app">
     <div class="glass-card" style="position:relative">
         <button class="btn-logout" id="btn-sair">🔒</button>
-        <img src="foto.jpg?v=18" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+        <img src="foto.jpg?v=19" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
         
         <h2 style="margin: 5px 0 0 0; font-weight: 800;">Nossos Sonhos 🏡🚘</h2>
         <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;"><small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small></div>
@@ -170,14 +173,14 @@
 
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_final_v18', 'true');
+            localStorage.setItem('auth_pro_final_v19', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
 
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_final_v18'); location.reload(); };
+    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_final_v19'); location.reload(); };
 
-    if(localStorage.getItem('auth_pro_final_v18') === 'true') {
+    if(localStorage.getItem('auth_pro_final_v19') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
 
@@ -220,10 +223,16 @@
                     const div = document.createElement('div');
                     div.className = 'item'; div.style.borderLeftColor = m.valor > 0 ? 'var(--primary)' : 'var(--danger)';
                     
-                    // AQUI ADICIONAMOS O ⚠️ CASO SEJA RETIRADA NA LISTA
-                    const textoMotivo = (m.valor < 0) ? `⚠️ ${m.motivo}` : m.motivo;
+                    const descFinal = (m.valor < 0) ? `⚠️ ${m.motivo}` : m.motivo;
                     
-                    div.innerHTML = `<div class="item-info"><b>${m.quem}</b><small>${m.data} ${textoMotivo ? '• '+textoMotivo : ''}</small></div><div class="item-val" style="color: ${m.valor>0?'var(--primary)':'var(--danger)'}">${fmt(m.valor)}</div>`;
+                    div.innerHTML = `
+                        <div class="item-info">
+                            <b>${m.quem}</b>
+                            <small>${m.data}${descFinal ? ' • ' + descFinal : ''}</small>
+                        </div>
+                        <div class="item-val" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">
+                            ${fmt(m.valor)}
+                        </div>`;
                     div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
                     listaEl.appendChild(div);
                 });
