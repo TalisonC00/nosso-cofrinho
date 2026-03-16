@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=14">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=14">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=15">
+    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=15">
     <meta name="theme-color" content="#34c759">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <style>
@@ -51,18 +51,27 @@
 
         /* CARDS DE SALDO COM BORDA PRETA */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: #fff; padding: 20px; border-radius: 25px; border: 1px solid #1c1c1e; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
-        .stat-card span { font-weight: 800; font-size: 1.2rem; display: block; color: #1c1c1e; }
-        .stat-card small { color: #8e8e93; font-weight: 600; text-transform: uppercase; font-size: 0.65rem; }
+        .stat-card { 
+            background: #fff; padding: 20px; border-radius: 25px; 
+            border: 1.5px solid #1c1c1e; /* Borda preta definida */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02); 
+        }
+        .stat-card span { font-weight: 800; font-size: 1.1rem; display: block; color: #1c1c1e; }
+        .stat-card small { color: #8e8e93; font-weight: 600; text-transform: uppercase; font-size: 0.6rem; letter-spacing: 0.5px; }
 
         .info-box { background: #fff; border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.05); text-align: left; }
         .section-title { font-size: 0.7rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 15px; display: block; text-align: center; }
 
         .row-casal { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .user-pill { background: #f9f9fb; padding: 15px; border-radius: 20px; text-align: center; border: 1px solid #f2f2f7; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .user-pill b { font-size: 0.9rem; }
+        .user-pill { 
+            background: #f9f9fb; padding: 15px; border-radius: 20px; 
+            text-align: center; border: 1px solid #f2f2f7; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .user-pill b { font-size: 0.9rem; margin-bottom: 2px; }
 
-        .status-tag { font-size: 0.75rem; font-weight: 800; margin-top: 4px; display: block; }
+        /* Status em baixo do valor */
+        .status-tag { font-size: 0.7rem; font-weight: 800; margin-top: 5px; display: block; width: 100%; }
 
         .controls { background: #fff; padding: 20px; border-radius: 30px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
         input, select, .btn-action { padding: 18px; border-radius: 18px; border: 1px solid #e5e5ea; font-size: 1rem; font-weight: 600; }
@@ -86,16 +95,22 @@
 <div id="conteudo-app">
     <div class="glass-card" style="position:relative">
         <button class="btn-logout" id="btn-sair">🔒</button>
-        <img src="foto.jpg?v=14" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+        <img src="foto.jpg?v=15" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
         
-        <h2 style="margin: 5px 0 0 0; font-weight: 800;">Nossos Sonhos 🚘🏡</h2>
+        <h2 style="margin: 5px 0 0 0; font-weight: 800;">Nosso Sonho</h2>
         <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;"><small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small></div>
         
         <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
 
         <div class="stats-grid">
-            <div class="stat-card"><span id="total-geral">R$ 0,00</span><small>Saldo Geral</small></div>
-            <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
+            <div class="stat-card">
+                <span id="total-geral">R$ 0,00</span>
+                <small>Saldo Geral</small>
+            </div>
+            <div class="stat-card">
+                <span id="total-mes" style="color: var(--secondary);">R$ 0,00</span>
+                <small>Saldo Mês</small>
+            </div>
         </div>
 
         <div class="info-box" style="border: 2px solid var(--primary); background: #f0f9f2;">
@@ -133,7 +148,7 @@
             <p style="font-size:0.65rem; color:var(--danger); text-align:center; margin-top:5px; font-weight:700;">⚠️ VALOR TOTAL A REPOR AO COFRE</p>
         </div>
 
-        <div class="info-box" style="border: 1px solid #d1d1d6;">
+        <div class="info-box" style="border: 1.5px solid #1c1c1e;">
             <span class="section-title">📊 Progressão Mensal (Meta R$ 600,00)</span>
             <div id="lista-meses"></div>
         </div>
@@ -156,7 +171,16 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    const firebaseConfig = { apiKey: "AIzaSyCrorkszGFAUTTN2ZnV8nJ5rpNvFG9d1ow", authDomain: "cofrinho-47422.firebaseapp.com", databaseURL: "https://cofrinho-47422-default-rtdb.firebaseio.com", projectId: "cofrinho-47422", storageBucket: "cofrinho-47422.firebasestorage.app", messagingSenderId: "995544707412", appId: "1:995544707412:web:6a1b1410a24b456de5d8c1" };
+    const firebaseConfig = { 
+        apiKey: "AIzaSyCrorkszGFAUTTN2ZnV8nJ5rpNvFG9d1ow", 
+        authDomain: "cofrinho-47422.firebaseapp.com", 
+        databaseURL: "https://cofrinho-47422-default-rtdb.firebaseio.com", 
+        projectId: "cofrinho-47422", 
+        storageBucket: "cofrinho-47422.firebasestorage.app", 
+        messagingSenderId: "995544707412", 
+        appId: "1:995544707412:web:6a1b1410a24b456de5d8c1" 
+    };
+
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const dbRef = ref(db, 'movimentacoes');
@@ -165,14 +189,14 @@
 
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_final_v1', 'true');
+            localStorage.setItem('auth_pro_final_v15', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
 
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_final_v1'); location.reload(); };
+    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_final_v15'); location.reload(); };
 
-    if(localStorage.getItem('auth_pro_final_v1') === 'true') {
+    if(localStorage.getItem('auth_pro_final_v15') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
 
