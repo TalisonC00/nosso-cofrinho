@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=27">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=27">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=28">
+    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=28">
     <meta name="theme-color" content="#34c759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -45,19 +45,25 @@
         input, select, .btn-action { padding: 18px; border-radius: 18px; border: 1px solid #e5e5ea; font-size: 1rem; font-weight: 600; }
         .input-group { display: flex; gap: 12px; align-items: center; width: 100%; }
         .btn-toggle { min-width: 65px; height: 60px; border-radius: 18px; border: none; font-size: 1.6rem; color: white; cursor: pointer; }
-        #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 12px 24px rgba(52, 199, 89, 0.3); width: 100%; cursor: pointer; }
+        #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 12px 24px rgba(52, 199, 89, 0.3); width: 100%; }
         
-        /* DESIGN DA LISTA IGUAL AO ANTIGO */
+        /* LISTA TOTALMENTE REFEITA PARA NÃO QUEBRAR ERRADO */
         #lista { margin-top: 25px; max-height: 400px; overflow-y: auto; }
         .item { 
-            background: transparent; padding: 10px 5px; margin-bottom: 15px; 
-            display: flex; flex-direction: column; align-items: flex-start;
-            border-left: 5px solid #ccc; border-radius: 5px 0 0 5px; cursor: pointer; 
+            padding: 12px 5px; margin-bottom: 10px; 
+            border-left: 5px solid #ccc; border-radius: 4px;
+            cursor: pointer; display: block !important; width: 100%;
         }
-        .item-row-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
-        .item-row-top b { font-size: 1.1rem; color: #1c1c1e; padding-left: 10px; }
-        .item-val { font-weight: 800; font-size: 1.1rem; }
-        .item-desc { padding-left: 10px; color: #555; font-size: 0.9rem; margin-top: 2px; text-align: left; }
+        .item-topo { 
+            display: flex; justify-content: space-between; align-items: center; 
+            width: 100%; margin-bottom: 2px;
+        }
+        .item-topo b { font-size: 1.05rem; color: #1c1c1e; padding-left: 8px; }
+        .item-val { font-weight: 800; font-size: 1.05rem; }
+        .item-baixo { 
+            display: block; width: 100%; text-align: left; 
+            padding-left: 8px; color: #8e8e93; font-size: 0.88rem; 
+        }
 
         .mes-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f2f2f7; font-size: 0.9rem; }
         .badge-pro { padding: 5px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 900; }
@@ -67,15 +73,15 @@
 
 <div id="tela-login" class="glass-card">
     <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
-    <h2>Olá Casal💍</h2>
+    <h2>Olá Casal! 💍</h2>
     <input type="password" id="senha-input" placeholder="Senha">
-    <button id="btn-entrar" class="btn-action" style="background: #1c1c1e; color: white; width: 100%; margin-top: 20px;">Digite a senha de acesso</button>
+    <button id="btn-entrar" class="btn-action" style="background: #1c1c1e; color: white; width: 100%; margin-top: 20px;">Digite a senha para acesso</button>
 </div>
 
 <div id="conteudo-app">
     <div class="glass-card">
         <button class="btn-logout" id="btn-sair">🔒</button>
-        <img src="foto.jpg?v=27" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+        <img src="foto.jpg?v=28" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
         <h2 style="margin: 5px 0 0 0; font-weight: 800;">Nossos Sonhos 🏡🚘</h2>
         <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;"><small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small></div>
         <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
@@ -113,7 +119,7 @@
         </div>
 
         <div class="info-box" style="border: 1.5px solid #1c1c1e;">
-            <span class="section-title">📊 Progressão Mensal - Meta R$ 600,00</span>
+            <span class="section-title">📊 Progressão Mensal - Meta R$600,00</span>
             <div id="lista-meses"></div>
         </div>
 
@@ -138,18 +144,18 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const dbRef = ref(db, 'movimentacoes');
-    let sinalPositivo = true;
     const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    let sinalPositivo = true;
 
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_v27', 'true');
+            localStorage.setItem('auth_pro_v28', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v27'); location.reload(); };
+    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v28'); location.reload(); };
 
-    if(localStorage.getItem('auth_pro_v27') === 'true') {
+    if(localStorage.getItem('auth_pro_v28') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
         const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle'), btnR = document.getElementById('btn-registrar');
@@ -192,14 +198,14 @@
                     
                     const div = document.createElement('div');
                     div.className = 'item'; div.style.borderLeftColor = m.valor > 0 ? 'var(--primary)' : 'var(--danger)';
-                    const descFinal = (m.valor < 0) ? `⚠️ ${m.motivo}` : '';
+                    const icone = (m.valor < 0) ? `⚠️` : '';
                     
                     div.innerHTML = `
-                        <div class="item-row-top">
+                        <div class="item-topo">
                             <b>${m.quem}</b>
-                            <span class="item-val" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">${fmt(m.valor)}</span>
+                            <span class="item-val" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">${m.valor > 0 ? '' : '-'}${fmt(Math.abs(m.valor))}</span>
                         </div>
-                        <div class="item-desc">${m.data} ${descFinal}</div>`;
+                        <div class="item-baixo">${m.data} ${icone} ${m.motivo || ''}</div>`;
                     
                     div.onclick = () => { if(confirm("Apagar registro permanentemente?")) remove(ref(db, `movimentacoes/${key}`)); };
                     listaEl.appendChild(div);
