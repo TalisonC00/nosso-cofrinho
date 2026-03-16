@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="foto.jpg?v=3">
-    <link rel="icon" type="image/jpg" href="foto.jpg?v=3">
+    <link rel="apple-touch-icon" href="icon.jpg?v=4">
+    <link rel="icon" type="image/jpg" href="icon.jpg?v=4">
+    
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -23,11 +24,10 @@
         #conteudo-app { display: none; width: 100%; max-width: 480px; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* ESTILO DOS CARDS */
         .card { background: var(--card-bg); padding: 25px; border-radius: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: center; margin-bottom: 20px; position: relative; }
         .btn-logout { position: absolute; top: 20px; right: 20px; background: #f2f2f7; border: none; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; }
         
-        /* FOTO DE VOCÊS */
+        /* FOTO DE DENTRO DO APP (Perfil do Casal) */
         .logo-app { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 12px; object-fit: cover; border: 5px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         
         .barra-progresso { background: #e5e5ea; border-radius: 12px; height: 18px; width: 100%; margin: 15px 0; overflow: hidden; }
@@ -42,7 +42,6 @@
         .grid-casal { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .box-pessoal { background: white; padding: 12px; border-radius: 15px; text-align: center; border: 1px solid #f2f2f7; }
         
-        /* CAIXA DE SOMATÓRIA */
         .box-somatoria { grid-column: span 2; background: #fff; padding: 10px; border-radius: 15px; border: 1px dashed #ccc; margin-top: 5px; text-align: center; }
         .aviso-reposicao { grid-column: span 2; font-size: 0.65rem; color: var(--danger); text-align: center; font-weight: bold; margin-top: 8px; }
 
@@ -56,7 +55,6 @@
         .badge-sucesso { background: #e1f7e6; color: var(--primary); }
         .badge-pendente { background: #fff4e5; color: var(--warning); }
 
-        /* CONTROLES */
         .input-group { display: flex; gap: 10px; margin-bottom: 10px; }
         .btn-sinal { width: 60px; border-radius: 15px; border: none; font-size: 1.5rem; font-weight: bold; color: white; cursor: pointer; }
         .btn-pos { background: var(--primary); }
@@ -80,7 +78,7 @@
 <div id="conteudo-app">
     <div class="card">
         <button class="btn-logout" id="btn-sair">🚪</button>
-        <img src="foto.jpg?v=3" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+        <img src="foto.jpg?v=4" alt="Casal" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
         <h2>Nosso Sonho</h2>
         <small style="color: #8e8e93; font-weight: bold;">META: R$ 8.000,00</small>
         <div class="barra-progresso"><div class="progresso-interna" id="barra"></div></div>
@@ -93,62 +91,31 @@
         <div class="secao-info" style="border-color: var(--primary); background: #f0f9f2;">
             <p class="titulo-secao" style="color: var(--primary);">🏆 Depósitos Totais (Bruto)</p>
             <div class="grid-casal">
-                <div class="box-pessoal">
-                    <b>Talison</b>
-                    <span class="valor-info" id="dep-so-talison" style="color: var(--primary);">R$ 0</span>
-                    <span class="perc-label" id="perc-total-talison">0%</span>
-                </div>
-                <div class="box-pessoal">
-                    <b>Saiane</b>
-                    <span class="valor-info" id="dep-so-saiane" style="color: var(--primary);">R$ 0</span>
-                    <span class="perc-label" id="perc-total-saiane">0%</span>
-                </div>
-                <div class="box-somatoria">
-                    <small style="color:#666; font-weight: bold;">SOMA TOTAL INVESTIDA</small>
-                    <span class="valor-info" id="soma-bruta-total" style="color: var(--primary); font-size: 1.1rem;">R$ 0</span>
-                </div>
+                <div class="box-pessoal"><b>Talison</b><span class="valor-info" id="dep-so-talison" style="color: var(--primary);">R$ 0</span><span class="perc-label" id="perc-total-talison">0%</span></div>
+                <div class="box-pessoal"><b>Saiane</b><span class="valor-info" id="dep-so-saiane" style="color: var(--primary);">R$ 0</span><span class="perc-label" id="perc-total-saiane">0%</span></div>
+                <div class="box-somatoria"><small style="color:#666; font-weight: bold;">SOMA TOTAL INVESTIDA</small><span class="valor-info" id="soma-bruta-total" style="color: var(--primary); font-size: 1.1rem;">R$ 0</span></div>
             </div>
         </div>
 
         <div class="secao-info">
             <p class="titulo-secao">⚖️ Resumo Individual Líquido</p>
             <div class="grid-casal">
-                <div class="box-pessoal">
-                    <b>Talison</b>
-                    <span class="valor-info" id="liq-talison">R$ 0</span>
-                    <span class="status-tag" id="tag-talison">---</span>
-                </div>
-                <div class="box-pessoal">
-                    <b>Saiane</b>
-                    <span class="valor-info" id="liq-saiane">R$ 0</span>
-                    <span class="status-tag" id="tag-saiane">---</span>
-                </div>
+                <div class="box-pessoal"><b>Talison</b><span class="valor-info" id="liq-talison">R$ 0</span><span class="status-tag" id="tag-talison">---</span></div>
+                <div class="box-pessoal"><b>Saiane</b><span class="valor-info" id="liq-saiane">R$ 0</span><span class="status-tag" id="tag-saiane">---</span></div>
             </div>
         </div>
 
         <div class="secao-info" style="border-color: var(--danger); background: #fffafa;">
             <p class="titulo-secao" style="color: var(--danger);">💸 Total de Retiradas (Gastos)</p>
             <div class="grid-casal">
-                <div class="box-pessoal">
-                    <b>Talison</b>
-                    <span class="valor-info" id="ret-talison" style="color: var(--danger);">R$ 0</span>
-                </div>
-                <div class="box-pessoal">
-                    <b>Saiane</b>
-                    <span class="valor-info" id="ret-saiane" style="color: var(--danger);">R$ 0</span>
-                </div>
-                <div class="box-somatoria">
-                    <small style="color:#666; font-weight: bold;">SOMA TOTAL DE SAÍDAS</small>
-                    <span class="valor-info" id="soma-retirada-total" style="color: var(--danger); font-size: 1.1rem;">R$ 0</span>
-                </div>
+                <div class="box-pessoal"><b>Talison</b><span class="valor-info" id="ret-talison" style="color: var(--danger);">R$ 0</span></div>
+                <div class="box-pessoal"><b>Saiane</b><span class="valor-info" id="ret-saiane" style="color: var(--danger);">R$ 0</span></div>
+                <div class="box-somatoria"><small style="color:#666; font-weight: bold;">SOMA TOTAL DE SAÍDAS</small><span class="valor-info" id="soma-retirada-total" style="color: var(--danger); font-size: 1.1rem;">R$ 0</span></div>
                 <div class="aviso-reposicao">⚠️ Este é o valor total que precisa ser reposto ao cofrinho.</div>
             </div>
         </div>
 
-        <div class="secao-info">
-            <p class="titulo-secao">📊 Histórico Mensal (Meta R$ 600)</p>
-            <div id="lista-meses"></div>
-        </div>
+        <div class="secao-info"><p class="titulo-secao">📊 Histórico Mensal (Meta R$ 600)</p><div id="lista-meses"></div></div>
 
         <div class="controles">
             <select id="quem"><option value="Talison">Talison</option><option value="Saiane">Saiane</option></select>
@@ -171,40 +138,22 @@
     const app = initializeApp(firebaseConfig); const db = getDatabase(app); const movimentacoesRef = ref(db, 'movimentacoes');
     
     document.getElementById('btn-entrar').onclick = () => {
-        if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_cofrinho', 'true');
-            location.reload();
-        } else { alert("Senha incorreta!"); }
+        if(document.getElementById('senha-input').value === "0202") { localStorage.setItem('auth_cofrinho', 'true'); location.reload(); } else { alert("Senha incorreta!"); }
     };
     document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_cofrinho'); location.reload(); };
 
     if(localStorage.getItem('auth_cofrinho') === 'true') {
-        document.getElementById('tela-login').style.display = 'none';
-        document.getElementById('conteudo-app').style.display = 'block';
-        
+        document.getElementById('tela-login').style.display = 'none'; document.getElementById('conteudo-app').style.display = 'block';
         const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle');
         let sinalPositivo = true;
-
-        btnS.onclick = () => {
-            sinalPositivo = !sinalPositivo;
-            btnS.innerText = sinalPositivo ? "+" : "-";
-            btnS.className = sinalPositivo ? "btn-sinal btn-pos" : "btn-sinal btn-neg";
-            motI.style.display = sinalPositivo ? "none" : "block";
-        };
+        btnS.onclick = () => { sinalPositivo = !sinalPositivo; btnS.innerText = sinalPositivo ? "+" : "-"; btnS.className = sinalPositivo ? "btn-sinal btn-pos" : "btn-sinal btn-neg"; motI.style.display = sinalPositivo ? "none" : "block"; };
 
         document.getElementById('btn-registrar').onclick = () => {
-            let v = parseFloat(valI.value);
-            if (isNaN(v) || v <= 0) { alert("Valor inválido!"); return; }
-            if (!sinalPositivo) v = -Math.abs(v);
-            if (v < 0 && motI.value.trim() === "") { alert("Motivo obrigatório!"); return; }
+            let v = parseFloat(valI.value); if (isNaN(v) || v <= 0) { alert("Valor inválido!"); return; }
+            if (!sinalPositivo) v = -Math.abs(v); if (v < 0 && motI.value.trim() === "") { alert("Motivo obrigatório!"); return; }
             const agora = new Date();
-            push(movimentacoesRef, { 
-                quem: document.getElementById('quem').value, valor: v, 
-                motivo: v < 0 ? motI.value : "", data: agora.toLocaleDateString('pt-BR'), 
-                ts: Date.now(), mes: agora.getMonth(), ano: agora.getFullYear() 
-            }).then(() => { 
-                valI.value = ""; motI.value = ""; motI.style.display = 'none'; 
-                sinalPositivo = true; btnS.innerText = "+"; btnS.className = "btn-sinal btn-pos";
+            push(movimentacoesRef, { quem: document.getElementById('quem').value, valor: v, motivo: v < 0 ? motI.value : "", data: agora.toLocaleDateString('pt-BR'), ts: Date.now(), mes: agora.getMonth(), ano: agora.getFullYear() }).then(() => { 
+                valI.value = ""; motI.value = ""; motI.style.display = 'none'; sinalPositivo = true; btnS.innerText = "+"; btnS.className = "btn-sinal btn-pos";
             });
         };
 
@@ -213,48 +162,30 @@
             const dataHoje = new Date(); const mesHoje = dataHoje.getMonth(), anoHoje = dataHoje.getFullYear();
             let saldoGeral = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
             const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
-
             if(dados) {
                 Object.values(dados).sort((a,b) => b.ts - a.ts).forEach(m => {
-                    saldoGeral += m.valor;
-                    if(m.valor > 0) { if(m.quem === "Talison") depT += m.valor; else depS += m.valor; }
-                    else { if(m.quem === "Talison") retT += Math.abs(m.valor); else retS += Math.abs(m.valor); }
-                    const chaveM = `${m.mes}-${m.ano || anoHoje}`;
-                    if(!mesesMap[chaveM]) mesesMap[chaveM] = { totalLiq: 0, mesNomeIdx: m.mes, anoRef: m.ano || anoHoje };
+                    saldoGeral += m.valor; if(m.valor > 0) { if(m.quem === "Talison") depT += m.valor; else depS += m.valor; } else { if(m.quem === "Talison") retT += Math.abs(m.valor); else retS += Math.abs(m.valor); }
+                    const chaveM = `${m.mes}-${m.ano || anoHoje}`; if(!mesesMap[chaveM]) mesesMap[chaveM] = { totalLiq: 0, mesNomeIdx: m.mes, anoRef: m.ano || anoHoje };
                     mesesMap[chaveM].totalLiq += m.valor;
                     listaEl.innerHTML += `<div class="item-lista" style="border-left:5px solid ${m.valor>=0?'var(--primary)':'var(--danger)'}"><b>${m.quem}</b>: ${fmt(m.valor)}<br><small>${m.data} ${m.motivo?'⚠️ '+m.motivo:''}</small></div>`;
                 });
             }
-
             document.getElementById('total-geral').innerText = fmt(saldoGeral);
             document.getElementById('total-mes').innerText = fmt(mesesMap[`${mesHoje}-${anoHoje}`] ? mesesMap[`${mesHoje}-${anoHoje}`].totalLiq : 0);
             document.getElementById('barra').style.width = Math.min((saldoGeral/8000)*100, 100) + "%";
-            document.getElementById('dep-so-talison').innerText = fmt(depT);
-            document.getElementById('dep-so-saiane').innerText = fmt(depS);
+            document.getElementById('dep-so-talison').innerText = fmt(depT); document.getElementById('dep-so-saiane').innerText = fmt(depS);
             document.getElementById('soma-bruta-total').innerText = fmt(depT + depS);
-            document.getElementById('liq-talison').innerText = fmt(depT - retT);
-            document.getElementById('liq-saiane').innerText = fmt(depS - retS);
-            document.getElementById('ret-talison').innerText = fmt(retT);
-            document.getElementById('ret-saiane').innerText = fmt(retS);
+            document.getElementById('liq-talison').innerText = fmt(depT - retT); document.getElementById('liq-saiane').innerText = fmt(depS - retS);
+            document.getElementById('ret-talison').innerText = fmt(retT); document.getElementById('ret-saiane').innerText = fmt(retS);
             document.getElementById('soma-retirada-total').innerText = fmt(retT + retS);
-
             const totalD = depT + depS;
             document.getElementById('perc-total-talison').innerText = totalD > 0 ? ((depT/totalD)*100).toFixed(1) + "%" : "0%";
             document.getElementById('perc-total-saiane').innerText = totalD > 0 ? ((depS/totalD)*100).toFixed(1) + "%" : "0%";
-
-            const ajustarTag = (tag, val) => {
-                tag.innerText = val > 0 ? "Positivo" : (val === 0 ? "Zerado" : "Em Débito");
-                tag.style.color = val >= 0 ? "var(--primary)" : "var(--danger)";
-            };
-            ajustarTag(document.getElementById('tag-talison'), depT - retT);
-            ajustarTag(document.getElementById('tag-saiane'), depS - retS);
-
+            const ajustarTag = (tag, val) => { tag.innerText = val > 0 ? "Positivo" : (val === 0 ? "Zerado" : "Em Débito"); tag.style.color = val >= 0 ? "var(--primary)" : "var(--danger)"; };
+            ajustarTag(document.getElementById('tag-talison'), depT - retT); ajustarTag(document.getElementById('tag-saiane'), depS - retS);
             const metasEl = document.getElementById('lista-meses'); metasEl.innerHTML = "";
             const mNomes = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-            Object.keys(mesesMap).sort((a,b) => {
-                const [m1, a1] = a.split('-').map(Number); const [m2, a2] = b.split('-').map(Number);
-                return (a2 * 12 + m2) - (a1 * 12 + m1);
-            }).forEach(chave => {
+            Object.keys(mesesMap).sort((a,b) => { const [m1, a1] = a.split('-').map(Number); const [m2, a2] = b.split('-').map(Number); return (a2 * 12 + m2) - (a1 * 12 + m1); }).forEach(chave => {
                 const d = mesesMap[chave]; const ok = d.totalLiq >= 600;
                 metasEl.innerHTML += `<div class="mes-item"><div class="mes-header"><span><b>${mNomes[d.mesNomeIdx]} / ${d.anoRef}</b> <span class="badge ${ok?'badge-sucesso':'badge-pendente'}">${ok?'OK':'FOCO'}</span></span><b>${fmt(d.totalLiq)}</b></div></div>`;
             });
@@ -263,4 +194,3 @@
 </script>
 </body>
 </html>
-
