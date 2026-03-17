@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=32">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=32">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=33">
+    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=33">
     <meta name="theme-color" content="#34c759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -22,20 +22,17 @@
         
         .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); padding: 20px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
         
-        /* AJUSTE PARA O CONTEÚDO NÃO FICAR ATRÁS DO MENU INFERIOR */
-        #conteudo-app { display: none; padding-bottom: 90px; animation: fadeIn 0.4s ease; }
+        #conteudo-app { display: none; padding-bottom: 100px; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 📱 MENU DE ABAS INFERIOR FIXO */
         .tab-menu { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 25px; padding: 10px; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); position: fixed; bottom: 15px; left: 15px; right: 15px; z-index: 1000; width: calc(100% - 30px); margin: 0 auto; max-width: 420px; }
         .tab-btn { border: none; background: none; padding: 12px 18px; border-radius: 18px; font-weight: 700; color: #8e8e93; cursor: pointer; font-size: 0.8rem; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .tab-btn.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3); }
         .tab-btn i { font-style: normal; font-size: 1.3rem; }
 
-        /* SEÇÕES */
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { opacity: 1; transform: translateY(0); } }
 
         .logo-app { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 8px 15px rgba(0,0,0,0.1); margin-bottom: 10px; }
         .btn-logout { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 1rem; }
@@ -62,12 +59,13 @@
         .btn-toggle { min-width: 60px; height: 55px; border-radius: 15px; border: none; font-size: 1.5rem; color: white; cursor: pointer; }
         #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 8px 20px rgba(52, 199, 89, 0.3); margin-top: 10px; }
         
-        /* LISTA (MARTELO APLICADO) */
+        /* EXTRATO CORRIGIDO: Data - Nome | Valor */
         .item { background: #fff; padding: 15px; margin-bottom: 12px; border-left: 6px solid #ccc; border-radius: 15px; cursor: pointer; display: block !important; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .linha-topo { width: 100%; display: block; overflow: hidden; clear: both; margin-bottom: 5px; }
-        .nome-lista { float: left; font-weight: 800; font-size: 1.05rem; color: #1c1c1e; }
-        .valor-lista { float: right; font-weight: 800; font-size: 1.05rem; }
-        .linha-baixo { width: 100%; display: block; clear: both; text-align: left; color: #8e8e93; font-size: 0.85rem; }
+        .linha-topo { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .data-nome { font-weight: 700; font-size: 1rem; color: #1c1c1e; }
+        .data-nome span { color: #8e8e93; font-weight: 500; font-size: 0.85rem; margin-right: 5px; }
+        .valor-lista { font-weight: 800; font-size: 1.05rem; }
+        .linha-baixo { width: 100%; text-align: left; color: #444; font-size: 0.9rem; line-height: 1.4; display: block; border-top: 1px solid #f2f2f7; padding-top: 6px; }
 
         .mes-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f2f2f7; font-size: 0.9rem; }
         .badge-pro { padding: 5px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 900; }
@@ -86,8 +84,8 @@
     <div id="cofre" class="tab-content active">
         <div class="glass-card">
             <button class="btn-logout" id="btn-sair">🔒</button>
-            <img src="foto.jpg?v=32" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
-            <h2 style="margin: 0; font-weight: 800;">Nossos Sonhos 🏡🚘</h2>
+            <img src="foto.jpg?v=33" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+            <h2 style="margin: 0; font-weight: 800;">Nossos Sonhos 🏡🚗</h2>
             <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;">
                 <small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small>
             </div>
@@ -98,7 +96,7 @@
                 <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
             </div>
 
-            <div class="info-box" style="border-color: var(--primary);">
+            <div class="info-box" style="border: 2px solid var(--primary);">
                 <span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span>
                 <div class="row-casal">
                     <div class="user-pill"><b>Talison</b><br><span id="dep-so-talison" style="font-weight:700">R$ 0</span><div id="perc-talison" style="font-size:0.6rem; color:#999;">0%</div></div>
@@ -107,7 +105,7 @@
                 <div id="soma-bruta" style="text-align:center; font-weight:800; margin-top:15px; font-size:0.85rem; color: var(--primary);"></div>
             </div>
 
-            <div class="info-box" style="border-color: var(--warning);">
+            <div class="info-box" style="border: 2px solid var(--warning);">
                 <span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span>
                 <div class="row-casal">
                     <div class="user-pill"><b>Talison</b><br><span id="liq-talison" style="font-weight:700">R$ 0</span><br><span class="status-tag" id="tag-talison">---</span></div>
@@ -115,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="info-box" style="border-color: var(--danger);">
+            <div class="info-box" style="border: 2px solid var(--danger);">
                 <span class="section-title" style="color: var(--danger);">💸 Reposição Necessária</span>
                 <div id="soma-retirada" style="text-align:center; font-weight:800; font-size:1.1rem; color: var(--danger); margin-bottom:5px;">R$ 0,00</div>
                 <p style="font-size:0.6rem; color:var(--danger); text-align:center; margin:0; font-weight:700;">⚠️ Valor total a repor ao cofre</p>
@@ -132,7 +130,7 @@
                     <button id="btn-sinal-toggle" type="button" class="btn-toggle" style="background: var(--primary);">+</button>
                     <input type="number" id="valor-input" inputmode="decimal" placeholder="0,00">
                 </div>
-                <input type="text" id="motivo-retirada" placeholder="Qual o motivo da saída?" style="display:none; border-color: var(--warning);">
+                <input type="text" id="motivo-retirada" placeholder="Qual o motivo?" style="display:none; border: 2px solid var(--warning);">
                 <button id="btn-registrar" class="btn-action">Confirmar Registro</button>
             </div>
         </div>
@@ -140,7 +138,7 @@
 
     <div id="metas" class="tab-content">
         <div class="glass-card">
-            <span class="section-title">📊 Progressão Mensal - Meta R$600,00)</span>
+            <span class="section-title">📊 Progressão Mensal - Meta R$600,00</span>
             <div id="lista-meses"></div>
         </div>
     </div>
@@ -171,26 +169,23 @@
     const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     let sinalPositivo = true;
 
-    // Navegação de Abas
     window.openTab = function(tabName) {
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        
         document.getElementById(tabName).classList.add('active');
         document.querySelector('.' + tabName + '-btn').classList.add('active');
-        
-        window.scrollTo(0, 0); // Rola para o topo ao trocar de aba
+        window.scrollTo(0, 0);
     }
 
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_v32', 'true');
+            localStorage.setItem('auth_pro_v33', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v32'); location.reload(); };
+    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v33'); location.reload(); };
 
-    if(localStorage.getItem('auth_pro_v32') === 'true') {
+    if(localStorage.getItem('auth_pro_v33') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
         
@@ -212,7 +207,7 @@
             const agora = new Date();
             push(dbRef, { quem: document.getElementById('quem').value, valor: v, motivo: v < 0 ? motI.value : "", data: agora.toLocaleDateString('pt-BR'), ts: Date.now(), mes: agora.getMonth(), ano: agora.getFullYear() }).then(() => {
                 valI.value = ""; motI.value = ""; btnR.disabled = false; btnR.innerText = "Confirmar Registro";
-                openTab('extrato'); // Vai para o extrato após salvar
+                openTab('extrato');
             });
         };
 
@@ -237,16 +232,17 @@
                     div.className = 'item'; div.style.borderLeftColor = m.valor > 0 ? 'var(--primary)' : 'var(--danger)';
                     const icone = (m.valor < 0) ? `⚠️` : '';
                     
+                    // NOVO LAYOUT DO EXTRATO: Data - Nome | Valor
                     div.innerHTML = `
                         <div class="linha-topo">
-                            <span class="nome-lista">${m.quem}</span>
-                            <span class="valor-lista" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">
+                            <div class="data-nome"><span>${m.data}</span> ${m.quem}</div>
+                            <div class="valor-lista" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">
                                 ${m.valor < 0 ? '-' : ''}${fmt(Math.abs(m.valor))}
-                            </span>
+                            </div>
                         </div>
-                        <div class="linha-baixo">${m.data} ${icone} ${m.motivo || ''}</div>`;
+                        <div class="linha-baixo">${icone} ${m.motivo || 'Entrada de saldo'}</div>`;
                     
-                    div.onclick = () => { if(confirm("Apagar registro permanentemente?")) remove(ref(db, `movimentacoes/${key}`)); };
+                    div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
                     listaEl.appendChild(div);
                 });
             }
