@@ -1,8 +1,10 @@
 {
-  "name": "Cofrinho",
+  "name": "Cofrinho Talison Saiane",
   "short_name": "Cofrinho",
+  "description": "App de controle financeiro do casal",
   "start_url": "index.html",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#f2f2f7",
   "theme_color": "#34c759",
   "icons": [
@@ -13,4 +15,3 @@
     }
   ]
 }
-
