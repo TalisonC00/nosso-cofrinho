@@ -17,7 +17,6 @@
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        /* ESCALA AUMENTADA EM 1,1% SOBRE A V60 */
         body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 8.15px; min-height: 100vh; overflow-x: hidden; }
         
         .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 23px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); padding: 16.1px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
@@ -64,6 +63,8 @@
         .status-tag-premium { font-size: 0.6rem; font-weight: 800; padding: 3.5px 8.6px; border-radius: 7px; text-transform: uppercase; }
         .tag-pos { background: rgba(52, 199, 89, 0.12); color: #248a3d; border: 1px solid rgba(52, 199, 89, 0.2); }
         .tag-neg { background: rgba(255, 59, 48, 0.12); color: #d63027; border: 1px solid rgba(255, 59, 48, 0.2); }
+        .tag-warn { background: rgba(255, 149, 0, 0.12); color: #c27200; border: 1px solid rgba(255, 149, 0, 0.2); }
+        .tag-danger { background: rgba(255, 59, 48, 0.12); color: #ff3b30; border: 1px solid rgba(255, 59, 48, 0.2); }
 
         .item { background: #fff; padding: 14.1px; margin-bottom: 10.1px; border-left: 5px solid #ccc; border-radius: 15px; cursor: pointer; text-align: left; }
         .linha-topo { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8.1px; width: 100%; }
@@ -73,6 +74,12 @@
 
         .status-meta-novo { background: #f4f7ff; border-radius: 15px; padding: 12.1px; margin-bottom: 15.1px; border: 1px solid #eef2ff; display: flex; align-items: center; gap: 8.1px; }
         input, select { border: 1px solid #e5e5ea; background: #f9f9fb; font-weight: 600; padding: 14.1px; border-radius: 15px; width: 100%; font-size: 0.92rem; -webkit-appearance: none; }
+
+        /* Dashboard de Metas */
+        .dash-metas { display: flex; gap: 10px; margin-bottom: 20px; }
+        .dash-card { flex: 1; padding: 12px; border-radius: 15px; background: #fff; border: 1px solid #f2f2f7; text-align: center; }
+        .dash-card b { display: block; font-size: 1.2rem; }
+        .dash-card span { font-size: 0.55rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -136,7 +143,17 @@
         </div>
     </div>
 
-    <div id="metas" class="tab-content"><div class="glass-card"><h2>📊 Metas</h2><div id="lista-meses"></div></div></div>
+    <div id="metas" class="tab-content">
+        <div class="glass-card">
+            <h2>📊 Dashboard de Metas</h2>
+            <div class="dash-metas">
+                <div class="dash-card"><b id="count-ok" style="color: var(--primary);">0</b><span>Meses OK</span></div>
+                <div class="dash-card"><b id="count-fail" style="color: var(--danger);">0</b><span>Faltou Foco</span></div>
+            </div>
+            <div id="lista-meses"></div>
+        </div>
+    </div>
+
     <div id="extrato" class="tab-content"><div class="glass-card"><h2>📜 Extrato</h2><div id="lista"></div></div></div>
 
     <div class="tab-menu">
@@ -158,12 +175,10 @@
     const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     let globalMesesMap = {};
 
-    // REGISTRO DO SERVICE WORKER (Para download)
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').catch(() => {});
     }
 
-    // LOGIN
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
             localStorage.setItem('auth_cofrinho_v61', 'true');
@@ -177,16 +192,25 @@
     window.logout = () => { localStorage.removeItem('auth_cofrinho_v61'); location.reload(); };
 
     const inputMes = document.getElementById('mes-referencia');
-    inputMes.value = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
+    const hoje = new Date();
+    inputMes.value = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`;
 
     const atualizarIndicadorNovo = () => {
         const [ano, mes] = inputMes.value.split('-');
         const chave = `${parseInt(mes)-1}-${ano}`;
         const saldoMes = globalMesesMap[chave] ? globalMesesMap[chave].val : 0;
         document.getElementById('meta-acumulado').innerText = fmt(saldoMes);
+        
         const tag = document.getElementById('meta-status-tag');
-        if (saldoMes >= 600) { tag.innerText = "OK"; tag.className = "status-tag-premium tag-pos"; }
-        else { tag.innerText = "FOCO"; tag.className = "status-tag-premium tag-warn"; }
+        const isMêsAtual = (parseInt(mes)-1 === hoje.getMonth() && parseInt(ano) === hoje.getFullYear());
+
+        if (saldoMes >= 600) { 
+            tag.innerText = "✅ OK"; tag.className = "status-tag-premium tag-pos"; 
+        } else if (isMêsAtual) {
+            tag.innerText = "🎯 FOCO"; tag.className = "status-tag-premium tag-warn";
+        } else {
+            tag.innerText = "🔴 Faltou Foco"; tag.className = "status-tag-premium tag-danger";
+        }
     };
     inputMes.onchange = atualizarIndicadorNovo;
 
@@ -207,7 +231,7 @@
 
     btnR.onclick = () => {
         let v = parseFloat(valI.value);
-        if (!v || v <= 0) return alert("Insira um valor.");
+        if (isNaN(v)) return alert("Insira um valor.");
         if (btnS.innerText === "-") v = -v;
         const [anoSel, mesSel] = inputMes.value.split('-');
         btnR.disabled = true;
@@ -220,39 +244,58 @@
         const dados = snap.val();
         let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
         const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
+        
         if (dados) {
             Object.entries(dados).sort((a,b) => b[1].ts - a[1].ts).forEach(([key, m]) => {
                 const v = m.valor; saldoG += v;
-                if (v > 0) { m.quem === "Talison" ? depT += v : depS += v; }
+                if (v >= 0) { m.quem === "Talison" ? depT += v : depS += v; }
                 else { m.quem === "Talison" ? retT += Math.abs(v) : retS += Math.abs(v); }
                 const idMes = `${m.mes}-${m.ano}`;
                 if (!mesesMap[idMes]) mesesMap[idMes] = { val: 0, m: m.mes, a: m.ano };
                 mesesMap[idMes].val += v;
                 
                 const div = document.createElement('div');
-                div.className = 'item'; div.style.borderLeftColor = v > 0 ? 'var(--primary)' : 'var(--danger)';
-                div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt">${m.quem}</span><span class="valor-txt" style="color:${v>0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Investimento'}</div>`;
-                div.onclick = () => { if(confirm("Apagar?")) remove(ref(db, `movimentacoes/${key}`)); };
+                div.className = 'item'; div.style.borderLeftColor = v >= 0 ? 'var(--primary)' : 'var(--danger)';
+                div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt">${m.quem}</span><span class="valor-txt" style="color:${v>=0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
+                div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
                 listaEl.appendChild(div);
             });
         }
         globalMesesMap = mesesMap; atualizarIndicadorNovo();
+
         const prog = (saldoG / 8000) * 100;
         document.getElementById('barra').style.width = Math.min(prog, 100) + "%";
         document.getElementById('barra-porcentagem').innerText = `FALTAM ${(100-prog).toFixed(1)}% PARA A META`;
         document.getElementById('total-geral').innerText = fmt(saldoG);
-        document.getElementById('total-mes').innerText = fmt(mesesMap[`${new Date().getMonth()}-${new Date().getFullYear()}`]?.val || 0);
+        document.getElementById('total-mes').innerText = fmt(mesesMap[`${hoje.getMonth()}-${hoje.getFullYear()}`]?.val || 0);
         document.getElementById('soma-retirada').innerText = fmt(retT + retS);
+
         const totalDep = depT + depS;
-        document.getElementById('linhas-bruto').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(depT)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93;">${totalDep?((depT/totalDep)*100).toFixed(0):0}%</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(depS)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93;">${totalDep?((depS/totalDep)*100).toFixed(0):0}%</span></b></div>`;
+        document.getElementById('linhas-bruto').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(depT)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93; border:none;">${totalDep?((depT/totalDep)*100).toFixed(0):0}%</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(depS)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93; border:none;">${totalDep?((depS/totalDep)*100).toFixed(0):0}%</span></b></div>`;
         const lT = depT-retT, lS = depS-retS;
         document.getElementById('linhas-resumo').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(lT)} <span class="status-tag-premium ${lT>=0?'tag-pos':'tag-neg'}">${lT>=0?'POSITIVO':'DÉBITO'}</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(lS)} <span class="status-tag-premium ${lS>=0?'tag-pos':'tag-neg'}">${lS>=0?'POSITIVO':'DÉBITO'}</span></b></div>`;
+
         const listaMeses = document.getElementById('lista-meses'); listaMeses.innerHTML = "";
         const nomesM = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+        let okCount = 0, failCount = 0;
+
         Object.values(mesesMap).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
             const ok = d.val >= 600;
-            listaMeses.innerHTML += `<div class="mes-row" style="display:flex; justify-content:space-between; padding:11px 0; border-bottom:1px solid #f2f2f7;"><span><b>${nomesM[d.m]} / ${d.a}</b> <span class="status-tag-premium ${ok?'tag-pos':'tag-warn'}" style="margin-left:8px;">${ok?'OK ✅':'FOCO 🎯'}</span></span><b>${fmt(d.val)}</b></div>`;
+            const isAtual = (d.m === hoje.getMonth() && d.a === hoje.getFullYear());
+            
+            let tagClass = "tag-warn", tagLabel = "🎯 FOCO";
+            if (ok) { 
+                tagClass = "tag-pos"; tagLabel = "✅ OK"; 
+                okCount++;
+            } else if (!isAtual) {
+                tagClass = "tag-danger"; tagLabel = "🔴 Faltou Foco";
+                failCount++;
+            }
+
+            listaMeses.innerHTML += `<div class="mes-row" style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #f2f2f7;"><span><b>${nomesM[d.m]} / ${d.a}</b> <span class="status-tag-premium ${tagClass}" style="margin-left:8px;">${tagLabel}</span></span><b>${fmt(d.val)}</b></div>`;
         });
+        document.getElementById('count-ok').innerText = okCount;
+        document.getElementById('count-fail').innerText = failCount;
     });
 </script>
 </body>
