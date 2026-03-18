@@ -2,153 +2,134 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="apple-touch-icon" href="meu-icone-novo.jpg?v=33">
-    <link rel="icon" type="image/jpg" href="meu-icone-novo.jpg?v=33">
-    <meta name="theme-color" content="#34c759">
-    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="data:application/manifest+json,{'name':'Cofrinho','short_name':'Cofrinho','start_url':'.','display':'standalone','background_color':'#f2f2f7','theme_color':'#34c759','icons':[{'src':'meu-icone-novo.jpg','sizes':'192x192','type':'image/jpg'}]}">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cofrinho">
+    <link rel="apple-touch-icon" href="meu-icone-novo.jpg">
 
     <style>
         :root { 
             --primary: #34c759; --secondary: #007aff; --danger: #ff3b30; --warning: #ffcc00; 
-            --bg: #f2f2f7; --card-bg: rgba(255, 255, 255, 0.9); 
+            --bg: #f2f2f7; --card-bg: rgba(255, 255, 255, 0.98); 
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 10px; min-height: 100vh; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 8.06px; min-height: 100vh; overflow-x: hidden; }
         
-        .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); padding: 20px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
+        .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 23px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); padding: 15.9px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
         
-        #conteudo-app { display: none; padding-bottom: 100px; animation: fadeIn 0.4s ease; }
+        #conteudo-app { display: none; padding-bottom: calc(90px + env(safe-area-inset-bottom)); animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .tab-menu { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 25px; padding: 10px; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); position: fixed; bottom: 15px; left: 15px; right: 15px; z-index: 1000; width: calc(100% - 30px); margin: 0 auto; max-width: 420px; }
-        .tab-btn { border: none; background: none; padding: 12px 18px; border-radius: 18px; font-weight: 700; color: #8e8e93; cursor: pointer; font-size: 0.8rem; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .tab-btn.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3); }
-        .tab-btn i { font-style: normal; font-size: 1.3rem; }
+        /* MENU INFERIOR */
+        .tab-menu { 
+            display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); 
+            border-radius: 20px; padding: 7px; padding-bottom: calc(7px + env(safe-area-inset-bottom));
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05); position: fixed; bottom: 10px; left: 10px; right: 10px; z-index: 1000; max-width: 430px; margin: 0 auto; 
+        }
+        .tab-btn { border: none; background: none; padding: 7px; border-radius: 14px; font-weight: 700; color: #8e8e93; cursor: pointer; font-size: 0.77rem; display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .tab-btn.active { background: var(--primary); color: #fff; }
+        .tab-btn i { font-style: normal; font-size: 1.23rem; margin-bottom: 2px; }
 
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { opacity: 1; transform: translateY(0); } }
+        .tab-content.active { display: block; }
 
-        .logo-app { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 8px 15px rgba(0,0,0,0.1); margin-bottom: 10px; }
-        .btn-logout { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 1rem; }
-        
-        .barra-bg { background: rgba(0,0,0,0.08); border-radius: 20px; height: 14px; margin: 15px 0; overflow: hidden; }
-        .barra-fill { background: linear-gradient(90deg, #34c759, #2ecc71); height: 100%; width: 0%; transition: width 1.5s ease-in-out; }
-        
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-        .stat-card { background: #fff; padding: 15px; border-radius: 20px; border: 1.5px solid #1c1c1e; }
-        .stat-card span { font-weight: 800; font-size: 1rem; display: block; color: #1c1c1e; }
-        .stat-card small { color: #8e8e93; font-weight: 600; text-transform: uppercase; font-size: 0.55rem; }
-        
-        .info-box { background: #fff; border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1.5px solid rgba(0,0,0,0.05); text-align: left; }
-        .section-title { font-size: 0.7rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 15px; display: block; text-align: center; }
-        
-        .row-casal { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .user-pill { background: #f9f9fb; padding: 12px; border-radius: 18px; text-align: center; border: 1px solid #f2f2f7; }
-        .status-tag { font-size: 0.65rem; font-weight: 800; margin-top: 5px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
-        
-        /* REGISTRO */
-        .controls { display: flex; flex-direction: column; gap: 15px; }
-        input, select, .btn-action { padding: 16px; border-radius: 15px; border: 1.5px solid #e5e5ea; font-size: 1rem; font-weight: 600; width: 100%; }
-        .input-group { display: flex; gap: 10px; align-items: center; }
-        .btn-toggle { min-width: 60px; height: 55px; border-radius: 15px; border: none; font-size: 1.5rem; color: white; cursor: pointer; }
-        #btn-registrar { background: var(--primary); color: white; border: none; box-shadow: 0 8px 20px rgba(52, 199, 89, 0.3); margin-top: 10px; }
-        
-        /* EXTRATO CORRIGIDO: Data - Nome | Valor */
-        .item { background: #fff; padding: 15px; margin-bottom: 12px; border-left: 6px solid #ccc; border-radius: 15px; cursor: pointer; display: block !important; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .linha-topo { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .data-nome { font-weight: 700; font-size: 1rem; color: #1c1c1e; }
-        .data-nome span { color: #8e8e93; font-weight: 500; font-size: 0.85rem; margin-right: 5px; }
-        .valor-lista { font-weight: 800; font-size: 1.05rem; }
-        .linha-baixo { width: 100%; text-align: left; color: #444; font-size: 0.9rem; line-height: 1.4; display: block; border-top: 1px solid #f2f2f7; padding-top: 6px; }
+        .logo-app { width: 62px; height: 62px; border-radius: 50%; object-fit: cover; border: 2.5px solid #fff; margin-bottom: 7px; }
+        h2 { font-size: 1.22rem; margin: 5px 0; font-weight: 800; color: #1c1c1e; }
 
-        .mes-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f2f2f7; font-size: 0.9rem; }
-        .badge-pro { padding: 5px 12px; border-radius: 12px; font-size: 0.65rem; font-weight: 900; }
+        .meta-container-premium {
+            display: inline-flex; align-items: center; background: linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(52, 199, 89, 0.05) 100%);
+            padding: 6px 16px; border-radius: 50px; border: 1px solid rgba(52, 199, 89, 0.2); margin-bottom: 10px;
+        }
+        .meta-container-premium span { color: var(--primary); font-weight: 900; font-size: 0.79rem; text-transform: uppercase; }
+
+        .barra-bg { background: rgba(0,0,0,0.06); border-radius: 9px; height: 11.1px; overflow: hidden; margin-top: 10px; }
+        .barra-fill { background: linear-gradient(90deg, #34c759, #4cd964); height: 100%; width: 0%; transition: width 1.5s ease-out; }
+        .barra-info { font-size: 0.655rem; font-weight: 800; color: #8e8e93; margin-top: 6px; text-transform: uppercase; }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9.1px; margin: 12.1px 0; }
+        .stat-card { background: #fff; padding: 10.1px; border-radius: 14.1px; border: 1.51px solid #1c1c1e; }
+        .stat-card span { font-weight: 800; font-size: 0.91rem; display: block; }
+        
+        .info-box { background: #fff; border-radius: 20px; padding: 14.1px; margin-bottom: 12.1px; border: 1px solid rgba(0,0,0,0.04); text-align: left; }
+        .section-title { font-size: 0.67rem; font-weight: 800; color: #b0b0b5; text-transform: uppercase; margin-bottom: 10.1px; display: block; text-align: center; }
+
+        .info-line { display: flex; justify-content: space-between; align-items: center; padding: 8.1px 0; border-bottom: 1px solid #f2f2f7; }
+        .info-line:last-child { border-bottom: none; }
+        
+        .status-tag-premium { font-size: 0.59rem; font-weight: 800; padding: 3.5px 8.5px; border-radius: 7px; text-transform: uppercase; }
+        .tag-pos { background: rgba(52, 199, 89, 0.12); color: #248a3d; border: 1px solid rgba(52, 199, 89, 0.15); }
+        .tag-neg { background: rgba(255, 59, 48, 0.12); color: #d63027; border: 1px solid rgba(255, 59, 48, 0.15); }
+
+        .item { background: #fff; padding: 14px; margin-bottom: 10px; border-left: 5px solid #ccc; border-radius: 15px; cursor: pointer; text-align: left; }
+        .linha-topo { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; width: 100%; }
+        .data-txt { font-size: 0.86rem; color: #8e8e93; font-weight: 500; }
+        .nome-txt { font-weight: 700; font-size: 0.96rem; color: #1c1c1e; }
+        .valor-txt { font-weight: 800; font-size: 1.01rem; text-align: right; }
+
+        .status-meta-novo { background: #f4f7ff; border-radius: 15px; padding: 12px; margin-bottom: 15px; border: 1px solid #eef2ff; display: flex; align-items: center; gap: 8px; }
+        input, select { border: 1px solid #e5e5ea; background: #f9f9fb; font-weight: 600; padding: 14px; border-radius: 15px; width: 100%; font-size: 0.91rem; -webkit-appearance: none; }
     </style>
 </head>
 <body>
 
-<div id="tela-login" class="glass-card" style="margin-top: 50px;">
-    <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
-    <h2>Olá Casal! 💍</h2>
-    <input type="password" id="senha-input" placeholder="Senha" style="text-align: center;">
-    <button id="btn-entrar" class="btn-action" style="background: #1c1c1e; color: white; margin-top: 20px;">Digite a senha de acesso</button>
+<div id="tela-login" class="glass-card" style="margin-top: 60px;">
+    <div style="font-size: 2.8rem; margin-bottom: 10px;">🔐</div>
+    <h2>Olá Casal!</h2>
+    <input type="password" id="senha-input" placeholder="Senha do Cofrinho" style="text-align:center;">
+    <button id="btn-entrar" style="background:#1c1c1e; color:white; width:100%; padding:17px; border-radius:16px; margin-top:15px; border:none; font-weight:800;">Acessar</button>
 </div>
 
 <div id="conteudo-app">
     <div id="cofre" class="tab-content active">
         <div class="glass-card">
-            <button class="btn-logout" id="btn-sair">🔒</button>
-            <img src="foto.jpg?v=33" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
-            <h2 style="margin: 0; font-weight: 800;">Nossos Sonhos 🏡🚗</h2>
-            <div style="display:inline-block; background: rgba(52, 199, 89, 0.1); padding: 5px 15px; border-radius: 10px; margin: 10px 0;">
-                <small style="color: var(--primary); font-weight: 800;">META: R$ 8.000,00</small>
-            </div>
+            <button onclick="logout()" style="position:absolute; top:12px; right:12px; border:none; background:none; font-size:1.2rem;">🚪</button>
+            <img src="foto.jpg?v=54" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
+            <h2>Nossos Sonhos 🏡🚗</h2>
+            <div class="meta-container-premium"><span>🎯 Meta: R$ 8.000,00</span></div>
             <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
-            
+            <div id="barra-porcentagem" class="barra-info">Carregando...</div>
             <div class="stats-grid">
                 <div class="stat-card"><span id="total-geral">R$ 0,00</span><small>Saldo Geral</small></div>
                 <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
             </div>
-
-            <div class="info-box" style="border: 2px solid var(--primary);">
-                <span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span>
-                <div class="row-casal">
-                    <div class="user-pill"><b>Talison</b><br><span id="dep-so-talison" style="font-weight:700">R$ 0</span><div id="perc-talison" style="font-size:0.6rem; color:#999;">0%</div></div>
-                    <div class="user-pill"><b>Saiane</b><br><span id="dep-so-saiane" style="font-weight:700">R$ 0</span><div id="perc-saiane" style="font-size:0.6rem; color:#999;">0%</div></div>
-                </div>
-                <div id="soma-bruta" style="text-align:center; font-weight:800; margin-top:15px; font-size:0.85rem; color: var(--primary);"></div>
-            </div>
-
-            <div class="info-box" style="border: 2px solid var(--warning);">
-                <span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span>
-                <div class="row-casal">
-                    <div class="user-pill"><b>Talison</b><br><span id="liq-talison" style="font-weight:700">R$ 0</span><br><span class="status-tag" id="tag-talison">---</span></div>
-                    <div class="user-pill"><b>Saiane</b><br><span id="liq-saiane" style="font-weight:700">R$ 0</span><br><span class="status-tag" id="tag-saiane">---</span></div>
-                </div>
-            </div>
-
-            <div class="info-box" style="border: 2px solid var(--danger);">
-                <span class="section-title" style="color: var(--danger);">💸 Reposição Necessária</span>
-                <div id="soma-retirada" style="text-align:center; font-weight:800; font-size:1.1rem; color: var(--danger); margin-bottom:5px;">R$ 0,00</div>
-                <p style="font-size:0.6rem; color:var(--danger); text-align:center; margin:0; font-weight:700;">⚠️ Valor total a repor ao cofre</p>
+            <div class="info-box" style="border: 1px solid var(--primary);"><span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span><div id="linhas-bruto"></div></div>
+            <div class="info-box" style="border: 1px solid var(--warning);"><span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span><div id="linhas-resumo"></div></div>
+            <div style="text-align: center; background: #fff; border-radius: 20px; padding: 15px; border: 2.2px solid var(--danger);">
+                <b id="soma-retirada" style="font-size:1.11rem; color:var(--danger);">R$ 0,00</b><br>
+                <small style="color:var(--danger); font-weight:800; font-size:0.61rem; text-transform:uppercase;">⚠️ Valor total a repor</small>
             </div>
         </div>
     </div>
 
     <div id="novo" class="tab-content">
         <div class="glass-card">
-            <h3 class="section-title">Registrar Movimentação</h3>
-            <div class="controls">
-                <select id="quem"><option value="Talison">Talison</option><option value="Saiane">Saiane</option></select>
-                <div class="input-group">
-                    <button id="btn-sinal-toggle" type="button" class="btn-toggle" style="background: var(--primary);">+</button>
-                    <input type="number" id="valor-input" inputmode="decimal" placeholder="0,00">
-                </div>
-                <input type="text" id="motivo-retirada" placeholder="Qual o motivo?" style="display:none; border: 2px solid var(--warning);">
-                <button id="btn-registrar" class="btn-action">Confirmar Registro</button>
+            <h2>Novo Registro</h2>
+            <div class="status-meta-novo">
+                <small style="font-size:0.66rem; color:#8e8e93; text-transform:uppercase; font-weight:800;">Meta:</small>
+                <span id="meta-status-tag" class="status-tag-premium">---</span>
+                <span id="meta-acumulado" style="margin-left:auto; font-weight:800; font-size:0.96rem;">R$ 0,00</span>
             </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+                <select id="quem"><option value="Talison">Talison</option><option value="Saiane">Saiane</option></select>
+                <input type="month" id="mes-referencia">
+            </div>
+            <div style="display:flex; gap:10px; margin-bottom:10px;">
+                <button id="btn-sinal-toggle" style="width:60px; height:55px; border-radius:15px; border:none; background:var(--primary); color:white; font-size:1.7rem;">+</button>
+                <input type="number" id="valor-input" inputmode="decimal" placeholder="0,00" style="flex:1;">
+            </div>
+            <div id="campo-motivo" style="display:none; margin-bottom:10px;"><input type="text" id="motivo-retirada" placeholder="Qual o motivo?"></div>
+            <button id="btn-registrar" style="width:100%; background:var(--primary); color:white; padding:19px; border-radius:16px; border:none; font-weight:800;">Confirmar Registro</button>
         </div>
     </div>
 
-    <div id="metas" class="tab-content">
-        <div class="glass-card">
-            <span class="section-title">📊 Progressão Mensal - Meta R$600,00</span>
-            <div id="lista-meses"></div>
-        </div>
-    </div>
-
-    <div id="extrato" class="tab-content">
-        <div class="glass-card">
-            <span class="section-title">📜 Histórico de Atividades</span>
-            <div id="lista"></div>
-        </div>
-    </div>
+    <div id="metas" class="tab-content"><div class="glass-card"><h2>📊 Metas</h2><div id="lista-meses"></div></div></div>
+    <div id="extrato" class="tab-content"><div class="glass-card"><h2>📜 Extrato</h2><div id="lista"></div></div></div>
 
     <div class="tab-menu">
         <button class="tab-btn cofre-btn active" onclick="openTab('cofre')"><i>💰</i>Cofre</button>
@@ -167,115 +148,106 @@
     const db = getDatabase(app);
     const dbRef = ref(db, 'movimentacoes');
     const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    let sinalPositivo = true;
+    let sinalPositivo = true, globalMesesMap = {};
+
+    const inputMes = document.getElementById('mes-referencia');
+    inputMes.value = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
+
+    document.getElementById('btn-entrar').onclick = () => {
+        if(document.getElementById('senha-input').value === "0202") {
+            localStorage.setItem('auth_cofrinho_v54', 'true');
+            location.reload();
+        } else { alert("Senha incorreta!"); }
+    };
+    if(localStorage.getItem('auth_cofrinho_v54') === 'true') {
+        document.getElementById('tela-login').style.display = 'none';
+        document.getElementById('conteudo-app').style.display = 'block';
+    }
+    window.logout = () => { localStorage.removeItem('auth_cofrinho_v54'); location.reload(); };
+
+    const atualizarIndicadorNovo = () => {
+        const [ano, mes] = inputMes.value.split('-');
+        const chave = `${parseInt(mes)-1}-${ano}`;
+        const saldoMes = globalMesesMap[chave] ? globalMesesMap[chave].val : 0;
+        document.getElementById('meta-acumulado').innerText = fmt(saldoMes);
+        const tag = document.getElementById('meta-status-tag');
+        if (saldoMes >= 600) { tag.innerText = "OK"; tag.className = "status-tag-premium tag-pos"; }
+        else { tag.innerText = "FOCO"; tag.className = "status-tag-premium tag-warn"; }
+    };
+    inputMes.onchange = atualizarIndicadorNovo;
 
     window.openTab = function(tabName) {
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         document.getElementById(tabName).classList.add('active');
         document.querySelector('.' + tabName + '-btn').classList.add('active');
+        if(tabName === 'novo') atualizarIndicadorNovo();
         window.scrollTo(0, 0);
     }
 
-    document.getElementById('btn-entrar').onclick = () => {
-        if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_pro_v33', 'true');
-            location.reload();
-        } else { alert("Senha incorreta!"); }
+    const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle'), btnR = document.getElementById('btn-registrar');
+    btnS.onclick = () => {
+        sinalPositivo = !sinalPositivo;
+        btnS.innerText = sinalPositivo ? "+" : "-";
+        btnS.style.background = sinalPositivo ? "var(--primary)" : "var(--danger)";
+        document.getElementById('campo-motivo').style.display = sinalPositivo ? "none" : "block";
     };
-    document.getElementById('btn-sair').onclick = () => { localStorage.removeItem('auth_pro_v33'); location.reload(); };
 
-    if(localStorage.getItem('auth_pro_v33') === 'true') {
-        document.getElementById('tela-login').style.display = 'none';
-        document.getElementById('conteudo-app').style.display = 'block';
-        
-        const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle'), btnR = document.getElementById('btn-registrar');
-        
-        btnS.onclick = () => {
-            sinalPositivo = !sinalPositivo;
-            btnS.innerText = sinalPositivo ? "+" : "-";
-            btnS.style.background = sinalPositivo ? "var(--primary)" : "var(--danger)";
-            motI.style.display = sinalPositivo ? "none" : "block";
-        };
-
-        btnR.onclick = () => {
-            let v = parseFloat(valI.value);
-            if (!v || v <= 0) return alert("Insira um valor.");
-            if (!sinalPositivo) v = -v;
-            if (v < 0 && !motI.value.trim()) return alert("O motivo é obrigatório.");
-            btnR.disabled = true; btnR.innerText = "Salvando...";
-            const agora = new Date();
-            push(dbRef, { quem: document.getElementById('quem').value, valor: v, motivo: v < 0 ? motI.value : "", data: agora.toLocaleDateString('pt-BR'), ts: Date.now(), mes: agora.getMonth(), ano: agora.getFullYear() }).then(() => {
-                valI.value = ""; motI.value = ""; btnR.disabled = false; btnR.innerText = "Confirmar Registro";
-                openTab('extrato');
-            });
-        };
-
-        onValue(dbRef, (snap) => {
-            const dados = snap.val();
-            let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
-            const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
-            const hoje = new Date(); const mAtual = hoje.getMonth(), aAtual = hoje.getFullYear();
-
-            if (dados) {
-                const itens = Object.entries(dados).sort((a,b) => b[1].ts - a[1].ts);
-                itens.forEach(([key, m]) => {
-                    saldoG += m.valor;
-                    if (m.valor > 0) { m.quem === "Talison" ? depT += m.valor : depS += m.valor; }
-                    else { m.quem === "Talison" ? retT += Math.abs(m.valor) : retS += Math.abs(m.valor); }
-                    
-                    const idMes = `${m.mes}-${m.ano || aAtual}`;
-                    if (!mesesMap[idMes]) mesesMap[idMes] = { val: 0, m: m.mes, a: m.ano || aAtual };
-                    mesesMap[idMes].val += m.valor;
-                    
-                    const div = document.createElement('div');
-                    div.className = 'item'; div.style.borderLeftColor = m.valor > 0 ? 'var(--primary)' : 'var(--danger)';
-                    const icone = (m.valor < 0) ? `⚠️` : '';
-                    
-                    // NOVO LAYOUT DO EXTRATO: Data - Nome | Valor
-                    div.innerHTML = `
-                        <div class="linha-topo">
-                            <div class="data-nome"><span>${m.data}</span> ${m.quem}</div>
-                            <div class="valor-lista" style="color: ${m.valor > 0 ? 'var(--primary)' : 'var(--danger)'}">
-                                ${m.valor < 0 ? '-' : ''}${fmt(Math.abs(m.valor))}
-                            </div>
-                        </div>
-                        <div class="linha-baixo">${icone} ${m.motivo || 'Entrada de saldo'}</div>`;
-                    
-                    div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
-                    listaEl.appendChild(div);
-                });
-            }
-            document.getElementById('total-geral').innerText = fmt(saldoG);
-            document.getElementById('barra').style.width = Math.min((saldoG / 8000) * 100, 100) + "%";
-            document.getElementById('dep-so-talison').innerText = fmt(depT);
-            document.getElementById('dep-so-saiane').innerText = fmt(depS);
-            document.getElementById('soma-bruta').innerText = `INVESTIMENTO TOTAL: ${fmt(depT+depS)}`;
-            document.getElementById('liq-talison').innerText = fmt(depT - retT);
-            document.getElementById('liq-saiane').innerText = fmt(depS - retS);
-            document.getElementById('soma-retirada').innerText = fmt(retT + retS);
-            
-            const totalDep = depT + depS;
-            document.getElementById('perc-talison').innerText = totalDep ? ((depT/totalDep)*100).toFixed(1) + "%" : "0%";
-            document.getElementById('perc-saiane').innerText = totalDep ? ((depS/totalDep)*100).toFixed(1) + "%" : "0%";
-
-            const ajustarTag = (tag, val) => {
-                tag.innerText = val > 0 ? "Positivo" : (val === 0 ? "Zerado" : "Em Débito");
-                tag.style.color = val >= 0 ? "var(--primary)" : "var(--danger)";
-                tag.style.background = val >= 0 ? "rgba(52, 199, 89, 0.1)" : "rgba(255, 59, 48, 0.1)";
-            };
-            ajustarTag(document.getElementById('tag-talison'), depT - retT);
-            ajustarTag(document.getElementById('tag-saiane'), depS - retS);
-
-            const listaMeses = document.getElementById('lista-meses'); listaMeses.innerHTML = "";
-            const nomesM = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-            document.getElementById('total-mes').innerText = fmt(mesesMap[`${mAtual}-${aAtual}`] ? mesesMap[`${mAtual}-${aAtual}`].val : 0);
-            Object.values(mesesMap).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
-                const ok = d.val >= 600;
-                listaMeses.innerHTML += `<div class="mes-row"><span><b>${nomesM[d.m]} / ${d.a}</b> <span class="badge-pro" style="background:${ok?'#e1f7e6':'#fff4e5'}; color:${ok?'#34c759':'#ff9500'}">${ok?'META OK':'FOCO'}</span></span><b>${fmt(d.val)}</b></div>`;
-            });
+    btnR.onclick = () => {
+        let v = parseFloat(valI.value);
+        if (!v || v <= 0) return alert("Insira um valor.");
+        if (!sinalPositivo) v = -v;
+        const [anoSel, mesSel] = inputMes.value.split('-');
+        btnR.disabled = true;
+        push(dbRef, { quem: document.getElementById('quem').value, valor: v, motivo: v < 0 ? motI.value : "", data: new Date(anoSel, mesSel - 1, 15).toLocaleDateString('pt-BR'), ts: Date.now(), mes: parseInt(mesSel) - 1, ano: parseInt(anoSel) }).then(() => {
+            valI.value = ""; motI.value = ""; btnR.disabled = false; openTab('extrato');
         });
-    }
+    };
+
+    onValue(dbRef, (snap) => {
+        const dados = snap.val();
+        let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
+        const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
+        if (dados) {
+            Object.entries(dados).sort((a,b) => b[1].ts - a[1].ts).forEach(([key, m]) => {
+                const v = m.valor; saldoG += v;
+                if (v > 0) { m.quem === "Talison" ? depT += v : depS += v; }
+                else { m.quem === "Talison" ? retT += Math.abs(v) : retS += Math.abs(v); }
+                const idMes = `${m.mes}-${m.ano}`;
+                if (!mesesMap[idMes]) mesesMap[idMes] = { val: 0, m: m.mes, a: m.ano };
+                mesesMap[idMes].val += v;
+                const div = document.createElement('div');
+                div.className = 'item'; div.style.borderLeftColor = v > 0 ? 'var(--primary)' : 'var(--danger)';
+                div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt">${m.quem}</span><span class="valor-txt" style="color:${v>0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div class="linha-baixo">${v<0?'⚠️ ':''}${m.motivo||'Investimento'}</div>`;
+                div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
+                listaEl.appendChild(div);
+            });
+        }
+        globalMesesMap = mesesMap; atualizarIndicadorNovo();
+        const prog = (saldoG / 8000) * 100;
+        document.getElementById('barra').style.width = Math.min(prog, 100) + "%";
+        document.getElementById('barra-porcentagem').innerText = prog >= 100 ? "CONQUISTADO! 🎉" : `FALTAM ${(100-prog).toFixed(1)}% PARA A META`;
+        document.getElementById('total-geral').innerText = fmt(saldoG);
+        document.getElementById('total-mes').innerText = fmt(mesesMap[`${new Date().getMonth()}-${new Date().getFullYear()}`]?.val || 0);
+        document.getElementById('soma-retirada').innerText = fmt(retT + retS);
+        const totalDep = depT + depS;
+        document.getElementById('linhas-bruto').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(depT)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93;">${totalDep?((depT/totalDep)*100).toFixed(0):0}%</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(depS)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93;">${totalDep?((depS/totalDep)*100).toFixed(0):0}%</span></b></div>`;
+        const lT = depT-retT, lS = depS-retS;
+        document.getElementById('linhas-resumo').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(lT)} <span class="status-tag-premium ${lT>=0?'tag-pos':'tag-neg'}">${lT>=0?'POSITIVO':'DÉBITO'}</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(lS)} <span class="status-tag-premium ${lS>=0?'tag-pos':'tag-neg'}">${lS>=0?'POSITIVO':'DÉBITO'}</span></b></div>`;
+        const listaMeses = document.getElementById('lista-meses'); listaMeses.innerHTML = "";
+        const nomesM = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+        Object.values(mesesMap).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
+            const ok = d.val >= 600;
+            listaMeses.innerHTML += `<div class="mes-row" style="display:flex; justify-content:space-between; padding:11px 0; border-bottom:1px solid #f2f2f7;"><span><b>${nomesM[d.m]} / ${d.a}</b> <span class="status-tag-premium ${ok?'tag-pos':'tag-warn'}" style="margin-left:8px;">${ok?'OK ✅':'FOCO 🎯'}</span></span><b>${fmt(d.val)}</b></div>`;
+        });
+    });
+
+    // SCRIPT PARA FORÇAR DOWNLOAD NO ANDROID
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        let deferredPrompt = e;
+        // Você pode criar um botão que chama deferredPrompt.prompt() se quiser forçar o clique
+    });
 </script>
 </body>
 </html>
