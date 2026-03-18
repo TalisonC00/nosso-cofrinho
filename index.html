@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="data:application/manifest+json,{'name':'Cofrinho','short_name':'Cofrinho','start_url':'index.html','display':'standalone','background_color':'#f2f2f7','theme_color':'#34c759','icons':[{'src':'icon.jpg','sizes':'512x512','type':'image/jpeg'}]}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.jpg">
@@ -24,38 +24,58 @@
         #conteudo-app { display: none; padding-bottom: calc(91px + env(safe-area-inset-bottom)); animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ESTILO DOS MODAIS PERSONALIZADOS */
+        /* MODAL PERSONALIZADO */
         #custom-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: center; }
-        .custom-modal { background: white; width: 85%; max-width: 320px; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2); animation: popScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes popScale { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .custom-modal { background: white; width: 85%; max-width: 320px; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
         .modal-msg { font-size: 1.05rem; font-weight: 600; color: #1c1c1e; margin-bottom: 20px; line-height: 1.4; }
         .modal-btns { display: flex; gap: 10px; justify-content: center; }
         .modal-btn { border: none; padding: 12px 25px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; cursor: pointer; flex: 1; }
         .btn-confirm { background: var(--primary); color: white; }
         .btn-cancel { background: #f2f2f7; color: #8e8e93; }
 
-        /* DASHBOARD METAS */
-        .dash-metas { display: flex; gap: 10px; margin-bottom: 20px; }
-        .dash-card { flex: 1; padding: 12px; border-radius: 15px; background: #fff; border: 1px solid #f2f2f7; text-align: center; }
-        .dash-card b { display: block; font-size: 1.2rem; }
-        .dash-card span { font-size: 0.55rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; }
-
-        /* RESTANTE DOS ESTILOS ORIGINAIS (Abas, Grid, Tags) */
+        /* ABAS E NAVEGAÇÃO */
         .tab-menu { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 7.1px; padding-bottom: calc(7.1px + env(safe-area-inset-bottom)); box-shadow: 0 -5px 15px rgba(0,0,0,0.05); position: fixed; bottom: 10.1px; left: 10.1px; right: 10.1px; z-index: 1000; max-width: 430px; margin: 0 auto; }
         .tab-btn { border: none; background: none; padding: 7.1px; border-radius: 14px; font-weight: 700; color: #8e8e93; cursor: pointer; font-size: 0.78rem; display: flex; flex-direction: column; align-items: center; flex: 1; }
         .tab-btn.active { background: var(--primary); color: #fff; }
         .tab-btn i { font-style: normal; font-size: 1.24rem; margin-bottom: 2px; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+
+        /* COFRE PREMIUM */
+        .logo-app { width: 67px; height: 67px; border-radius: 50%; object-fit: cover; border: 2.5px solid #fff; margin-bottom: 7.1px; }
+        h2 { font-size: 1.23rem; margin: 5px 0; font-weight: 800; color: #1c1c1e; }
+        .meta-pill { display: inline-flex; align-items: center; background: linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(52, 199, 89, 0.05) 100%); padding: 6.1px 16.2px; border-radius: 50px; border: 1px solid rgba(52, 199, 89, 0.2); margin-bottom: 10.1px; }
+        .meta-pill span { color: var(--primary); font-weight: 900; font-size: 0.8rem; text-transform: uppercase; }
+        .barra-bg { background: rgba(0,0,0,0.06); border-radius: 9px; height: 11.2px; overflow: hidden; margin-top: 10.1px; }
+        .barra-fill { background: linear-gradient(90deg, #34c759, #4cd964); height: 100%; width: 0%; transition: width 1.5s ease-out; }
+        .barra-info { font-size: 0.66rem; font-weight: 800; color: #8e8e93; margin-top: 6.1px; text-transform: uppercase; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9.2px; margin: 12.2px 0; }
+        .stat-card { background: #fff; padding: 10.2px; border-radius: 14.2px; border: 1.52px solid #1c1c1e; }
+        .stat-card span { font-weight: 800; font-size: 0.92rem; display: block; }
+        .info-box { background: #fff; border-radius: 20px; padding: 14.2px; margin-bottom: 12.2px; border: 1px solid rgba(0,0,0,0.04); text-align: left; }
+        .section-title { font-size: 0.68rem; font-weight: 800; color: #b0b0b5; text-transform: uppercase; margin-bottom: 10.2px; display: block; text-align: center; }
+        .info-line { display: flex; justify-content: space-between; align-items: center; padding: 8.2px 0; border-bottom: 1px solid #f2f2f7; }
+        .info-line:last-child { border-bottom: none; }
+
+        /* TAGS PREMIUM */
         .status-tag-premium { font-size: 0.6rem; font-weight: 800; padding: 3.5px 8.6px; border-radius: 7px; text-transform: uppercase; }
         .tag-pos { background: rgba(52, 199, 89, 0.12); color: #248a3d; border: 1px solid rgba(52, 199, 89, 0.2); }
         .tag-neg { background: rgba(255, 59, 48, 0.12); color: #d63027; border: 1px solid rgba(255, 59, 48, 0.2); }
         .tag-warn { background: rgba(255, 149, 0, 0.12); color: #c27200; border: 1px solid rgba(255, 149, 0, 0.2); }
         .tag-danger { background: rgba(255, 59, 48, 0.12); color: #ff3b30; border: 1px solid rgba(255, 59, 48, 0.2); }
+
+        /* EXTRATO AGRUPADO */
+        .mes-header { font-size: 0.7rem; font-weight: 800; color: #b0b0b5; text-transform: uppercase; text-align: left; margin: 15px 0 10px 5px; border-left: 3px solid var(--primary); padding-left: 8px; }
         .item { background: #fff; padding: 14.1px; margin-bottom: 10.1px; border-left: 5px solid #ccc; border-radius: 15px; cursor: pointer; text-align: left; }
         .linha-topo { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8.1px; width: 100%; }
         .valor-txt { font-weight: 800; font-size: 1.02rem; text-align: right; }
         input, select { border: 1px solid #e5e5ea; background: #f9f9fb; font-weight: 600; padding: 14.1px; border-radius: 15px; width: 100%; font-size: 0.92rem; -webkit-appearance: none; }
+
+        /* DASHBOARD METAS */
+        .dash-metas { display: flex; gap: 10px; margin-bottom: 20px; }
+        .dash-card { flex: 1; padding: 12px; border-radius: 15px; background: #fff; border: 1px solid #f2f2f7; text-align: center; }
+        .dash-card b { display: block; font-size: 1.2rem; }
+        .dash-card span { font-size: 0.55rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -81,17 +101,17 @@
     <div id="cofre" class="tab-content active">
         <div class="glass-card">
             <button onclick="logout()" style="position:absolute; top:12px; right:12px; border:none; background:none; font-size:1.2rem;">🔒</button>
-            <img src="foto.jpg" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'" style="width:67px; height:67px; border-radius:50%; object-fit:cover; border:2.5px solid #fff; margin-bottom:7.1px;">
+            <img src="foto.jpg" class="logo-app" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2170/2170321.png'">
             <h2>Nossos Sonhos 🏡🚗</h2>
-            <div class="meta-container-premium"><span>🎯 Meta: R$ 8.000,00</span></div>
+            <div class="meta-pill"><span>🎯 Meta: R$ 8.000,00</span></div>
             <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
-            <div id="barra-porcentagem" class="barra-info">Calculando objetivo...</div>
-            <div class="stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 9.2px; margin: 12.2px 0;">
+            <div id="barra-porcentagem" class="barra-info">Calculando...</div>
+            <div class="stats-grid">
                 <div class="stat-card"><span id="total-geral">R$ 0,00</span><small>Saldo Geral</small></div>
                 <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
             </div>
-            <div class="info-box" style="border: 1px solid var(--primary);"><span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span><div id="linhas-bruto"></div></div>
-            <div class="info-box" style="border: 1px solid var(--warning);"><span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span><div id="linhas-resumo"></div></div>
+            <div class="info-box" style="border: 1px solid var(--primary);"><span class="section-title">🏆 Depósitos Brutos</span><div id="linhas-bruto"></div></div>
+            <div class="info-box" style="border: 1px solid var(--warning);"><span class="section-title">⚖️ Resumo Individual</span><div id="linhas-resumo"></div></div>
             <div style="text-align: center; background: #fff; border-radius: 20px; padding: 15.1px; border: 2.2px solid var(--danger);"><b id="soma-retirada" style="font-size:1.12rem; color:var(--danger);">R$ 0,00</b><br><small style="color:var(--danger); font-weight:800; font-size:0.62rem; text-transform:uppercase;">⚠️ Valor total a repor</small></div>
         </div>
     </div>
@@ -144,7 +164,6 @@
     let globalMesesMap = {};
     const hoje = new Date();
 
-    // FUNÇÕES PARA MODAL CUSTOMIZADO
     const showModal = (text, confirmOnly = false) => {
         return new Promise((resolve) => {
             const overlay = document.getElementById('custom-modal-overlay');
@@ -152,13 +171,13 @@
             document.getElementById('modal-text').innerText = text;
             btnCancel.style.display = confirmOnly ? 'none' : 'block';
             overlay.style.display = 'flex';
-            
             document.getElementById('modal-btn-ok').onclick = () => { overlay.style.display = 'none'; resolve(true); };
             btnCancel.onclick = () => { overlay.style.display = 'none'; resolve(false); };
         });
     };
 
-    // LOGIN
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+
     document.getElementById('btn-entrar').onclick = async () => {
         if(document.getElementById('senha-input').value === "0202") {
             localStorage.setItem('auth_cofrinho_final', 'true');
@@ -171,7 +190,6 @@
     }
     window.logout = () => { localStorage.removeItem('auth_cofrinho_final'); location.reload(); };
 
-    // ABAS
     window.openTab = function(tabName) {
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -216,8 +234,10 @@
 
     onValue(dbRef, (snap) => {
         const dados = snap.val();
-        let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
+        let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {}, agrupado = {};
         const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
+        const nomesM = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+
         if (dados) {
             Object.entries(dados).sort((a,b) => b[1].ts - a[1].ts).forEach(([key, m]) => {
                 const v = m.valor; saldoG += v;
@@ -226,11 +246,27 @@
                 const idMes = `${m.mes}-${m.ano}`;
                 if (!mesesMap[idMes]) mesesMap[idMes] = { val: 0, m: m.mes, a: m.ano };
                 mesesMap[idMes].val += v;
-                const div = document.createElement('div');
-                div.className = 'item'; div.style.borderLeftColor = v >= 0 ? 'var(--primary)' : 'var(--danger)';
-                div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt" style="font-weight:700;">${m.quem}</span><span class="valor-txt" style="color:${v>=0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
-                div.onclick = async () => { if(await showModal("Apagar este registro?")) remove(ref(db, `movimentacoes/${key}`)); };
-                listaEl.appendChild(div);
+
+                if (!agrupado[idMes]) agrupado[idMes] = { title: `${nomesM[m.mes]} de ${m.ano}`, items: [] };
+                agrupado[idMes].items.push({ key, ...m });
+            });
+
+            // GERA O EXTRATO ORGANIZADO
+            Object.keys(agrupado).sort((a,b) => {
+                const [m1, a1] = a.split('-').map(Number);
+                const [m2, a2] = b.split('-').map(Number);
+                return (a2 * 12 + m2) - (a1 * 12 + m1);
+            }).forEach(id => {
+                const header = document.createElement('div');
+                header.className = 'mes-header'; header.innerText = agrupado[id].title;
+                listaEl.appendChild(header);
+                agrupado[id].items.forEach(m => {
+                    const div = document.createElement('div');
+                    div.className = 'item'; div.style.borderLeftColor = m.valor >= 0 ? 'var(--primary)' : 'var(--danger)';
+                    div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt" style="font-weight:700;">${m.quem}</span><span class="valor-txt" style="color:${m.valor>=0?'#34c759':'#ff3b30'}">${m.valor < 0 ? '-' : ''}${fmt(Math.abs(m.valor))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${m.valor<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
+                    div.onclick = async () => { if(await showModal("Apagar registro?")) remove(ref(db, `movimentacoes/${m.key}`)); };
+                    listaEl.appendChild(div);
+                });
             });
         }
         globalMesesMap = mesesMap; atualizarIndicadorNovo();
@@ -246,7 +282,6 @@
         document.getElementById('linhas-resumo').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(lT)} <span class="status-tag-premium ${lT>=0?'tag-pos':'tag-neg'}">${lT>=0?'POSITIVO':'DÉBITO'}</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(lS)} <span class="status-tag-premium ${lS>=0?'tag-pos':'tag-neg'}">${lS>=0?'POSITIVO':'DÉBITO'}</span></b></div>`;
 
         const listaMeses = document.getElementById('lista-meses'); listaMeses.innerHTML = "";
-        const nomesM = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
         let okCount = 0, failCount = 0;
         Object.values(mesesMap).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
             const ok = d.val >= 600;
