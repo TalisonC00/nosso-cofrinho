@@ -33,7 +33,7 @@
         .btn-confirm { background: var(--primary); color: white; }
         .btn-cancel { background: #f2f2f7; color: #8e8e93; }
 
-        /* ABAS E NAVEGAÇÃO */
+        /* NAVEGAÇÃO */
         .tab-menu { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 7.1px; padding-bottom: calc(7.1px + env(safe-area-inset-bottom)); box-shadow: 0 -5px 15px rgba(0,0,0,0.05); position: fixed; bottom: 10.1px; left: 10.1px; right: 10.1px; z-index: 1000; max-width: 430px; margin: 0 auto; }
         .tab-btn { border: none; background: none; padding: 7.1px; border-radius: 14px; font-weight: 700; color: #8e8e93; cursor: pointer; font-size: 0.78rem; display: flex; flex-direction: column; align-items: center; flex: 1; }
         .tab-btn.active { background: var(--primary); color: #fff; }
@@ -41,7 +41,7 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* COFRE PREMIUM */
+        /* COFRE */
         .logo-app { width: 67px; height: 67px; border-radius: 50%; object-fit: cover; border: 2.5px solid #fff; margin-bottom: 7.1px; }
         h2 { font-size: 1.23rem; margin: 5px 0; font-weight: 800; color: #1c1c1e; }
         .meta-pill { display: inline-flex; align-items: center; background: linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(52, 199, 89, 0.05) 100%); padding: 6.1px 16.2px; border-radius: 50px; border: 1px solid rgba(52, 199, 89, 0.2); margin-bottom: 10.1px; }
@@ -54,18 +54,17 @@
         .stat-card span { font-weight: 800; font-size: 0.92rem; display: block; }
         .info-box { background: #fff; border-radius: 20px; padding: 14.2px; margin-bottom: 12.2px; border: 1px solid rgba(0,0,0,0.04); text-align: left; }
         .section-title { font-size: 0.68rem; font-weight: 800; color: #b0b0b5; text-transform: uppercase; margin-bottom: 10.2px; display: block; text-align: center; }
-        .info-line { display: flex; justify-content: space-between; align-items: center; padding: 8.2px 0; border-bottom: 1px solid #f2f2f7; }
-        .info-line:last-child { border-bottom: none; }
 
-        /* TAGS PREMIUM */
+        /* TAGS */
         .status-tag-premium { font-size: 0.6rem; font-weight: 800; padding: 3.5px 8.6px; border-radius: 7px; text-transform: uppercase; }
         .tag-pos { background: rgba(52, 199, 89, 0.12); color: #248a3d; border: 1px solid rgba(52, 199, 89, 0.2); }
         .tag-neg { background: rgba(255, 59, 48, 0.12); color: #d63027; border: 1px solid rgba(255, 59, 48, 0.2); }
         .tag-warn { background: rgba(255, 149, 0, 0.12); color: #c27200; border: 1px solid rgba(255, 149, 0, 0.2); }
         .tag-danger { background: rgba(255, 59, 48, 0.12); color: #ff3b30; border: 1px solid rgba(255, 59, 48, 0.2); }
 
-        /* EXTRATO AGRUPADO */
-        .mes-header { font-size: 0.7rem; font-weight: 800; color: #b0b0b5; text-transform: uppercase; text-align: left; margin: 15px 0 10px 5px; border-left: 3px solid var(--primary); padding-left: 8px; }
+        /* EXTRATO FILTRADO */
+        .filtro-container { background: #f4f7ff; border-radius: 18px; padding: 12px; margin-bottom: 15px; border: 1px solid #eef2ff; }
+        .filtro-label { font-size: 0.65rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; display: block; margin-bottom: 5px; text-align: left; }
         .item { background: #fff; padding: 14.1px; margin-bottom: 10.1px; border-left: 5px solid #ccc; border-radius: 15px; cursor: pointer; text-align: left; }
         .linha-topo { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8.1px; width: 100%; }
         .valor-txt { font-weight: 800; font-size: 1.02rem; text-align: right; }
@@ -142,7 +141,16 @@
         </div>
     </div>
 
-    <div id="extrato" class="tab-content"><div class="glass-card"><h2>📜 Extrato</h2><div id="lista"></div></div></div>
+    <div id="extrato" class="tab-content">
+        <div class="glass-card">
+            <h2>📜 Extrato Detalhado</h2>
+            <div class="filtro-container">
+                <span class="filtro-label">Filtrar por período:</span>
+                <input type="month" id="filtro-extrato-mes">
+            </div>
+            <div id="lista"></div>
+        </div>
+    </div>
 
     <div class="tab-menu">
         <button class="tab-btn cofre-btn active" onclick="openTab('cofre')"><i>💰</i>Cofre</button>
@@ -196,10 +204,16 @@
         document.getElementById(tabName).classList.add('active');
         document.querySelector('.' + tabName + '-btn').classList.add('active');
         if(tabName === 'novo') atualizarIndicadorNovo();
+        if(tabName === 'extrato') processarDados();
     };
 
     const inputMes = document.getElementById('mes-referencia');
-    inputMes.value = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`;
+    const filtroExtrato = document.getElementById('filtro-extrato-mes');
+    const valorPadrao = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`;
+    inputMes.value = valorPadrao;
+    filtroExtrato.value = valorPadrao;
+
+    filtroExtrato.onchange = () => processarDados();
 
     const atualizarIndicadorNovo = () => {
         const [ano, mes] = inputMes.value.split('-');
@@ -232,68 +246,61 @@
         });
     };
 
-    onValue(dbRef, (snap) => {
-        const dados = snap.val();
-        let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {}, agrupado = {};
-        const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
-        const nomesM = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+    function processarDados() {
+        onValue(dbRef, (snap) => {
+            const dados = snap.val();
+            let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
+            const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
+            const [fAno, fMes] = filtroExtrato.value.split('-').map(Number);
 
-        if (dados) {
-            Object.entries(dados).sort((a,b) => b[1].ts - a[1].ts).forEach(([key, m]) => {
-                const v = m.valor; saldoG += v;
-                if (v >= 0) { m.quem === "Talison" ? depT += v : depS += v; }
-                else { m.quem === "Talison" ? retT += Math.abs(v) : retS += Math.abs(v); }
-                const idMes = `${m.mes}-${m.ano}`;
-                if (!mesesMap[idMes]) mesesMap[idMes] = { val: 0, m: m.mes, a: m.ano };
-                mesesMap[idMes].val += v;
+            if (dados) {
+                Object.entries(dados).sort((a,b) => b[1].ts - a[1].ts).forEach(([key, m]) => {
+                    const v = m.valor; saldoG += v;
+                    if (v >= 0) { m.quem === "Talison" ? depT += v : depS += v; }
+                    else { m.quem === "Talison" ? retT += Math.abs(v) : retS += Math.abs(v); }
+                    const idMes = `${m.mes}-${m.ano}`;
+                    if (!mesesMap[idMes]) mesesMap[idMes] = { val: 0, m: m.mes, a: m.ano };
+                    mesesMap[idMes].val += v;
 
-                if (!agrupado[idMes]) agrupado[idMes] = { title: `${nomesM[m.mes]} de ${m.ano}`, items: [] };
-                agrupado[idMes].items.push({ key, ...m });
-            });
-
-            // GERA O EXTRATO ORGANIZADO
-            Object.keys(agrupado).sort((a,b) => {
-                const [m1, a1] = a.split('-').map(Number);
-                const [m2, a2] = b.split('-').map(Number);
-                return (a2 * 12 + m2) - (a1 * 12 + m1);
-            }).forEach(id => {
-                const header = document.createElement('div');
-                header.className = 'mes-header'; header.innerText = agrupado[id].title;
-                listaEl.appendChild(header);
-                agrupado[id].items.forEach(m => {
-                    const div = document.createElement('div');
-                    div.className = 'item'; div.style.borderLeftColor = m.valor >= 0 ? 'var(--primary)' : 'var(--danger)';
-                    div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt" style="font-weight:700;">${m.quem}</span><span class="valor-txt" style="color:${m.valor>=0?'#34c759':'#ff3b30'}">${m.valor < 0 ? '-' : ''}${fmt(Math.abs(m.valor))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${m.valor<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
-                    div.onclick = async () => { if(await showModal("Apagar registro?")) remove(ref(db, `movimentacoes/${m.key}`)); };
-                    listaEl.appendChild(div);
+                    if (m.mes === (fMes - 1) && m.ano === fAno) {
+                        const div = document.createElement('div');
+                        div.className = 'item'; div.style.borderLeftColor = v >= 0 ? 'var(--primary)' : 'var(--danger)';
+                        div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt" style="font-weight:700;">${m.quem}</span><span class="valor-txt" style="color:${v>=0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
+                        div.onclick = async () => { if(await showModal("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
+                        listaEl.appendChild(div);
+                    }
                 });
-            });
-        }
-        globalMesesMap = mesesMap; atualizarIndicadorNovo();
-        const prog = (saldoG / 8000) * 100;
-        document.getElementById('barra').style.width = Math.min(prog, 100) + "%";
-        document.getElementById('barra-porcentagem').innerText = `FALTAM ${(100-prog).toFixed(1)}% PARA A META`;
-        document.getElementById('total-geral').innerText = fmt(saldoG);
-        document.getElementById('total-mes').innerText = fmt(mesesMap[`${hoje.getMonth()}-${hoje.getFullYear()}`]?.val || 0);
-        document.getElementById('soma-retirada').innerText = fmt(retT + retS);
-        const totalDep = depT + depS;
-        document.getElementById('linhas-bruto').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(depT)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93; border:none;">${totalDep?((depT/totalDep)*100).toFixed(0):0}%</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(depS)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93; border:none;">${totalDep?((depS/totalDep)*100).toFixed(0):0}%</span></b></div>`;
-        const lT = depT-retT, lS = depS-retS;
-        document.getElementById('linhas-resumo').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(lT)} <span class="status-tag-premium ${lT>=0?'tag-pos':'tag-neg'}">${lT>=0?'POSITIVO':'DÉBITO'}</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(lS)} <span class="status-tag-premium ${lS>=0?'tag-pos':'tag-neg'}">${lS>=0?'POSITIVO':'DÉBITO'}</span></b></div>`;
+            }
+            if (listaEl.innerHTML === "") listaEl.innerHTML = "<p style='color:#8e8e93; font-size:0.9rem; margin-top:20px;'>Nenhum registro para este mês.</p>";
 
-        const listaMeses = document.getElementById('lista-meses'); listaMeses.innerHTML = "";
-        let okCount = 0, failCount = 0;
-        Object.values(mesesMap).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
-            const ok = d.val >= 600;
-            const isAtual = (d.m === hoje.getMonth() && d.a === hoje.getFullYear());
-            let tagC = "tag-warn", tagL = "🎯 FOCO";
-            if (ok) { tagC = "tag-pos"; tagL = "✅ OK"; okCount++; }
-            else if (!isAtual) { tagC = "tag-danger"; tagL = "🔴 Faltou Foco"; failCount++; }
-            listaMeses.innerHTML += `<div class="mes-row" style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #f2f2f7;"><span><b>${nomesM[d.m]} / ${d.a}</b> <span class="status-tag-premium ${tagC}" style="margin-left:8px;">${tagL}</span></span><b>${fmt(d.val)}</b></div>`;
+            globalMesesMap = mesesMap;
+            document.getElementById('barra').style.width = Math.min((saldoG / 8000) * 100, 100) + "%";
+            document.getElementById('barra-porcentagem').innerText = `FALTAM ${(100 - (saldoG / 8000) * 100).toFixed(1)}% PARA A META`;
+            document.getElementById('total-geral').innerText = fmt(saldoG);
+            document.getElementById('total-mes').innerText = fmt(mesesMap[`${hoje.getMonth()}-${hoje.getFullYear()}`]?.val || 0);
+            document.getElementById('soma-retirada').innerText = fmt(retT + retS);
+
+            const totalDep = depT + depS;
+            document.getElementById('linhas-bruto').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(depT)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93; border:none;">${totalDep?((depT/totalDep)*100).toFixed(0):0}%</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(depS)} <span class="status-tag-premium" style="background:rgba(0,0,0,0.03); color:#8e8e93; border:none;">${totalDep?((depS/totalDep)*100).toFixed(0):0}%</span></b></div>`;
+            const lT = depT-retT, lS = depS-retS;
+            document.getElementById('linhas-resumo').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(lT)} <span class="status-tag-premium ${lT>=0?'tag-pos':'tag-neg'}">${lT>=0?'POSITIVO':'DÉBITO'}</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(lS)} <span class="status-tag-premium ${lS>=0?'tag-pos':'tag-neg'}">${lS>=0?'POSITIVO':'DÉBITO'}</span></b></div>`;
+
+            const listaMeses = document.getElementById('lista-meses'); listaMeses.innerHTML = "";
+            const nomesM = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+            let okCount = 0, failCount = 0;
+            Object.values(mesesMap).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
+                const ok = d.val >= 600;
+                const isAtual = (d.m === hoje.getMonth() && d.a === hoje.getFullYear());
+                let tagC = "tag-warn", tagL = "🎯 FOCO";
+                if (ok) { tagC = "tag-pos"; tagL = "✅ OK"; okCount++; }
+                else if (!isAtual) { tagC = "tag-danger"; tagL = "🔴 Faltou Foco"; failCount++; }
+                listaMeses.innerHTML += `<div class="mes-row" style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #f2f2f7;"><span><b>${nomesM[d.m]} / ${d.a}</b> <span class="status-tag-premium ${tagC}" style="margin-left:8px;">${tagL}</span></span><b>${fmt(d.val)}</b></div>`;
+            });
+            document.getElementById('count-ok').innerText = okCount;
+            document.getElementById('count-fail').innerText = failCount;
         });
-        document.getElementById('count-ok').innerText = okCount;
-        document.getElementById('count-fail').innerText = failCount;
-    });
+    }
+    processarDados();
 </script>
 </body>
 </html>
