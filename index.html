@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Cofrinho Talison & Saiane</title>
     
-    <link rel="manifest" href="data:application/manifest+json,{'name':'Cofrinho','short_name':'Cofrinho','start_url':'index.html','display':'standalone','background_color':'#f2f2f7','theme_color':'#34c759','icons':[{'src':'icon.jpg','sizes':'512x512','type':'image/jpeg'}]}">
+    <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.jpg">
@@ -17,7 +17,7 @@
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        /* ESCALA AUMENTADA EM 1,1% SOBRE A V60 */
+        /* ESCALA v61 MANTIDA (1,1%) */
         body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 8.15px; min-height: 100vh; overflow-x: hidden; }
         
         .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 23px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); padding: 16.1px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
@@ -58,13 +58,11 @@
         .info-box { background: #fff; border-radius: 20px; padding: 14.2px; margin-bottom: 12.2px; border: 1px solid rgba(0,0,0,0.04); text-align: left; }
         .section-title { font-size: 0.68rem; font-weight: 800; color: #b0b0b5; text-transform: uppercase; margin-bottom: 10.2px; display: block; text-align: center; }
 
-        .info-line { display: flex; justify-content: space-between; align-items: center; padding: 8.2px 0; border-bottom: 1px solid #f2f2f7; }
-        .info-line:last-child { border-bottom: none; }
-        
         .status-tag-premium { font-size: 0.6rem; font-weight: 800; padding: 3.5px 8.6px; border-radius: 7px; text-transform: uppercase; }
         .tag-pos { background: rgba(52, 199, 89, 0.12); color: #248a3d; border: 1px solid rgba(52, 199, 89, 0.2); }
         .tag-neg { background: rgba(255, 59, 48, 0.12); color: #d63027; border: 1px solid rgba(255, 59, 48, 0.2); }
 
+        /* EXTRATO EM GRID */
         .item { background: #fff; padding: 14.1px; margin-bottom: 10.1px; border-left: 5px solid #ccc; border-radius: 15px; cursor: pointer; text-align: left; }
         .linha-topo { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8.1px; width: 100%; }
         .data-txt { font-size: 0.87rem; color: #8e8e93; font-weight: 500; }
@@ -92,22 +90,13 @@
             <h2>Nossos Sonhos 🏡🚗</h2>
             <div class="meta-container-premium"><span>🎯 Meta: R$ 8.000,00</span></div>
             <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
-            <div id="barra-porcentagem" class="barra-info">Calculando objetivo...</div>
+            <div id="barra-porcentagem" class="barra-info">Carregando objetivo...</div>
             <div class="stats-grid">
                 <div class="stat-card"><span id="total-geral">R$ 0,00</span><small>Saldo Geral</small></div>
                 <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
             </div>
-            
-            <div class="info-box" style="border: 1px solid var(--primary);">
-                <span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span>
-                <div id="linhas-bruto"></div>
-            </div>
-            
-            <div class="info-box" style="border: 1px solid var(--warning);">
-                <span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span>
-                <div id="linhas-resumo"></div>
-            </div>
-
+            <div class="info-box" style="border: 1px solid var(--primary);"><span class="section-title">🏆 Depósitos Brutos</span><div id="linhas-bruto"></div></div>
+            <div class="info-box" style="border: 1px solid var(--warning);"><span class="section-title">⚖️ Resumo Individual</span><div id="linhas-resumo"></div></div>
             <div style="text-align: center; background: #fff; border-radius: 20px; padding: 15.1px; border: 2.2px solid var(--danger);">
                 <b id="soma-retirada" style="font-size:1.12rem; color:var(--danger);">R$ 0,00</b><br>
                 <small style="color:var(--danger); font-weight:800; font-size:0.62rem; text-transform:uppercase;">⚠️ Valor total a repor</small>
@@ -136,7 +125,7 @@
         </div>
     </div>
 
-    <div id="metas" class="tab-content"><div class="glass-card"><h2>📊 Metas</h2><div id="lista-meses"></div></div></div>
+    <div id="metas" class="tab-content"><div class="glass-card"><h2>📊 Histórico</h2><div id="lista-meses"></div></div></div>
     <div id="extrato" class="tab-content"><div class="glass-card"><h2>📜 Extrato</h2><div id="lista"></div></div></div>
 
     <div class="tab-menu">
@@ -158,24 +147,29 @@
     const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     let globalMesesMap = {};
 
-    // REGISTRO DO SERVICE WORKER (Para download)
+    // 🚀 REGISTRO DO SERVICE WORKER (FÍSICO)
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('SW ok'))
+            .catch(err => console.log('SW erro', err));
+        });
     }
 
     // LOGIN
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_cofrinho_v61', 'true');
+            localStorage.setItem('auth_cofrinho_final_v62', 'true');
             location.reload();
         } else { alert("Senha incorreta!"); }
     };
-    if(localStorage.getItem('auth_cofrinho_v61') === 'true') {
+    if(localStorage.getItem('auth_cofrinho_final_v62') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
     }
-    window.logout = () => { localStorage.removeItem('auth_cofrinho_v61'); location.reload(); };
+    window.logout = () => { localStorage.removeItem('auth_cofrinho_final_v62'); location.reload(); };
 
+    // PROCESSAMENTO DE DADOS
     const inputMes = document.getElementById('mes-referencia');
     inputMes.value = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
 
@@ -232,7 +226,7 @@
                 const div = document.createElement('div');
                 div.className = 'item'; div.style.borderLeftColor = v > 0 ? 'var(--primary)' : 'var(--danger)';
                 div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt">${m.quem}</span><span class="valor-txt" style="color:${v>0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Investimento'}</div>`;
-                div.onclick = () => { if(confirm("Apagar?")) remove(ref(db, `movimentacoes/${key}`)); };
+                div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
                 listaEl.appendChild(div);
             });
         }
