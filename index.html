@@ -6,9 +6,11 @@
     <title>Cofrinho Talison & Saiane</title>
     
     <link rel="manifest" href="data:application/manifest+json,{'name':'Cofrinho','short_name':'Cofrinho','start_url':'index.html','display':'standalone','background_color':'#f2f2f7','theme_color':'#34c759','icons':[{'src':'icon.jpg','sizes':'512x512','type':'image/jpeg'}]}">
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.jpg">
+    <link rel="apple-touch-startup-image" href="foto.jpg">
 
     <style>
         :root { 
@@ -17,18 +19,38 @@
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        /* MEDIDAS ORIGINAIS MANTIDAS */
-        body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 8.15px; min-height: 100vh; overflow-x: hidden; }
+        /* CORREÇÃO VISUAL DA SPLASH SCREEN */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #f2f2f7;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+        #splash-screen img {
+            width: 100%; max-width: 420px; height: auto; object-fit: contain;
+        }
+
+        body { 
+            font-family: -apple-system, system-ui, sans-serif; 
+            background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); 
+            margin: 0; 
+            padding: 8.15px; 
+            padding-top: calc(8.15px + env(safe-area-inset-top));
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
         
         .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 23px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); padding: 16.1px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
         
-        /* AJUSTE DE PROXIMIDADE COM A BARRA INFERIOR */
-        #conteudo-app { display: none; padding-bottom: calc(85px + env(safe-area-inset-bottom)); animation: fadeIn 0.4s ease; }
+        #conteudo-app { display: none; padding-bottom: calc(95px + env(safe-area-inset-bottom)); animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .tab-menu { 
             display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px); 
-            border-radius: 20px; padding: 7.1px; padding-bottom: calc(7.1px + env(safe-area-inset-bottom));
+            border-radius: 20px; padding: 7.1px; 
+            padding-bottom: calc(7.1px + env(safe-area-inset-bottom));
             box-shadow: 0 -8px 25px rgba(0,0,0,0.05); position: fixed; bottom: 10.1px; left: 10.1px; right: 10.1px; z-index: 1000; max-width: 430px; margin: 0 auto; 
         }
         .tab-btn { border: none; background: none; padding: 7.1px; border-radius: 14px; font-weight: 700; color: #8e8e93; cursor: pointer; font-size: 0.78rem; display: flex; flex-direction: column; align-items: center; flex: 1; }
@@ -41,32 +63,11 @@
         .logo-app { width: 67px; height: 67px; border-radius: 50%; object-fit: cover; border: 2.5px solid #fff; margin-bottom: 7.1px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h2 { font-size: 1.23rem; margin: 5px 0; font-weight: 800; color: #1c1c1e; }
 
-        .meta-container-premium {
-            display: inline-flex; align-items: center; background: linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(52, 199, 89, 0.05) 100%);
-            padding: 6.1px 16.2px; border-radius: 50px; border: 1px solid rgba(52, 199, 89, 0.2); margin-bottom: 10.1px;
-        }
-        .meta-container-premium span { color: var(--primary); font-weight: 900; font-size: 0.8rem; text-transform: uppercase; }
-
+        .meta-container-premium { display: inline-flex; align-items: center; background: linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(52, 199, 89, 0.05) 100%); padding: 6.1px 16.2px; border-radius: 50px; border: 1px solid rgba(52, 199, 89, 0.2); margin-bottom: 10.1px; }
         .barra-bg { background: rgba(0,0,0,0.06); border-radius: 9px; height: 11.2px; overflow: hidden; margin-top: 10.1px; }
         .barra-fill { background: linear-gradient(90deg, #34c759, #4cd964); height: 100%; width: 0%; transition: width 1.5s ease-out; }
-        .barra-info { font-size: 0.66rem; font-weight: 800; color: #8e8e93; margin-top: 6.1px; text-transform: uppercase; }
-
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9.2px; margin: 12.2px 0; }
-        .stat-card { background: #fff; padding: 10.2px; border-radius: 14.2px; border: 1.52px solid #1c1c1e; }
-        .stat-card span { font-weight: 800; font-size: 0.92rem; display: block; }
-        .stat-card small { color: #8e8e93; font-weight: 700; text-transform: uppercase; font-size: 0.52rem; }
         
-        .info-box { background: #fff; border-radius: 20px; padding: 14.2px; margin-bottom: 8px; border: 1px solid rgba(0,0,0,0.04); text-align: left; }
-        .section-title { font-size: 0.68rem; font-weight: 800; color: #b0b0b5; text-transform: uppercase; margin-bottom: 10.2px; display: block; text-align: center; }
-
-        .info-line { display: flex; justify-content: space-between; align-items: center; padding: 8.2px 0; border-bottom: 1px solid #f2f2f7; }
-        .info-line:last-child { border-bottom: none; }
-        
-        /* TAGS MODELO PREMIUM EM DEGRADÊ */
-        .status-tag-premium { 
-            font-size: 0.58rem; font-weight: 900; padding: 4px 10px; border-radius: 8px; 
-            text-transform: uppercase; letter-spacing: 0.3px; display: inline-flex; align-items: center; justify-content: center;
-        }
+        .status-tag-premium { font-size: 0.58rem; font-weight: 900; padding: 4px 10px; border-radius: 8px; text-transform: uppercase; display: inline-flex; align-items: center; }
         .tag-pos { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #2e7d32; border: 1px solid rgba(46, 125, 50, 0.2); }
         .tag-neg { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); color: #c62828; border: 1px solid rgba(198, 40, 40, 0.2); }
         .tag-warn { background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%); color: #f9a825; border: 1px solid rgba(249, 168, 37, 0.2); }
@@ -74,28 +75,26 @@
 
         .item { background: #fff; padding: 14.1px; margin-bottom: 10.1px; border-left: 5px solid #ccc; border-radius: 15px; cursor: pointer; text-align: left; }
         .linha-topo { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8.1px; width: 100%; }
-        .data-txt { font-size: 0.87rem; color: #8e8e93; font-weight: 500; }
-        .nome-txt { font-weight: 700; font-size: 0.97rem; color: #1c1c1e; }
-        .valor-txt { font-weight: 800; font-size: 1.02rem; text-align: right; }
-
         input, select { border: 1px solid #e5e5ea; background: #f9f9fb; font-weight: 600; padding: 14.1px; border-radius: 15px; width: 100%; font-size: 0.92rem; -webkit-appearance: none; }
-
         .dash-metas { display: flex; gap: 10px; margin-bottom: 15px; }
         .dash-card { flex: 1; padding: 12px; border-radius: 15px; background: #fff; border: 1px solid #f2f2f7; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .dash-card b { display: block; font-size: 1.2rem; }
         .dash-card span { font-size: 0.55rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; }
-
         .filtro-extrato { background: #f4f7ff; border-radius: 18px; padding: 12px; margin-bottom: 15px; border: 1px solid #eef2ff; text-align: left; }
         .filtro-extrato label { font-size: 0.65rem; font-weight: 800; color: #8e8e93; text-transform: uppercase; display: block; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
+<div id="splash-screen">
+    <img src="foto.jpg" alt="Cofrinho">
+</div>
+
 <div id="tela-login" class="glass-card" style="margin-top: 60px;">
     <div style="font-size: 2.8rem; margin-bottom: 10px;">🔐</div>
     <h2>Olá Casal! 💍</h2>
     <input type="password" id="senha-input" placeholder="Senha do Cofrinho" style="text-align:center;">
-    <button id="btn-entrar" style="background:#1c1c1e; color:white; width:100%; padding:17px; border-radius:16px; margin-top:15px; border:none; font-weight:800;">Acessar App</button>
+    <button id="btn-entrar" style="background:#1c1c1e; color:white; width:100%; padding:17px; border-radius:16px; margin-top:15px; border:none; font-weight:800;">Digite senha de acesso</button>
 </div>
 
 <div id="conteudo-app">
@@ -106,26 +105,14 @@
             <h2>Nossos Sonhos 🏡🚗</h2>
             <div class="meta-container-premium"><span>🎯 Meta: R$ 8.000,00</span></div>
             <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
-            <div id="barra-porcentagem" class="barra-info">Calculando objetivo...</div>
+            <div id="barra-porcentagem" style="font-size:0.66rem; font-weight:800; color:#8e8e93; margin-top:10.1px; text-transform:uppercase;">Calculando objetivo...</div>
             <div class="stats-grid">
-                <div class="stat-card"><span id="total-geral">R$ 0,00</span><small>Saldo Geral</small></div>
-                <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small>Saldo Mês</small></div>
+                <div class="stat-card"><span id="total-geral">R$ 0,00</span><small style="display:block; font-size:0.52rem; color:#8e8e93; text-transform:uppercase;">Saldo Geral</small></div>
+                <div class="stat-card"><span id="total-mes" style="color: var(--secondary);">R$ 0,00</span><small style="display:block; font-size:0.52rem; color:#8e8e93; text-transform:uppercase;">Saldo Mês</small></div>
             </div>
-            
-            <div class="info-box" style="border: 1px solid var(--primary);">
-                <span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span>
-                <div id="linhas-bruto"></div>
-            </div>
-            
-            <div class="info-box" style="border: 1px solid var(--warning);">
-                <span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span>
-                <div id="linhas-resumo"></div>
-            </div>
-
-            <div style="text-align: center; background: #fff; border-radius: 20px; padding: 15.1px; border: 2.2px solid var(--danger);">
-                <b id="soma-retirada" style="font-size:1.12rem; color:var(--danger);">R$ 0,00</b><br>
-                <small style="color:var(--danger); font-weight:800; font-size:0.62rem; text-transform:uppercase;">⚠️ Valor total a repor</small>
-            </div>
+            <div class="info-box" style="border: 1px solid var(--primary);"><span style="font-size:0.68rem; font-weight:800; color:var(--primary); display:block; text-align:center; margin-bottom:10.2px;">🏆 Depósitos Brutos</span><div id="linhas-bruto"></div></div>
+            <div class="info-box" style="border: 1px solid var(--warning);"><span style="font-size:0.68rem; font-weight:800; color:#b38f00; display:block; text-align:center; margin-bottom:10.2px;">⚖️ Resumo Individual</span><div id="linhas-resumo"></div></div>
+            <div style="text-align: center; background: #fff; border-radius: 20px; padding: 15.1px; border: 2.2px solid var(--danger);"><b id="soma-retirada" style="font-size:1.12rem; color:var(--danger);">R$ 0,00</b><br><small style="color:var(--danger); font-weight:800; font-size:0.62rem; text-transform:uppercase;">⚠️ Valor total a repor</small></div>
         </div>
     </div>
 
@@ -152,7 +139,7 @@
 
     <div id="metas" class="tab-content">
         <div class="glass-card">
-            <h2>📊 Metas</h2>
+            <h2>📊 Dashboard de Metas</h2>
             <div class="dash-metas">
                 <div class="dash-card"><b id="count-ok" style="color: var(--primary);">0</b><span>Meses OK ✅</span></div>
                 <div class="dash-card"><b id="count-fail" style="color: var(--danger);">0</b><span>Faltou Foco 🔴</span></div>
@@ -192,9 +179,14 @@
     let globalMesesMap = {};
     const hoje = new Date();
 
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
-    }
+    // REMOVE A SPLASH SCREEN APÓS CARREGAR
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            setTimeout(() => splash.style.display = 'none', 500);
+        }, 1500);
+    });
 
     document.getElementById('btn-entrar').onclick = () => {
         if(document.getElementById('senha-input').value === "0202") {
@@ -208,11 +200,9 @@
     }
     window.logout = () => { localStorage.removeItem('auth_cofrinho_final'); location.reload(); };
 
-    const inputMes = document.getElementById('mes-referencia');
-    const filtroExtratoMes = document.getElementById('filtro-extrato-mes');
+    const inputMes = document.getElementById('mes-referencia'), filtroExtratoMes = document.getElementById('filtro-extrato-mes');
     const mesPadrao = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`;
-    inputMes.value = mesPadrao;
-    filtroExtratoMes.value = mesPadrao;
+    inputMes.value = mesPadrao; filtroExtratoMes.value = mesPadrao;
 
     const atualizarIndicadorNovo = () => {
         const [ano, mes] = inputMes.value.split('-');
@@ -221,7 +211,6 @@
         document.getElementById('meta-acumulado').innerText = fmt(saldoMes);
         const tag = document.getElementById('meta-status-tag');
         const isMêsAtual = (parseInt(mes)-1 === hoje.getMonth() && parseInt(ano) === hoje.getFullYear());
-
         if (saldoMes >= 600) { tag.innerText = "✅ OK"; tag.className = "status-tag-premium tag-pos"; }
         else if (isMêsAtual) { tag.innerText = "🎯 FOCO"; tag.className = "status-tag-premium tag-warn"; }
         else { tag.innerText = "🔴 Faltou Foco"; tag.className = "status-tag-premium tag-danger"; }
@@ -262,7 +251,6 @@
             let saldoG = 0, depT = 0, depS = 0, retT = 0, retS = 0, mesesMap = {};
             const listaEl = document.getElementById('lista'); listaEl.innerHTML = "";
             const [fAno, fMes] = filtroExtratoMes.value.split('-').map(Number);
-
             if (dados) {
                 Object.entries(dados).sort((a,b) => b[1].ts - a[1].ts).forEach(([key, m]) => {
                     const v = m.valor; saldoG += v;
@@ -274,30 +262,26 @@
                     if (m.mes === (fMes - 1) && m.ano === fAno) {
                         const div = document.createElement('div');
                         div.className = 'item'; div.style.borderLeftColor = v >= 0 ? 'var(--primary)' : 'var(--danger)';
-                        div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt">${m.quem}</span><span class="valor-txt" style="color:${v>=0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
+                        div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt" style="font-weight:700;">${m.quem}</span><span class="valor-txt" style="color:${v>=0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
                         div.onclick = () => { if(confirm("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
                         listaEl.appendChild(div);
                     }
                 });
             }
             if (listaEl.innerHTML === "") listaEl.innerHTML = "<p style='color:#8e8e93; font-size:0.9rem; margin-top:20px;'>Sem registros este mês.</p>";
-
-            globalMesesMap = mesesMap;
+            globalMesesMap = mesesMap; atualizarIndicadorNovo();
             const prog = (saldoG / 8000) * 100;
             document.getElementById('barra').style.width = Math.min(prog, 100) + "%";
             document.getElementById('barra-porcentagem').innerText = `FALTAM ${(100-prog).toFixed(1)}% PARA A META`;
             document.getElementById('total-geral').innerText = fmt(saldoG);
             document.getElementById('total-mes').innerText = fmt(mesesMap[`${hoje.getMonth()}-${hoje.getFullYear()}`]?.val || 0);
             document.getElementById('soma-retirada').innerText = fmt(retT + retS);
-
             document.getElementById('linhas-bruto').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(depT)}</b></div><div class="info-line"><span>Saiane</span><b>${fmt(depS)}</b></div>`;
             const lT = depT-retT, lS = depS-retS;
             document.getElementById('linhas-resumo').innerHTML = `<div class="info-line"><span>Talison</span><b>${fmt(lT)} <span class="status-tag-premium ${lT>=0?'tag-pos':'tag-neg'}">${lT>=0?'POSITIVO':'DÉBITO'}</span></b></div><div class="info-line"><span>Saiane</span><b>${fmt(lS)} <span class="status-tag-premium ${lS>=0?'tag-pos':'tag-neg'}">${lS>=0?'POSITIVO':'DÉBITO'}</span></b></div>`;
-
             const listaMeses = document.getElementById('lista-meses'); listaMeses.innerHTML = "";
             const nomesM = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
             let okCount = 0, failCount = 0;
-
             Object.values(mesesMap).sort((a,b) => (b.a * 12 + b.m) - (a.a * 12 + a.m)).forEach(d => {
                 const ok = d.val >= 600;
                 const isAtual = (d.m === hoje.getMonth() && d.a === hoje.getFullYear());
@@ -313,4 +297,4 @@
     renderizarDados();
 </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                
+</html>
