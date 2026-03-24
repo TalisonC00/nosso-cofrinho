@@ -232,7 +232,7 @@ document.getElementById('barra').style.width = Math.min(progresso, 100) + "%";
 
 document.getElementById('barra-porcentagem').innerHTML = 
     `FALTAM <span style="color:#fff">${fmt(faltamValor > 0 ? faltamValor : 0)}</span> ` +
-    `(${faltamPerc > 0 ? faltamPerc.toFixed(1) : 0}%) PARA O OBJETIVO`;
+    `(${faltamPerc > 0 ? faltamPerc.toFixed(1) : 0}%) PARA O OBJETIVO DE R$ 8000,00`;
             document.getElementById('total-geral').innerText = fmt(saldoG);
             document.getElementById('total-mes').innerText = fmt(mesesMap[`${hoje.getMonth()}-${hoje.getFullYear()}`]?.val || 0);
             document.getElementById('soma-retirada').innerText = fmt(retT + retS);
