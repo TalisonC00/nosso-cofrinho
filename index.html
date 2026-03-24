@@ -18,19 +18,19 @@
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        /* SPLASH SCREEN QUE NÃO DESCONFIGURA O LAYOUT */
+        /* SPLASH SCREEN QUE NÃO AFETA O LAYOUT INTERNO */
         #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f2f2f7; display: flex; justify-content: center; align-items: center; z-index: 10000; transition: opacity 0.5s ease; }
         #splash-screen img { max-width: 90%; max-height: 80vh; object-fit: contain; border-radius: 20px; border: 3px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
-        /* MEDIDAS ORIGINAIS DE 8.15PX + SAFE AREA */
+        /* MEDIDAS ORIGINAIS (8.15PX) + SUPORTE IPHONE 16 */
         body { font-family: -apple-system, system-ui, sans-serif; background: linear-gradient(180deg, #f2f2f7 0%, #d1d1d6 100%); margin: 0; padding: 8.15px; padding-top: calc(8.15px + env(safe-area-inset-top)); min-height: 100vh; overflow-x: hidden; }
         
         .glass-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 23px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); padding: 16.1px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
         
-        #conteudo-app { display: none; padding-bottom: calc(95px + env(safe-area-inset-bottom)); animation: fadeIn 0.4s ease; }
+        #conteudo-app { display: none; padding-bottom: calc(91px + env(safe-area-inset-bottom)); animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* NOVO MODAL DE PRIVACIDADE */
+        /* MODAL DE PRIVACIDADE (SUBSTITUI ALERT/CONFIRM) */
         #custom-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: center; }
         .custom-modal { background: white; width: 85%; max-width: 320px; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
         .modal-msg { font-size: 1.05rem; font-weight: 600; color: #1c1c1e; margin-bottom: 20px; }
@@ -39,39 +39,33 @@
         .btn-confirm { background: var(--primary); color: white; }
         .btn-cancel { background: #f2f2f7; color: #8e8e93; }
 
-        /* ABA COFRE - ESPAÇAMENTOS ORIGINAIS RESTAURADOS */
+        /* ESTILOS ORIGINAIS DO SEU CÓDIGO */
         .info-box { background: #fff; border-radius: 20px; padding: 14.2px; margin-bottom: 12.2px; border: 1px solid rgba(0,0,0,0.04); text-align: left; }
-        .info-line { display: flex; justify-content: space-between; align-items: center; padding: 8.2px 0; border-bottom: 1px solid #f2f2f7; min-height: 45px; }
+        .section-title { font-size: 0.68rem; font-weight: 800; color: #b0b0b5; text-transform: uppercase; margin-bottom: 10.2px; display: block; text-align: center; }
+        .info-line { display: flex; justify-content: space-between; align-items: center; padding: 8.2px 0; border-bottom: 1px solid #f2f2f7; }
         .info-line:last-child { border-bottom: none; }
-        
-        /* MENU FIXO ORIGINAL COM SUPORTE A IPHONE 16 */
-        .tab-menu { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px); border-radius: 20px; padding: 7.1px; padding-bottom: calc(7.1px + env(safe-area-inset-bottom)); box-shadow: 0 -5px 15px rgba(0,0,0,0.05); position: fixed; bottom: 10.1px; left: 10.1px; right: 10.1px; z-index: 1000; max-width: 430px; margin: 0 auto; }
+
+        .tab-menu { display: flex; justify-content: space-around; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); border-radius: 20px; padding: 7.1px; padding-bottom: calc(7.1px + env(safe-area-inset-bottom)); box-shadow: 0 -5px 15px rgba(0,0,0,0.05); position: fixed; bottom: 10.1px; left: 10.1px; right: 10.1px; z-index: 1000; max-width: 430px; margin: 0 auto; }
         .tab-btn { border: none; background: none; padding: 7.1px; border-radius: 14px; font-weight: 700; color: #8e8e93; cursor: pointer; font-size: 0.78rem; display: flex; flex-direction: column; align-items: center; flex: 1; }
-        .tab-btn.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3); }
+        .tab-btn.active { background: var(--primary); color: #fff; }
         .tab-btn i { font-style: normal; font-size: 1.24rem; margin-bottom: 2px; }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .logo-app { width: 67px; height: 67px; border-radius: 50%; object-fit: cover; border: 2.5px solid #fff; margin-bottom: 7.1px; }
-        h2 { font-size: 1.23rem; margin: 5px 0; font-weight: 800; color: #1c1c1e; }
-
-        /* TAGS PREMIUM degradê */
-        .status-tag-premium { font-size: 0.58rem; font-weight: 900; padding: 4px 10px; border-radius: 8px; text-transform: uppercase; display: inline-flex; align-items: center; }
+        .status-tag-premium { font-size: 0.6rem; font-weight: 800; padding: 3.5px 8.6px; border-radius: 7px; text-transform: uppercase; display: inline-flex; align-items: center; }
         .tag-pos { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #2e7d32; border: 1px solid rgba(46, 125, 50, 0.2); }
         .tag-neg { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); color: #c62828; border: 1px solid rgba(198, 40, 40, 0.2); }
-        .tag-warn { background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%); color: #f9a825; border: 1px solid rgba(249, 168, 37, 0.2); }
-        .tag-danger { background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); color: #e65100; border: 1px solid rgba(230, 81, 0, 0.2); }
         
         .item { background: #fff; padding: 14.1px; margin-bottom: 10.1px; border-left: 5px solid #ccc; border-radius: 15px; cursor: pointer; text-align: left; }
         .linha-topo { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8.1px; width: 100%; }
         input, select { border: 1px solid #e5e5ea; background: #f9f9fb; font-weight: 600; padding: 14.1px; border-radius: 15px; width: 100%; font-size: 0.92rem; -webkit-appearance: none; }
-        .dash-metas { display: flex; gap: 10px; margin-bottom: 20px; }
-        .dash-card { flex: 1; padding: 12px; border-radius: 15px; background: #fff; border: 1px solid #f2f2f7; text-align: center; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .logo-app { width: 67px; height: 67px; border-radius: 50%; object-fit: cover; border: 2.5px solid #fff; margin-bottom: 7.1px; }
+        h2 { font-size: 1.23rem; margin: 5px 0; font-weight: 800; color: #1c1c1e; }
     </style>
 </head>
 <body>
 
-<div id="splash-screen"><img src="foto.jpg" alt="Carregando"></div>
+<div id="splash-screen"><img src="foto.jpg" alt="Cofrinho"></div>
 
 <div id="custom-modal-overlay">
     <div class="custom-modal">
@@ -98,15 +92,15 @@
             <h2>Nossos Sonhos 🏡🚗</h2>
             <div style="display: inline-flex; align-items: center; background: linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(52, 199, 89, 0.05) 100%); padding: 6.1px 16.2px; border-radius: 50px; border: 1px solid rgba(52, 199, 89, 0.2); margin-bottom: 10.1px;"><span style="color: var(--primary); font-weight: 900; font-size: 0.8rem; text-transform: uppercase;">🎯 Meta: R$ 8.000,00</span></div>
             <div class="barra-bg"><div id="barra" class="barra-fill" style="width:0%"></div></div>
-            <div id="barra-porcentagem" style="font-size:0.66rem; font-weight:800; color:#8e8e93; margin-top:10.1px; text-transform:uppercase;">Carregando...</div>
+            <div id="barra-porcentagem" style="font-size:0.66rem; font-weight:800; color:#8e8e93; margin-top:6.1px; text-transform:uppercase;">Carregando...</div>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 9.2px; margin: 12.2px 0;">
-                <div style="background: #fff; padding: 10.2px; border-radius: 14.2px; border: 1.52px solid #1c1c1e;"><span>Saldo Geral</span><b id="total-geral" style="display:block; font-size:0.92rem;">R$ 0,00</b></div>
-                <div style="background: #fff; padding: 10.2px; border-radius: 14.2px; border: 1.52px solid #1c1c1e;"><span>Saldo Mês</span><b id="total-mes" style="display:block; font-size:0.92rem; color: var(--secondary);">R$ 0,00</b></div>
+                <div style="background: #fff; padding: 10.2px; border-radius: 14.2px; border: 1.52px solid #1c1c1e;"><span>Saldo Geral</span><b id="total-geral">R$ 0,00</b></div>
+                <div style="background: #fff; padding: 10.2px; border-radius: 14.2px; border: 1.52px solid #1c1c1e;"><span>Saldo Mês</span><b id="total-mes" style="color: var(--secondary);">R$ 0,00</b></div>
             </div>
             
-            <div class="info-box" style="border-top: 4px solid var(--primary);"><span style="font-size:0.68rem; font-weight:800; color:#b0b0b5; display:block; text-align:center; margin-bottom:10.2px;">🏆 Depósitos Brutos</span><div id="linhas-bruto"></div></div>
-            <div class="info-box" style="border-top: 4px solid var(--warning);"><span style="font-size:0.68rem; font-weight:800; color:#b0b0b5; display:block; text-align:center; margin-bottom:10.2px;">⚖️ Resumo Individual</span><div id="linhas-resumo"></div></div>
+            <div class="info-box"><span class="section-title" style="color: var(--primary);">🏆 Depósitos Brutos</span><div id="linhas-bruto"></div></div>
+            <div class="info-box"><span class="section-title" style="color: #b38f00;">⚖️ Resumo Individual</span><div id="linhas-resumo"></div></div>
             
             <div style="text-align: center; background: #fff; border-radius: 20px; padding: 15.1px; border: 2.2px solid var(--danger);"><b id="soma-retirada" style="font-size:1.12rem; color:var(--danger);">R$ 0,00</b><br><small style="color:var(--danger); font-weight:800; font-size:0.62rem; text-transform:uppercase;">⚠️ Valor total a repor</small></div>
         </div>
@@ -116,17 +110,17 @@
         <div class="glass-card">
             <h2>Novo Registro</h2>
             <div style="background:#f4f7ff; border-radius:15px; padding:12.1px; margin-bottom:15.1px; border:1px solid #eef2ff; display:flex; align-items:center; gap:8.1px;"><span id="meta-status-tag" class="status-tag-premium">---</span><span id="meta-acumulado" style="margin-left:auto; font-weight:800;">R$ 0,00</span></div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><select id="quem"><option value="Talison">Talison</option><option value="Saiane">Saiane</option></select><input type="month" id="mes-referencia"></div>
-            <div style="display:flex; gap:10px;"><button id="btn-sinal-toggle" style="width:60px; height:55px; border-radius:15px; border:none; background:var(--primary); color:white; font-size:1.7rem;">+</button><input type="number" id="valor-input" inputmode="decimal" placeholder="0,00" style="flex:1;"></div>
-            <div id="campo-motivo" style="display:none;"><input type="text" id="motivo-retirada" placeholder="Motivo"></div>
-            <button id="btn-registrar" style="width:100%; background:var(--primary); color:white; padding:19px; border-radius:16px; border:none; font-weight:800;">Confirmar</button>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10.1px;"><select id="quem"><option value="Talison">Talison</option><option value="Saiane">Saiane</option></select><input type="month" id="mes-referencia"></div>
+            <div style="display:flex; gap:10.1px; margin-top:10px;"><button id="btn-sinal-toggle" style="width:60px; height:55px; border-radius:15px; border:none; background:var(--primary); color:white; font-size:1.7rem;">+</button><input type="number" id="valor-input" inputmode="decimal" placeholder="0,00" style="flex:1;"></div>
+            <div id="campo-motivo" style="display:none; margin-top:10px;"><input type="text" id="motivo-retirada" placeholder="Motivo"></div>
+            <button id="btn-registrar" style="width:100%; background:var(--primary); color:white; padding:19px; border-radius:16px; border:none; font-weight:800; margin-top:15px;">Confirmar</button>
         </div>
     </div>
 
     <div id="metas" class="tab-content">
         <div class="glass-card">
             <h2>📊 Metas</h2>
-            <div class="dash-metas"><div class="dash-card"><b id="count-ok" style="color: var(--primary);">0</b><span>OK ✅</span></div><div class="dash-card"><b id="count-fail" style="color: var(--danger);">0</b><span>FOCO 🔴</span></div></div>
+            <div style="display:flex; gap:10px; margin-bottom:20px;"><div style="flex:1; padding:12px; border-radius:15px; background:#fff; border:1px solid #f2f2f7; text-align:center;"><b id="count-ok" style="color:var(--primary);">0</b><span style="font-size:0.55rem; font-weight:800; color:#8e8e93; display:block; text-transform:uppercase;">OK ✅</span></div><div style="flex:1; padding:12px; border-radius:15px; background:#fff; border:1px solid #f2f2f7; text-align:center;"><b id="count-fail" style="color:var(--danger);">0</b><span style="font-size:0.55rem; font-weight:800; color:#8e8e93; display:block; text-transform:uppercase;">FOCO 🔴</span></div></div>
             <div id="lista-meses"></div>
         </div>
     </div>
@@ -134,7 +128,7 @@
     <div id="extrato" class="tab-content">
         <div class="glass-card">
             <h2>📜 Extrato</h2>
-            <div style="background:#f4f7ff; border-radius:18px; padding:12px; margin-bottom:15px; border:1px solid #eef2ff;"><input type="month" id="filtro-extrato-mes"></div>
+            <div style="background:#f4f7ff; border-radius:18px; padding:12px; margin-bottom:15px; border:1px solid #eef2ff;"><label style="font-size:0.65rem; font-weight:800; color:#8e8e93; text-transform:uppercase; display:block; margin-bottom:5px;">Ver mês:</label><input type="month" id="filtro-extrato-mes"></div>
             <div id="lista"></div>
         </div>
     </div>
@@ -180,15 +174,15 @@
 
     document.getElementById('btn-entrar').onclick = async () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_cofrinho_final_v85', 'true');
+            localStorage.setItem('auth_v86', 'true');
             location.reload();
         } else { await showModal("Senha incorreta!", true); }
     };
-    if(localStorage.getItem('auth_cofrinho_final_v85') === 'true') {
+    if(localStorage.getItem('auth_v86') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
     }
-    window.logout = () => { localStorage.removeItem('auth_cofrinho_final_v85'); location.reload(); };
+    window.logout = () => { localStorage.removeItem('auth_v86'); location.reload(); };
 
     window.openTab = function(tabName) {
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -211,11 +205,12 @@
         const saldoMes = globalMesesMap[chave] ? globalMesesMap[chave].val : 0;
         document.getElementById('meta-acumulado').innerText = fmt(saldoMes);
         const tag = document.getElementById('meta-status-tag');
-        const isAtual = (parseInt(mes)-1 === hoje.getMonth() && parseInt(ano) === hoje.getFullYear());
+        const isMêsAtual = (parseInt(mes)-1 === hoje.getMonth() && parseInt(ano) === hoje.getFullYear());
         if (saldoMes >= 600) { tag.innerText = "✅ OK"; tag.className = "status-tag-premium tag-pos"; }
-        else if (isAtual) { tag.innerText = "🎯 FOCO"; tag.className = "status-tag-premium tag-warn"; }
+        else if (isMêsAtual) { tag.innerText = "🎯 FOCO"; tag.className = "status-tag-premium tag-warn"; }
         else { tag.innerText = "🔴 Faltou Foco"; tag.className = "status-tag-premium tag-danger"; }
     };
+    inputMes.onchange = atualizarIndicadorNovo;
 
     const valI = document.getElementById('valor-input'), motI = document.getElementById('motivo-retirada'), btnS = document.getElementById('btn-sinal-toggle'), btnR = document.getElementById('btn-registrar');
     btnS.onclick = () => {
@@ -252,13 +247,13 @@
                     if (m.mes === (fMes - 1) && m.ano === fAno) {
                         const div = document.createElement('div');
                         div.className = 'item'; div.style.borderLeftColor = v >= 0 ? 'var(--primary)' : 'var(--danger)';
-                        div.innerHTML = `<div class="linha-topo"><span class="nome-txt" style="font-weight:700;">${m.quem}</span><span class="valor-txt" style="color:${v>=0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
-                        div.onclick = async () => { if(await showModal("Apagar este registro?")) remove(ref(db, `movimentacoes/${key}`)); };
+                        div.innerHTML = `<div class="linha-topo"><span class="data-txt">${m.data}</span><span class="nome-txt" style="font-weight:700;">${m.quem}</span><span class="valor-txt" style="color:${v>=0?'#34c759':'#ff3b30'}">${v < 0 ? '-' : ''}${fmt(Math.abs(v))}</span></div><div style="font-size:0.83rem; color:#8e8e93; border-top:1px solid #f8f8f8; padding-top:6px; margin-top:5px;">${v<0?'⚠️ ':''}${m.motivo||'Depósito'}</div>`;
+                        div.onclick = async () => { if(await showModal("Apagar registro?")) remove(ref(db, `movimentacoes/${key}`)); };
                         listaEl.appendChild(div);
                     }
                 });
             }
-            if (listaEl.innerHTML === "") listaEl.innerHTML = "<p style='color:#8e8e93; font-size:0.9rem; margin-top:20px;'>Sem registros.</p>";
+                   if (listaEl.innerHTML === "") listaEl.innerHTML = "<p style='color:#8e8e93; font-size:0.9rem; margin-top:20px;'>Sem registros.</p>";
             globalMesesMap = mesesMap; atualizarIndicadorNovo();
             const prog = (saldoG / 8000) * 100;
             document.getElementById('barra').style.width = Math.min(prog, 100) + "%";
