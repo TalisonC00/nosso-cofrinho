@@ -18,36 +18,36 @@
         
         body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: var(--text); margin: 0; padding: 8.15px; padding-top: calc(8.15px + env(safe-area-inset-top)); min-height: 100vh; overflow-x: hidden; }
         
-        .glass-card { background: var(--card-bg); backdrop-filter: blur(25px); border: 1.5px solid rgba(255, 255, 255, 0.1); border-radius: 28px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); padding: 18.1px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
+        .glass-card { background: var(--card-bg); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 28px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); padding: 18.1px; width: 100%; max-width: 450px; text-align: center; margin: 0 auto; position: relative; }
         
-        #conteudo-app { display: none; padding-bottom: calc(115px + env(safe-area-inset-bottom)); animation: fadeIn 0.4s ease; }
+        #conteudo-app { display: none; padding-bottom: calc(110px + env(safe-area-inset-bottom)); animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* MODAL PERSONALIZADO */
+        /* MODAL CUSTOMIZADO */
         #custom-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; justify-content: center; align-items: center; }
         .custom-modal { background: #1c1c1e; width: 85%; max-width: 320px; border-radius: 24px; padding: 25px; text-align: center; border: 1px solid var(--saiane); }
         .modal-btn { border: none; padding: 12px; border-radius: 14px; font-weight: 700; cursor: pointer; flex: 1; color: white; }
 
-        /* ABA COFRE - SEM ESPREMER */
+        /* BOXES DE INFO */
         .info-box { background: rgba(255,255,255,0.03); border-radius: 22px; padding: 16px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.06); text-align: left; }
         .info-line { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.05); min-height: 50px; }
         .info-line:last-child { border-bottom: none; }
 
-        /* TAGS ULTRA PREMIUM */
+        /* TAGS CAPRICHADAS */
         .status-tag-premium { font-size: 0.58rem; font-weight: 900; padding: 5px 12px; border-radius: 10px; text-transform: uppercase; display: inline-flex; align-items: center; letter-spacing: 0.5px; }
-        .tag-pos { background: linear-gradient(135deg, rgba(52, 199, 89, 0.2), rgba(52, 199, 89, 0.1)); color: #4cd964; border: 1.2px solid rgba(76, 217, 100, 0.4); }
-        .tag-neg { background: linear-gradient(135deg, rgba(255, 45, 85, 0.2), rgba(255, 45, 85, 0.1)); color: #ff375f; border: 1.2px solid rgba(255, 55, 95, 0.4); }
-        .tag-warn { background: linear-gradient(135deg, rgba(255, 204, 0, 0.2), rgba(255, 204, 0, 0.1)); color: #ffcc00; border: 1.2px solid rgba(255, 204, 0, 0.4); }
+        .tag-pos { background: linear-gradient(135deg, rgba(52, 199, 89, 0.25), rgba(52, 199, 89, 0.1)); color: #4cd964; border: 1.2px solid rgba(76, 217, 100, 0.5); }
+        .tag-neg { background: linear-gradient(135deg, rgba(255, 45, 85, 0.25), rgba(255, 45, 85, 0.1)); color: #ff375f; border: 1.2px solid rgba(255, 55, 95, 0.5); }
+        .tag-warn { background: linear-gradient(135deg, rgba(255, 204, 0, 0.25), rgba(255, 204, 0, 0.1)); color: #ffcc00; border: 1.2px solid rgba(255, 204, 0, 0.5); }
 
-        /* MENU PREMIUM */
-        .tab-menu { display: flex; justify-content: space-around; background: rgba(20, 20, 20, 0.98); backdrop-filter: blur(25px); border-radius: 26px; padding: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); position: fixed; bottom: 12px; left: 12px; right: 12px; z-index: 1000; max-width: 430px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.08); }
+        /* MENU INFERIOR */
+        .tab-menu { display: flex; justify-content: space-around; background: rgba(20, 20, 20, 0.98); backdrop-filter: blur(25px); border-radius: 26px; padding: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); position: fixed; bottom: 12px; left: 12px; right: 12px; z-index: 1000; max-width: 430px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); }
         .tab-btn { border: none; background: none; color: #555; cursor: pointer; font-size: 0.72rem; display: flex; flex-direction: column; align-items: center; flex: 1; transition: 0.3s; }
         .tab-btn.active.cofre-btn { color: var(--talison); text-shadow: 0 0 12px var(--talison); }
         .tab-btn.active.novo-btn { color: var(--saiane); text-shadow: 0 0 12px var(--saiane); }
         .tab-btn i { font-style: normal; font-size: 1.5rem; margin-bottom: 4px; }
 
-        .barra-bg { background: rgba(255,255,255,0.05); border-radius: 12px; height: 16px; overflow: hidden; margin: 12px 0; border: 1px solid rgba(255,255,255,0.1); }
-        .barra-fill { background: linear-gradient(90deg, var(--talison), var(--saiane)); height: 100%; transition: width 1.2s ease; }
+        .barra-bg { background: rgba(255,255,255,0.05); border-radius: 12px; height: 16px; overflow: hidden; margin: 15px 0; border: 1px solid rgba(255,255,255,0.1); }
+        .barra-fill { background: linear-gradient(90deg, var(--talison), var(--saiane)); height: 100%; transition: width 1s ease; }
 
         .logo-app { width: 78px; height: 78px; border-radius: 50%; object-fit: cover; border: 3px solid var(--saiane); box-shadow: 0 0 20px rgba(255, 45, 85, 0.4); margin-bottom: 12px; }
         input, select { background: #1c1c1e; border: 1.5px solid rgba(255,255,255,0.1); color: white; padding: 16px; border-radius: 20px; width: 100%; font-size: 1rem; }
@@ -57,13 +57,13 @@
 </head>
 <body>
 
-<div id="custom-modal-overlay"><div class="custom-modal"><div id="modal-text" style="color:white; margin-bottom:20px; font-weight:800;"></div><div style="display:flex; gap:10px;"><button class="modal-btn" id="modal-btn-cancel" style="background:#3a3a3c;">Cancelar</button><button class="modal-btn" id="modal-btn-ok" style="background:linear-gradient(to right, var(--talison), var(--saiane));">OK</button></div></div></div>
+<div id="custom-modal-overlay"><div class="custom-modal"><div id="modal-text" style="color:white; margin-bottom:20px; font-weight:800; font-size:1.1rem;"></div><div style="display:flex; gap:10px;"><button class="modal-btn" id="modal-btn-cancel" style="background:#3a3a3c;">Cancelar</button><button class="modal-btn" id="modal-btn-ok" style="background:linear-gradient(to right, var(--talison), var(--saiane));">OK</button></div></div></div>
 
 <div id="tela-login" class="glass-card" style="margin-top: 80px;">
     <div style="font-size: 3.5rem; margin-bottom: 15px;">🔒</div>
     <h2 style="color:white;">Acesso do Casal! 💍</h2>
-    <input type="password" id="senha-input" placeholder="Senha do Cofrinho" style="text-align:center; margin-bottom:20px;">
-    <button id="btn-entrar" style="background:linear-gradient(135deg, var(--talison), var(--saiane)); color:white; width:100%; padding:20px; border-radius:22px; border:none; font-weight:900;">Digite a senha de acesso</button>
+    <input type="password" id="senha-input" placeholder="Senha Secreta" style="text-align:center; margin-bottom:20px;">
+    <button id="btn-entrar" style="background:linear-gradient(135deg, var(--talison), var(--saiane)); color:white; width:100%; padding:20px; border-radius:22px; border:none; font-weight:900; font-size:1.1rem;">Digite a senha de acesso</button>
 </div>
 
 <div id="conteudo-app">
@@ -74,23 +74,23 @@
             <h2 style="color:white; font-size:1.4rem; margin-bottom:15px;">Nossos Sonhos 🏡🚗</h2>
             
             <div class="barra-bg"><div id="barra" class="barra-fill" style="width:0%"></div></div>
-            <div id="barra-porcentagem" style="font-size:0.65rem; font-weight:900; color:#8e8e93; text-transform:uppercase;">Carregando...</div>
+            <div id="barra-porcentagem" style="font-size:0.65rem; font-weight:900; color:#8e8e93; text-transform:uppercase; letter-spacing:1.2px;">Calculando...</div>
             
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin:22px 0;">
                 <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:22px; border:1px solid var(--talison);">
-                    <small style="display:block; color:var(--talison); font-weight:900; font-size:0.58rem; margin-bottom:6px;">TOTAL TALISON</small>
+                    <small style="display:block; color:#8e8e93; font-weight:900; font-size:0.58rem; margin-bottom:6px; letter-spacing:1px;">SALDO GERAL</small>
                     <b id="total-geral" style="font-size:1.15rem; color:white;">R$ 0,00</b>
                 </div>
                 <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:22px; border:1px solid var(--saiane);">
-                    <small style="display:block; color:var(--saiane); font-weight:900; font-size:0.58rem; margin-bottom:6px;">TOTAL SAIANE</small>
-                    <b id="total-mes" style="color:white; font-size:1.15rem;">R$ 0,00</b>
+                    <small style="display:block; color:#8e8e93; font-weight:900; font-size:0.58rem; margin-bottom:6px; letter-spacing:1px;">SALDO MÊS</small>
+                    <b id="total-mes" style="color:var(--saiane); font-size:1.15rem;">R$ 0,00</b>
                 </div>
             </div>
 
-            <div class="info-box" style="border-left: 4px solid var(--talison);"><span style="font-size:0.65rem; font-weight:900; color:var(--talison); display:block; text-align:center; margin-bottom:12px;">🏆 DEPÓSITOS BRUTOS</span><div id="linhas-bruto"></div></div>
-            <div class="info-box" style="border-left: 4px solid var(--saiane);"><span style="font-size:0.65rem; font-weight:900; color:var(--saiane); display:block; text-align:center; margin-bottom:12px;">⚖️ RESUMO INDIVIDUAL</span><div id="linhas-resumo"></div></div>
+            <div class="info-box" style="border-top: 4px solid var(--talison);"><span style="font-size:0.65rem; font-weight:900; color:var(--talison); display:block; text-align:center; margin-bottom:12px; letter-spacing:1px;">🏆 DEPÓSITOS BRUTOS</span><div id="linhas-bruto"></div></div>
+            <div class="info-box" style="border-top: 4px solid var(--saiane);"><span style="font-size:0.65rem; font-weight:900; color:var(--saiane); display:block; text-align:center; margin-bottom:12px; letter-spacing:1px;">⚖️ RESUMO INDIVIDUAL</span><div id="linhas-resumo"></div></div>
             
-            <div style="background:rgba(255,255,255,0.03); border-radius:24px; padding:18px; border:2px solid var(--danger);"><b id="soma-retirada" style="font-size:1.25rem; color:var(--danger);">R$ 0,00</b><br><small style="color:var(--danger); font-weight:900; font-size:0.6rem;">⚠️ TOTAL A REPOR</small></div>
+            <div style="background:rgba(255,59,48,0.05); border-radius:24px; padding:18px; border:2px solid var(--danger);"><b id="soma-retirada" style="font-size:1.25rem; color:var(--danger);">R$ 0,00</b><br><small style="color:var(--danger); font-weight:900; font-size:0.6rem; letter-spacing:1px;">⚠️ VALOR TOTAL A REPOR</small></div>
         </div>
     </div>
 
@@ -110,10 +110,10 @@
 
     <div id="metas" class="tab-content">
         <div class="glass-card">
-            <h2>📊 Metas</h2>
+            <h2 style="color:white; margin-bottom:20px;">📊 Dashboard</h2>
             <div style="display:flex; gap:12px; margin-bottom:25px;">
-                <div style="flex:1; padding:16px; border-radius:22px; background:rgba(255,255,255,0.03); border:1.2px solid var(--talison);"><b id="count-ok" style="color:var(--talison); font-size:1.4rem;">0</b><span style="display:block; font-size:0.55rem; color:#8e8e93; font-weight:900;">OK ✅</span></div>
-                <div style="flex:1; padding:16px; border-radius:22px; background:rgba(255,255,255,0.03); border:1.2px solid var(--saiane);"><b id="count-fail" style="color:var(--saiane); font-size:1.4rem;">0</b><span style="display:block; font-size:0.55rem; color:#8e8e93; font-weight:900;">FOCO 🔴</span></div>
+                <div style="flex:1; padding:16px; border-radius:22px; background:rgba(52,199,89,0.05); border:1.2px solid var(--talison);"><b id="count-ok" style="color:var(--talison); font-size:1.4rem;">0</b><span style="display:block; font-size:0.55rem; color:#8e8e93; font-weight:900; letter-spacing:1px;">OK ✅</span></div>
+                <div style="flex:1; padding:16px; border-radius:22px; background:rgba(255,45,85,0.05); border:1.2px solid var(--saiane);"><b id="count-fail" style="color:var(--saiane); font-size:1.4rem;">0</b><span style="display:block; font-size:0.55rem; color:#8e8e93; font-weight:900; letter-spacing:1px;">FOCO 🔴</span></div>
             </div>
             <div id="lista-meses"></div>
         </div>
@@ -121,9 +121,9 @@
 
     <div id="extrato" class="tab-content">
         <div class="glass-card">
-            <h2>📜 Histórico</h2>
+            <h2 style="color:white; margin-bottom:20px;">📜 Extrato</h2>
             <div style="background:rgba(255,255,255,0.03); border-radius:20px; padding:15px; margin-bottom:15px; border:1px solid rgba(255,255,255,0.1); text-align:left;">
-                <label style="font-size:0.65rem; font-weight:900; color:#8e8e93; display:block; margin-bottom:8px;">ESCOLHER MÊS:</label>
+                <label style="font-size:0.65rem; font-weight:900; color:#8e8e93; display:block; margin-bottom:8px;">VER MÊS:</label>
                 <input type="month" id="filtro-extrato-mes">
             </div>
             <div id="lista"></div>
@@ -161,18 +161,18 @@
         });
     };
 
-    // SENHA MANTIDA: 0202
+    // SENHA 0202
     document.getElementById('btn-entrar').onclick = async () => {
         if(document.getElementById('senha-input').value === "0202") {
-            localStorage.setItem('auth_cofrinho_v93', 'true');
+            localStorage.setItem('auth_dark_premium_v94', 'true');
             location.reload();
         } else { await showModal("Senha incorreta!", true); }
     };
-    if(localStorage.getItem('auth_cofrinho_v93') === 'true') {
+    if(localStorage.getItem('auth_dark_premium_v94') === 'true') {
         document.getElementById('tela-login').style.display = 'none';
         document.getElementById('conteudo-app').style.display = 'block';
     }
-    window.logout = () => { localStorage.removeItem('auth_cofrinho_v93'); location.reload(); };
+    window.logout = () => { localStorage.removeItem('auth_dark_premium_v94'); location.reload(); };
 
     window.openTab = function(tabName) {
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -247,9 +247,9 @@
             document.getElementById('barra').style.width = Math.min((saldoG/8000)*100, 100) + "%";
             document.getElementById('barra-porcentagem').innerText = `FALTAM ${(100-(saldoG/8000)*100).toFixed(1)}% PARA A META`;
             
-            // EXIBIÇÃO DOS VALORES ACUMULADOS NO TOPO
-            document.getElementById('total-geral').innerText = fmt(depT - retT);
-            document.getElementById('total-mes').innerText = fmt(depS - retS);
+            // TOPO: SALDO GERAL (SOMA DOS DOIS) E SALDO DO MÊS ATUAL (SOMA DOS DOIS NO MÊS)
+            document.getElementById('total-geral').innerText = fmt(saldoG);
+            document.getElementById('total-mes').innerText = fmt(mesesMap[`${hoje.getMonth()}-${hoje.getFullYear()}`]?.val || 0);
             
             document.getElementById('soma-retirada').innerText = fmt(retT + retS);
             document.getElementById('linhas-bruto').innerHTML = `<div class="info-line"><span>Talison</span><b style="color:var(--talison)">${fmt(depT)}</b></div><div class="info-line"><span>Saiane</span><b style="color:var(--saiane)">${fmt(depS)}</b></div>`;
@@ -277,4 +277,3 @@
 </script>
 </body>
 </html>
-                
