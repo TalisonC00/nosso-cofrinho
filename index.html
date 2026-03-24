@@ -187,7 +187,7 @@
         document.getElementById('meta-acumulado').innerText = fmt(saldoMes);
         const tag = document.getElementById('meta-status-tag');
         const isMêsAtual = (parseInt(mes)-1 === hoje.getMonth() && parseInt(ano) === hoje.getFullYear());
-        if (saldoMes >= 600) { tag.innerText = "✅ OK"; tag.className = "status-tag-premium tag-pos"; }
+        if (saldoMes >= 600) { tag.innerText = "🟢 OK"; tag.className = "status-tag-premium tag-pos"; }
         else if (isMêsAtual) { tag.innerText = "🎯 FOCO"; tag.className = "status-tag-premium tag-warn"; }
         else { tag.innerText = "🔴 Faltou Foco"; tag.className = "status-tag-premium tag-danger"; }
     };
@@ -255,7 +255,7 @@
                 const ok = d.val >= 600;
                 const isAtu = (d.m === hoje.getMonth() && d.a === hoje.getFullYear());
                 let tagC = "tag-warn", tagL = "🎯 FOCO";
-                if (ok) { tagC = "tag-pos"; tagL = "✅ OK"; okCount++; }
+                if (ok) { tagC = "tag-pos"; tagL = "🟢 OK"; okCount++; }
                 else if (!isAtu) { tagC = "tag-danger"; tagL = "🔴 Faltou Foco"; failCount++; }
                 listaMeses.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; padding:13px 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span><b>${nomesM[d.m]} / ${d.a}</b> <span class="status-tag-premium ${tagC}" style="margin-left:10px;">${tagL}</span></span><b>${fmt(d.val)}</b></div>`;
             });
