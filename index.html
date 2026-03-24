@@ -72,7 +72,10 @@
         <div class="glass-card">
             <button onclick="logout()" style="position:absolute; top:18px; right:18px; border:none; background:none; font-size:1.4rem;">🔒</button>
             <img src="foto.jpg" class="logo-app">
-            <h2 style="color:white; font-size:1.4rem; margin-bottom:15px;">Nosso Cofrinho 💍</h2>
+            <h2 style="color:white; font-size:1.4rem; margin-bottom:2px;">Nosso Cofrinho 💍</h2>
+<div style="font-size: 1.8rem; font-weight: 900; background: linear-gradient(90deg, var(--talison), var(--saiane)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; letter-spacing: 1px;">
+    OBJETIVO: R$ 8.000,00
+</div>
             <div class="barra-bg"><div id="barra" class="barra-fill"></div></div>
             <div id="barra-porcentagem" style="font-size:0.65rem; font-weight:900; color:#8e8e93; text-transform:uppercase;">Calculando...</div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin:22px 0;">
@@ -232,7 +235,7 @@ document.getElementById('barra').style.width = Math.min(progresso, 100) + "%";
 
 document.getElementById('barra-porcentagem').innerHTML = 
     `FALTAM <span style="color:#fff">${fmt(faltamValor > 0 ? faltamValor : 0)}</span> ` +
-    `(${faltamPerc > 0 ? faltamPerc.toFixed(1) : 0}%) PARA O OBJETIVO DE R$ 8000,00`;
+    `(${faltamPerc > 0 ? faltamPerc.toFixed(1) : 0}%) PARA O OBJETIVO`;
             document.getElementById('total-geral').innerText = fmt(saldoG);
             document.getElementById('total-mes').innerText = fmt(mesesMap[`${hoje.getMonth()}-${hoje.getFullYear()}`]?.val || 0);
             document.getElementById('soma-retirada').innerText = fmt(retT + retS);
