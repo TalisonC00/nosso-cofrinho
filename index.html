@@ -219,7 +219,7 @@
                     if (m.mes === (fMes - 1) && m.ano === fAno) {
                         const div = document.createElement('div');
                         div.className = 'item'; div.style.cssText = "background:rgba(255,255,255,0.03); padding:16px; margin-bottom:12px; border-radius:20px; border-left:5px solid "+(v>=0?(m.quem==='Talison'?'var(--talison)':'var(--saiane)'):'var(--danger)')+";";
-                        div.innerHTML = `<div style="display:flex; justify-content:space-between;"><span>${m.quem}</span><b>${v<0?'-':''}${fmt(Math.abs(v))}</b></div><div style="font-size:0.75rem; color:#8e8e93; margin-top:5px;">${m.motivo||'Depósito'}</div>`;
+                        div.innerHTML = `<div style="display:flex; justify-content:space-between;"><span>${m.quem}</span><b>${v<0?'-':''}${fmt(Math.abs(v))}</b></div><div style="font-size:0.75rem; color:#8e8e93; margin-top:5px;">text-align:left;">${v < 0 ? '⚠️ ' : ''}${m.motivo||'Depósito'}</div>`;
                         div.onclick = () => { if(confirm("Apagar?")) remove(ref(db, `movimentacoes/${key}`)); };
                         listaEl.appendChild(div);
                     }
